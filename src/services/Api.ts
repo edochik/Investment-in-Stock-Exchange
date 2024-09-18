@@ -1,0 +1,2 @@
+export const API_IMOEX = 'https://iss.moex.com/iss/statistics/engines/stock/markets/index/analytics/IMOEX.json?limit=100';
+export const API_SECURITIES = 'https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json';
