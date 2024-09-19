@@ -9,3 +9,10 @@ html {
 *::after {
 	box-sizing: inherit;
 }
+
+body{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}

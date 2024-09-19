@@ -55,3 +55,8 @@ const securityData = {
 };
 
 ```
+
+
+
+Вопросы типизиация useSelector и useDispatch?? => hooks
+Куда мы складываем все interface
