@@ -1,7 +1,7 @@
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_SECURITIES } from "../../services/Api";
-import { getSecuritiesApi } from "../../services/getSecuritiesApi";
+// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+// import { API_SECURITIES } from "../../services/api";
+// import { getSecuritiesApi } from "../../services/getSecuritiesApi";
 
 export interface Securities {
 	secid: string,
@@ -33,45 +33,45 @@ export interface Securities {
 	settledate: string
 };
 
-interface InitialState {
-	loading: 'idle' | 'pending' | 'succeeded' | 'failed',
-	data: Record<string, Securities>;
-	error: string | null;
-}
+// interface InitialState {
+// 	loading: 'idle' | 'pending' | 'succeeded' | 'failed',
+// 	data: Record<string, Securities>;
+// 	error: string | null;
+// }
 
-export const fetchDataSecurities = createAsyncThunk(
-	'data/fetchDataSecurities',
-	async () => {
-		const data = await getSecuritiesApi(API_SECURITIES)
-		return data;
-	}
-)
+// export const fetchDataSecurities = createAsyncThunk(
+// 	'data/fetchDataSecurities',
+// 	async () => {
+// 		const data = await getSecuritiesApi(API_SECURITIES)
+// 		return data;
+// 	}
+// )
 
-const initialState: InitialState = {
-	loading: 'idle',
-	data: {},
-	error: null
-}
+// const initialState: InitialState = {
+// 	loading: 'idle',
+// 	data: {},
+// 	error: null
+// }
 
-export const securitiesSlicer = createSlice({
-	name: 'securities',
-	initialState,
-	reducers: {},
-	extraReducers: (builder) => {
-		builder
-			.addCase(fetchDataSecurities.pending, (state) => {
-				state.loading = 'pending';
-				state.data = {};
-			})
-			.addCase(fetchDataSecurities.fulfilled, (state, action) => {
-				state.loading = 'succeeded';
-				state.data = action.payload;
-			})
-			.addCase(fetchDataSecurities.rejected, (state, action) => {
-				state.loading = 'failed';
-				state.error = action.error.message!;
-			})
-	}
-})
+// export const securitiesSlicer = createSlice({
+// 	name: 'securities',
+// 	initialState,
+// 	reducers: {},
+// 	extraReducers: (builder) => {
+// 		builder
+// 			.addCase(fetchDataSecurities.pending, (state) => {
+// 				state.loading = 'pending';
+// 				state.data = {};
+// 			})
+// 			.addCase(fetchDataSecurities.fulfilled, (state, action) => {
+// 				state.loading = 'succeeded';
+// 				state.data = action.payload;
+// 			})
+// 			.addCase(fetchDataSecurities.rejected, (state, action) => {
+// 				state.loading = 'failed';
+// 				state.error = action.error.message!;
+// 			})
+// 	}
+// })
 
-export default securitiesSlicer.reducer
+// export default securitiesSlicer.reducer

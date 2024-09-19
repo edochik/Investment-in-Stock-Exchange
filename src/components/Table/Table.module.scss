@@ -1,0 +1,22 @@
+.table {
+  border: 2px solid rgb(140 140 140);
+}
+
+.th,
+.td {
+  border: 1px solid rgb(160 160 160);
+}
+.thead {
+  .tr {
+    background-color: #efefef;
+  }
+}
+.tbody {
+  .tr:nth-child(even) {
+    background-color: rgba(128, 128, 128, 0.4);
+  }
+}
+.th {
+  max-width: 150px;
+  word-break: break-word;
+}

@@ -1,9 +1,8 @@
-export {}
-const securitiesTranslation = {
-	secid: "идентификатор бумаги",
+export const translation: Record<string, string> = {
+	secid: "идентификатор индекса",
 	boardid: "идентификатор доски",
-	shortname: "краткое имя",
-	prevprice: "предыдущая цена",
+	shortname: "название компании",
+	prevprice: "предыдущая цена", // цена
 	lotsize: "размер лота",
 	facevalue: "номинальная стоимость",
 	status: "статус",
@@ -15,25 +14,22 @@ const securitiesTranslation = {
 	instrid: "идентификатор инструмента",
 	sectorid: "идентификатор сектора",
 	minstep: "минимальный шаг",
-	prevwaprice: "предыдущая средневзвешенная цена",
+	prevwaprice: "предыдущая средневзвешенная цена", // цена
 	faceunit: "валюта номинала",
 	prevdate: "предыдущая дата",
 	issuesize: "объем выпуска",
 	isin: "международный код ценной бумаги",
 	latname: "латинское имя",
 	regnumber: "регистрационный номер",
-	prevlegalcloseprice: "предыдущая официальная цена закрытия",
+	prevlegalcloseprice: "предыдущая официальная цена закрытия", // цена
 	currencyid: "идентификатор валюты",
 	sectype: "тип бумаги",
 	listlevel: "уровень листинга",
-	settledate: "дата расчетов"
-};
-
-const imoexTranslation = {
+	settledate: "дата расчетов",
 	indexid: "идентификатор индекса",
 	tradedate: "дата торгов",
 	ticker: "тикер",
-	shortnames: "краткое имя",
+	shortnames: "название компании",
 	secids: "идентификатор бумаги",
 	weight: "вес",
 	tradingsession: "торговая сессия"
