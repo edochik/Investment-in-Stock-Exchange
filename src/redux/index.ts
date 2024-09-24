@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { dataSlice } from './dataSlice/dataSlice'
 import { fetchInitialDataThunk } from './dataSlice/thunk';
-import { stocksUserSlice } from './stocksUserSlice/stocksUserSlice';
+import { sumStocksSlice } from './sumStocksSlice/sumStocksSlice';
 
 export const store = configureStore({
 	reducer: {
 		data: dataSlice.reducer,
-		stocksUser: stocksUserSlice.reducer,
+		sumStocks: sumStocksSlice.reducer,
 	},
 })
 
