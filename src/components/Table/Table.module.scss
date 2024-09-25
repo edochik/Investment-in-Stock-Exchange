@@ -9,24 +9,19 @@
 .thead {
   .tr {
     background-color: #efefef;
+    width: 100px;
   }
 }
 .tbody {
   .tr:nth-child(even) {
     background-color: rgba(128, 128, 128, 0.4);
-    // .input{
-    //   background-color: rgba(128, 128, 128,0);
-      
-    // }
   }
 }
 .th {
   max-width: 100px;
   word-break: break-word;
+  > input {
+    width: 100%;
+    text-align: center;
+  }
 }
-.input {
-  width: 100px;
-  // border: none;
-  // outline: none;
-}
-

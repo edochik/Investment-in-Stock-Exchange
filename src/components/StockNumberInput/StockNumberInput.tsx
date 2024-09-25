@@ -1,21 +1,22 @@
-import { useAppDispatch } from "../../hooks.js";
-import { addStock } from "../../redux/sumStocksSlice/sumStocksSlice.js";
-
-// import s from "./StockNumberInput.module.scss";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { addStock } from "../../redux/sumStocksSlice/sumStocksSlice";
 interface StockNumberInputProps {
   ticker: string;
 }
 const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
   const dispatch = useAppDispatch();
-	
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const count = Number(e.target.value);
-    dispatch(addStock({ ticker, count }));
+  const sumStocks = useAppSelector((state) => state.sumStocks);
+  const handleChangeAddStock = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(addStock({ ticker, count: Number(e.target.value) }));
   };
 
   return (
     <>
-      <input type="text" value="0" onChange={handleChange} />
+      <input
+        type="text"
+        value={sumStocks[ticker] ? sumStocks[ticker] : "0"}
+        onChange={(e) => handleChangeAddStock(e)}
+      />
     </>
   );
 };

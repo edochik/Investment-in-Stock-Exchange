@@ -1,4 +1,4 @@
-import { Security } from "../domain/securitiy";
+import { Security } from "../domain/Security";
 import { fetchData, formatSecurityData } from "./helper";
 
 const API_SECURITIES = 'https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json'
