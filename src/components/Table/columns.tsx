@@ -14,7 +14,7 @@ interface Columns {
     row: Row,
     sumStocks: Record<string, number>,
     coefficient: Record<string, string>,
-    totalWeigth: number,
+    table: Row[]
   ) => React.ReactNode;
 }
 
@@ -35,7 +35,7 @@ export const columns: Columns[] = [
       coefficient: Record<string, string>
     ) => {
       return coefficient[row.ticker]
-        ? `${roundNumber(Number(coefficient[row.ticker]) * row.weight)}%`
+        ? `${Number(coefficient[row.ticker]) * row.weight}%`
         : `${row.weight}%`;
     },
   },
@@ -50,9 +50,7 @@ export const columns: Columns[] = [
   {
     header: "Куплено стоимость позиции",
     cell: (row: Row, sumStocks: Record<string, number>) => {
-      return sumStocks[row.ticker]
-        ? roundNumber(row.price * sumStocks[row.ticker])
-        : 0;
+      return sumStocks[row.ticker] ? row.price * sumStocks[row.ticker] : 0;
     },
   },
   {
@@ -65,16 +63,19 @@ export const columns: Columns[] = [
       row: Row,
       sumStocks: Record<string, number>,
       coefficient: Record<string, string>,
-      totalWeight: number,
+      table: Row[]
     ) => {
-      return coefficient[row.ticker]
-        ? roundNumber(Number(coefficient[row.ticker]) * row.weight) *
-            (1 / totalWeight)
-        : row.weight * (1 / totalWeight);
+      const result = table.map((row) =>
+        coefficient[row.ticker]
+          ? {
+              ...row,
+              weight: Number(coefficient[row.ticker]) * Number(row.weight),
+            }
+          : row
+      );
+      const total = result.reduce((acc, row) => acc + Number(row.weight), 0);
+      const test = result.find((item) => item.ticker === row.ticker)?.weight;
+      return (Number(test) * (1 / total) * 100).toFixed(2);
     },
   },
 ];
-
-function roundNumber(num: number) {
-  return Number.isInteger(num) ? num : Number(num.toFixed(2));
-}

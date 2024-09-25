@@ -3,6 +3,7 @@ import { addCoefficient } from "../../redux/coefficientSlice/coefficientSlice";
 interface CoefficientInputProps {
   ticker: string;
 }
+
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
   const dispatch = useAppDispatch();
   const coefficient = useAppSelector((state) => state.coefficient);
