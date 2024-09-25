@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Security } from "../../domain/securitiy";
+import { Security } from "../../domain/Security";
 import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { fetchInitialDataThunk } from "./thunk";
 
