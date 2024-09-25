@@ -111,3 +111,53 @@ src/
   внесение дополнительных
 
 
+// ===============================Первый способ================================
+// использование того же fetchInitialDataThunk
+// делаем получаем данные и повторно их преобразовываем
+export const tableSlice = createSlice({
+	name: 'table',
+	initialState,
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(fetchInitialDataThunk.fulfilled, (state, action) => {
+			const { imoex, securities } = action.payload
+			const transform = Object.fromEntries(securities.map(s => [s.secid, s]))
+			return imoex.map((company) => {
+				const { ticker, shortnames, weight } = company;
+				const price = transform[ticker].prevprice;
+				return { ticker, shortnames, weight, price };
+			})
+		})
+	}
+})
+
+// ===============================Второй способ================================
+// делаем вторую санку
+export const fetchGetDataThunk = createAsyncThunk(
+	'fetchGetData',
+	async (_, { getState }) => {
+		const state = getState() as RootState;;
+		const { imoex, securities } = state.data;
+		return { imoex, securities }
+	}
+)
+
+export const tableSlice = createSlice({
+	name: 'table',
+	initialState,
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(fetchGetDataThunk.fulfilled, (state, action) => {
+			const { imoex, securities } = action.payload;
+			return imoex.map((company: any) => {
+				const { ticker, shortnames, weight } = company;
+				const price = securities[ticker].prevprice;
+				return { ticker, shortnames, weight, price };
+			});
+		})
+	}
+})
+
+store.dispatch(fetchInitialDataThunk()).then(() => {
+	store.dispatch(fetchGetDataThunk())
+})
