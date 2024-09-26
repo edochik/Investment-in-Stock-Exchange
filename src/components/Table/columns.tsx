@@ -13,69 +13,63 @@ interface Columns {
   cell: (
     row: Row,
     sumStocks: Record<string, number>,
-    coefficient: Record<string, string>,
-    table: Row[]
+    table: Row[],
+    weightCompanies: Record<string, Record<string, string>>,
+    totalWeight: number,
+    target: number
   ) => React.ReactNode;
 }
 
 export const columns: Columns[] = [
   {
     header: "Тикер",
-    cell: (row: Row) => row.ticker,
+    cell: (row) => row.ticker,
   },
   {
     header: "Название компании",
-    cell: (row: Row) => row.shortnames,
+    cell: (row) => row.shortnames,
   },
   {
     header: "Вес",
-    cell: (
-      row: Row,
-      sumStocks: Record<string, number>,
-      coefficient: Record<string, string>
-    ) => {
-      return coefficient[row.ticker]
-        ? `${Number(coefficient[row.ticker]) * row.weight}%`
-        : `${row.weight}%`;
+    cell: (row, _, __, weightCompanies) => {
+      return `${weightCompanies[row.ticker].weightNew}%`;
     },
   },
   {
     header: "Цена",
-    cell: (row: Row) => row.price,
+    cell: (row) => row.price,
   },
   {
     header: "Куплено акций",
-    cell: (row: Row) => <StockNumberInput ticker={row.ticker} />,
+    cell: (row) => <StockNumberInput ticker={row.ticker} />,
   },
   {
     header: "Куплено стоимость позиции",
-    cell: (row: Row, sumStocks: Record<string, number>) => {
+    cell: (row, sumStocks) => {
       return sumStocks[row.ticker] ? row.price * sumStocks[row.ticker] : 0;
     },
   },
   {
     header: "Коэффициент",
-    cell: (row: Row) => <CoefficientInput ticker={row.ticker} />,
+    cell: (row) => <CoefficientInput ticker={row.ticker} />,
   },
   {
     header: "Мой Вес (нормализовано)",
-    cell: (
-      row: Row,
-      sumStocks: Record<string, number>,
-      coefficient: Record<string, string>,
-      table: Row[]
-    ) => {
-      const result = table.map((row) =>
-        coefficient[row.ticker]
-          ? {
-              ...row,
-              weight: Number(coefficient[row.ticker]) * Number(row.weight),
-            }
-          : row
-      );
-      const total = result.reduce((acc, row) => acc + Number(row.weight), 0);
-      const test = result.find((item) => item.ticker === row.ticker)?.weight;
-      return (Number(test) * (1 / total) * 100).toFixed(2);
+    cell: (row, _, __, weightCompanies, totalWeight) => {
+      const result =
+        Number(weightCompanies[row.ticker].weightNew) * (1 / totalWeight);
+      return `${(result * 100).toFixed(2)}%`;
+    },
+  },
+  {
+    header: "Акций Купить (нормализовано по тек.ценам)",
+    cell: (row, _, __, weightCompanies, totalWeight, target) => {
+      const test =
+        Number(weightCompanies[row.ticker].weightNew) * (1 / totalWeight) * 100;
+      const result =
+        (target * test) /
+        (row.price * 100);
+      return `${Math.round(result)}`;
     },
   },
 ];
