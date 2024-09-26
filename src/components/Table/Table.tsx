@@ -1,28 +1,23 @@
 import s from "./Table.module.scss";
 import { useAppSelector } from "../../hooks";
 import { columns } from "./columns";
-import { useState } from "react";
+import { companiesValues } from "./helper";
+import { UserMoneyInput } from "../UserMoneyInput/UserMoneyInput";
 
 export const Table = () => {
-  const { loading, imoex, securities } = useAppSelector((state) => state.data);
-  const table = useAppSelector((state) => state.table);
-  const sumStocks = useAppSelector((state) => state.sumStocks);
-  const weightCompanies = useAppSelector(
-    (state) => state.weights.weightCompanies
+  const { loading } = useAppSelector((state) => state.data);
+
+  const investmentTableData = useAppSelector(({ userData, data }) =>
+    companiesValues(userData, data)
   );
-  const totalWeight = useAppSelector((state) => state.weights.totalWeight);
-  const [target, setTarget] = useState(1000_000);
-  
+
   if (loading === "pending") {
     return <div>...Loading</div>;
   }
 
   return (
     <>
-      <input
-        value={target}
-        onChange={(e) => setTarget(Number(e.target.value))}
-      />
+      <UserMoneyInput />
       <table className={s.table}>
         <thead className={s.thead}>
           <tr className={s.tr}>
@@ -34,18 +29,11 @@ export const Table = () => {
           </tr>
         </thead>
         <tbody className={s.tbody}>
-          {table.map((row, ind) => (
+          {investmentTableData.map((InvestmentRowData, ind) => (
             <tr key={ind} className={s.tr}>
               {columns.map((column, index) => (
                 <th key={index} className={s.th}>
-                  {column.cell(
-                    row,
-                    sumStocks,
-                    table,
-                    weightCompanies,
-                    totalWeight,
-                    target
-                  )}
+                  {column.cell(InvestmentRowData)}
                 </th>
               ))}
             </tr>
