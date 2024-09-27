@@ -161,3 +161,6 @@ export const tableSlice = createSlice({
 store.dispatch(fetchInitialDataThunk()).then(() => {
 	store.dispatch(fetchGetDataThunk())
 })
+
+
+//reselect кэширование selector

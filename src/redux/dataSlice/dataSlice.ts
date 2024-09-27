@@ -3,14 +3,14 @@ import { Security } from "../../domain/Security";
 import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { fetchInitialDataThunk } from "./thunk";
 
-interface InitialState {
+export interface Data {
 	loading: "idle" | "pending" | "succeeded" | "failed";
 	error: string | null;
 	imoex: ImoexSecurity[];
 	securities: Record<Security["secid"], Security>;
 }
 
-const initialState: InitialState = {
+const initialState: Data = {
 	loading: "idle",
 	imoex: [],
 	securities: {},

@@ -1,27 +1,22 @@
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { changeCoefficient } from "../../redux/coefficientSlice/coefficientSlice";
+import { addCoefficents } from "../../redux/userDataSlice/userDataSlice";
 interface CoefficientInputProps {
   ticker: string;
 }
 
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
   const dispatch = useAppDispatch();
-  const coefficient = useAppSelector((state) => state.weights.weightCompanies);
+  const coefficients = useAppSelector((state) => state.userData.coefficients);
   const handleChangeAddCoefficient = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputValue = e.target.value;
-    dispatch(changeCoefficient({ ticker, count: e.target.value }));
+    dispatch(addCoefficents({ ticker, count: e.target.value }));
   };
   return (
     <>
       <input
         type="text"
-        value={
-          coefficient[ticker].weightOld === coefficient[ticker].weightNew
-            ? "1"
-            : coefficient[ticker].count
-        }
+        value={coefficients[ticker] !== undefined ? coefficients[ticker] : "1"}
         onChange={(e) => handleChangeAddCoefficient(e)}
       />
     </>
