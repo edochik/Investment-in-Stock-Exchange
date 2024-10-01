@@ -12,7 +12,7 @@ const style = {
   width: "100%",
 };
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
-  const [input, setInput] = useState("1");
+  const [input, setInput] = useState("");
   const dispatch = useAppDispatch();
 
   const handleChangeUpdateCoefficients = (
@@ -25,7 +25,7 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
     setInput(value);
     const valueAsNumber = Number(value);
     if (!Number.isNaN(valueAsNumber)) {
-      dispatch(updateCoefficents({ ticker, count: Number(value) }));
+      dispatch(updateCoefficents({ ticker, count: valueAsNumber }));
     }
   };
 

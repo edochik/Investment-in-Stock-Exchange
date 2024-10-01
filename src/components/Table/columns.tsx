@@ -5,12 +5,11 @@ export interface Value {
   shortnames: string;
   weight: number;
   price: number;
-  stocksToBuyUser: number;
+  stocksBuyUser: number;
   weightPortfolio: number;
-  targetstocksToBuyTarget: number;
-  totalStocks: number;
+  stocksBuyLotsize: number;
+  totalSum: number;
   progressToTarget: number;
-  lotsize: number;
 }
 
 interface Columns {
@@ -39,7 +38,7 @@ export const columns: Columns[] = [
   {
     header: "Вес компании",
     cell: (value) => {
-      return `${value.weight}%`;
+      return `${value.weight.toFixed(2)}%`;
     },
   },
   {
@@ -53,7 +52,7 @@ export const columns: Columns[] = [
   {
     header: "Сумма купленных акций",
     cell: (value) => {
-      return Math.round(value.stocksToBuyUser * value.price);
+      return Math.round(value.stocksBuyUser * value.price);
     },
   },
   {
@@ -69,19 +68,13 @@ export const columns: Columns[] = [
   {
     header: "Купить акций(шт)",
     cell: (value) => {
-      return Math.round(value.targetstocksToBuyTarget);
-    },
-  },
-  {
-    header: "Кол-во акций в Лот",
-    cell: (value) => {
-      return value.lotsize;
+      return Math.round(value.stocksBuyLotsize);
     },
   },
   {
     header: "Итого за акции",
     cell: (value) => {
-      return `${Math.round(value.totalStocks)} ₽`;
+      return `${Math.round(value.totalSum)} ₽`;
     },
   },
   {

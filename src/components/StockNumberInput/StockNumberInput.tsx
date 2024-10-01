@@ -15,13 +15,14 @@ const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
   const [input, setInput] = useState("0");
   const dispatch = useAppDispatch();
   const handleChangeUpdateStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (
-      /^[0-9]*[.]?[0-9]*$/.test(e.target.value) &&
-      !e.target.value.startsWith(".")
-    ) {
-      const newValue = e.target.value;
-      setInput(newValue);
-      dispatch(updateStocks({ ticker, count: Number(newValue) }));
+    const { value } = e.target;
+    if (!/^[0-9.]*$/.test(value)) {
+      return;
+    }
+    setInput(value);
+    const valueIsNumber = Number(value);
+    if (!Number.isNaN(valueIsNumber)) {
+      dispatch(updateStocks({ ticker, count: valueIsNumber }));
     }
   };
 

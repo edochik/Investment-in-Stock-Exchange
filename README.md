@@ -50,8 +50,10 @@ src/
 разделение логики преобразование данных и самой санки
 
 реализация верстки и расчетов => две сущность массив и объект надо собрать данные которые только нужны
-+ input отдельный slice = данные пользователя коэфицент, и кол-во акций объкт, объект c коэфицентами
-внесение дополнительных 
+
+- input отдельный slice = данные пользователя коэфицент, и кол-во акций объкт, объект c коэфицентами
+  внесение дополнительных
+
 1. делаем запросы Api
 
 - https://iss.moex.com/iss/statistics/engines/stock/markets/index/analytics/IMOEX.json = IMOEX
@@ -110,18 +112,47 @@ src/
 - input отдельный slice = данные пользователя коэфицент, и кол-во акций объкт, объект c коэфицентами
   внесение дополнительных
 
-
 - пулучаем данные с запроса, данные преобразовываем, и потом данные считаем в useSelect()
-т.е все расчеты и данные можно получить когда достаем state а дальше его state разбиваем.
+  т.е все расчеты и данные можно получить когда достаем state а дальше его state разбиваем.
 
 //reselect кэширование selector
-
 
 // у Input локальный state
 // в Input можно строку ввести а число в redux
 // иницилизируем данными из стора
 // в инпут валидация только цифры и точки
 
-
-сохранение в локалстораж цель коэффициент, сколько купленных. + кэширование данных в локал стораж 
+сохранение в локалстораж цель коэффициент, сколько купленных. + кэширование данных в локал стораж
 чтобы без интернета работало
+
+//================================================================================
+сначала считаю всю сумму денег по всем акциям, с округлением вверх или вниз
+
+```js
+let allSumStock = imoex.reduce((acc, dataCompany) => {
+  const { ticker } = dataCompany;
+  let { weight } = dataCompany;
+  const price = securities[ticker].prevprice;
+  const lotsize = securities[ticker].lotsize;
+  const coefficient = coefficients[ticker] ?? 1;
+  const weightPortfolio = coefficient * weight * weightCompanies * 100;
+  const stocksBuyTarget = Math.round(
+    (moneyUser * weightPortfolio) / (price * 100)
+  );
+  const stocksBuyLotsize = Math.round(stocksBuyTarget / lotsize) * lotsize;
+  const totalSum = stocksBuyLotsize * price;
+  return acc + totalSum;
+}, 0);
+```
+
+Потом проверяю можно ли окрулить лот вверх, т.е не будет ли лот при округлении в верх превышать сумму пользователя если не будет округляю, если будет то округляю в низ, так же вычитаю это из суммы посчитанной ранее
+```js
+const prevTotalSum = Math.round(stocksBuyTarget / lotsize) * lotsize * price;
+const isMoreAllSumStock = allSumStock + lotsize * price < moneyUser;
+console.log(allSumStock + lotsize * price, moneyUser);
+let stocksBuyLotsize = isMoreAllSumStock
+  ? Math.ceil(stocksBuyTarget / lotsize) * lotsize
+  : Math.floor(stocksBuyTarget / lotsize) * lotsize;
+allSumStock += stocksBuyLotsize * price;
+allSumStock -= prevTotalSum;
+```
