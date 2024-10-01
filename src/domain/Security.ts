@@ -26,5 +26,4 @@ export interface Security {
 	sectype: string,
 	listlevel: number,
 	settledate: string,
-	
 };

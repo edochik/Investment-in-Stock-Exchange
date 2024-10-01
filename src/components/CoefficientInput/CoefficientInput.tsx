@@ -1,23 +1,47 @@
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { addCoefficents } from "../../redux/userDataSlice/userDataSlice";
+import { useState } from "react";
+import { useAppDispatch } from "../../hooks";
+import { updateCoefficents } from "../../redux/userDataSlice/userDataSlice";
 interface CoefficientInputProps {
   ticker: string;
 }
-
+const style = {
+  backgroundColor: "inherit",
+  border: "none",
+  outline: "none",
+  textAlign: "center",
+  width: "100%",
+};
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
+  const [input, setInput] = useState("");
   const dispatch = useAppDispatch();
-  const coefficients = useAppSelector((state) => state.userData.coefficients);
-  const handleChangeAddCoefficient = (
+
+  const handleChangeUpdateCoefficients = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    dispatch(addCoefficents({ ticker, count: e.target.value }));
+    const { value } = e.target;
+    if (!/^[0-9.]*$/.test(value)) {
+      return;
+    }
+    setInput(value);
+    const valueAsNumber = Number(value);
+    if (!Number.isNaN(valueAsNumber)) {
+      dispatch(updateCoefficents({ ticker, count: valueAsNumber }));
+    }
   };
+
   return (
     <>
       <input
+        style={{
+          backgroundColor: "inherit",
+          border: "none",
+          outline: "none",
+          textAlign: "center",
+          width: "100%",
+        }}
         type="text"
-        value={coefficients[ticker] !== undefined ? coefficients[ticker] : "1"}
-        onChange={(e) => handleChangeAddCoefficient(e)}
+        value={input}
+        onChange={(e) => handleChangeUpdateCoefficients(e)}
       />
     </>
   );
