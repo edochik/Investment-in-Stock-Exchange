@@ -1,77 +1,95 @@
 import { CoefficientInput } from "../CoefficientInput/CoefficientInput";
 import { StockNumberInput } from "../StockNumberInput/StockNumberInput";
-export interface RowValues {
+export interface Value {
   ticker: string;
   shortnames: string;
   weight: number;
   price: number;
-  buyStocks: number;
-  userWeight: number;
-  targetBuyStocks: number;
-  targetSumStocks: number;
-  targetStockPercent: number;
+  stocksToBuyUser: number;
+  weightPortfolio: number;
+  targetstocksToBuyTarget: number;
+  totalStocks: number;
+  progressToTarget: number;
+  lotsize: number;
 }
 
 interface Columns {
   header: string;
-  cell: (rowValues: RowValues) => React.ReactNode;
+  cell: (value: Value) => React.ReactNode;
 }
 
 export const columns: Columns[] = [
   {
     header: "Тикер",
-    cell: (rowValues) => rowValues.ticker,
+    cell: (value) => (
+      <div style={{ display: "flex", alignItems: "center", columnGap: 10 }}>
+        <img
+          src={`/images/${value.ticker}.png`}
+          style={{ width: 20, height: 20 }}
+          alt={`Логотип ${value.ticker}`}
+        />
+        {value.ticker}
+      </div>
+    ),
   },
   {
     header: "Название компании",
-    cell: (rowValues) => rowValues.shortnames,
+    cell: (value) => value.shortnames,
   },
   {
     header: "Вес компании",
-    cell: (rowValues) => {
-      return `${rowValues.weight}%`;
+    cell: (value) => {
+      return `${value.weight}%`;
     },
   },
   {
     header: "Цена",
-    cell: (rowValues) => `${rowValues.price} ₽`,
+    cell: (value) => `${value.price} ₽`,
   },
   {
     header: "Куплено акций (шт)",
-    cell: (rowValues) => <StockNumberInput ticker={rowValues.ticker} />,
+    cell: (value) => <StockNumberInput ticker={value.ticker} />,
   },
   {
     header: "Сумма купленных акций",
-    cell: (row) => {
-      return row.buyStocks * row.price;
+    cell: (value) => {
+      return Math.round(value.stocksToBuyUser * value.price);
     },
   },
   {
     header: "Коэффициент",
-    cell: (rowValues) => <CoefficientInput ticker={rowValues.ticker} />,
+    cell: (value) => <CoefficientInput ticker={value.ticker} />,
   },
   {
     header: "Вес акций в портфеле",
-    cell: (row) => {
-      return `${row.userWeight.toFixed(2)}%`;
+    cell: (value) => {
+      return `${value.weightPortfolio.toFixed(2)}%`;
     },
   },
   {
     header: "Купить акций(шт)",
-    cell: (row) => {
-      return row.targetBuyStocks;
+    cell: (value) => {
+      return Math.round(value.targetstocksToBuyTarget);
     },
   },
   {
-    header: "Сумма купленных акций",
-    cell: (row) => {
-      return `${row.targetSumStocks} ₽`;
+    header: "Кол-во акций в Лот",
+    cell: (value) => {
+      return value.lotsize;
     },
   },
   {
-    header: "Купить акций",
-    cell: (row) => {
-      return isNaN(row.targetStockPercent) ? 0 : row.targetStockPercent;
+    header: "Итого за акции",
+    cell: (value) => {
+      return `${Math.round(value.totalStocks)} ₽`;
+    },
+  },
+  {
+    header: "Цель достигнута в %",
+    cell: (value) => {
+      return isNaN(value.progressToTarget)
+        ? ""
+        : Math.round(value.progressToTarget);
     },
   },
 ];

@@ -1,15 +1,10 @@
 import s from "./Table.module.scss";
 import { useAppSelector } from "../../hooks";
 import { columns } from "./columns";
-import { companiesValues } from "./helper";
-import { UserMoneyInput } from "../UserMoneyInput/UserMoneyInput";
-
+import { selectInvestmentValues } from "./createSelector";
 export const Table = () => {
-  const { loading } = useAppSelector((state) => state.data);
-
-  const investmentTableData = useAppSelector(({ userData, data }) =>
-    companiesValues(userData, data)
-  );
+  const { loading } = useAppSelector((state) => state.data); // достаем как обычные selector но без
+  const investmentValues = useAppSelector(selectInvestmentValues); // select
 
   if (loading === "pending") {
     return <div>...Loading</div>;
@@ -17,7 +12,6 @@ export const Table = () => {
 
   return (
     <>
-      <UserMoneyInput />
       <table className={s.table}>
         <thead className={s.thead}>
           <tr className={s.tr}>
@@ -29,11 +23,11 @@ export const Table = () => {
           </tr>
         </thead>
         <tbody className={s.tbody}>
-          {investmentTableData.map((InvestmentRowData, ind) => (
-            <tr key={ind} className={s.tr}>
+          {investmentValues.map((value, index) => (
+            <tr key={index} className={s.tr}>
               {columns.map((column, index) => (
                 <th key={index} className={s.th}>
-                  {column.cell(InvestmentRowData)}
+                  {column.cell(value)}
                 </th>
               ))}
             </tr>

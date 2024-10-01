@@ -3,21 +3,21 @@ import { Security } from "../../domain/Security";
 import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { fetchInitialDataThunk } from "./thunk";
 
-export interface Data {
+export interface InitialData {
 	loading: "idle" | "pending" | "succeeded" | "failed";
 	error: string | null;
-	imoex: ImoexSecurity[];
+	imoex: ImoexSecurity[],
 	securities: Record<Security["secid"], Security>;
 }
 
-const initialState: Data = {
+const initialState: InitialData = {
 	loading: "idle",
 	imoex: [],
 	securities: {},
 	error: null,
 };
 
-export const dataSlice = createSlice({
+export const initialDataSlice = createSlice({
 	name: "moex",
 	initialState,
 	reducers: {},

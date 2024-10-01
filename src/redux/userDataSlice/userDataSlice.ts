@@ -1,33 +1,33 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface userData {
-	coefficients: Record<string, string>,
+export interface UserData {
+	coefficients: Record<string, number>,
 	stocks: Record<string, number>,
-	UserMoneyInput: number
+	moneyUser: number
 }
 
-const initialState: userData = {
+const initialState: UserData = {
 	coefficients: {},
 	stocks: {},
-	UserMoneyInput: 0,
+	moneyUser: 0,
 }
 
 export const userDataSlice = createSlice({
 	name: 'userData',
 	initialState,
 	reducers: {
-		addCoefficents: (state, action: PayloadAction<{ ticker: string, count: string }>) => {
+		updateCoefficents: (state, action: PayloadAction<{ ticker: string, count: number }>) => {
 			state.coefficients[action.payload.ticker] = action.payload.count;
 		},
-		addStocks: (state, action: PayloadAction<{ ticker: string, count: number }>) => {
+		updateStocks: (state, action: PayloadAction<{ ticker: string, count: number }>) => {
 			state.stocks[action.payload.ticker] = action.payload.count;
 		},
-		addUserMoneyInput: (state, action: PayloadAction<number>) => {
-			state.UserMoneyInput = action.payload;
+		updateUserMoney: (state, action: PayloadAction<number>) => {
+			state.moneyUser = action.payload
 		}
 	},
 })
 
 
-export const { addCoefficents, addStocks, addUserMoneyInput } = userDataSlice.actions
+export const { updateCoefficents, updateStocks, updateUserMoney } = userDataSlice.actions
 

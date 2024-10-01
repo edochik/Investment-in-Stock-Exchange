@@ -6,3 +6,4 @@ export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", () =>
 	Promise.all([fetchImoex(), fetchSecurities()])
 		.then(([imoex, securities]) => ({ imoex, securities }))
 );
+

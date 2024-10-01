@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { dataSlice } from './dataSlice/dataSlice'
-import { fetchInitialDataThunk } from './dataSlice/thunk';
+import { initialDataSlice } from './initialDataSlice/initialDataSlice'
+import { fetchInitialDataThunk } from './initialDataSlice/thunk';
 import { userDataSlice } from './userDataSlice/userDataSlice';
 
 export const store = configureStore({
 	reducer: {
-		data: dataSlice.reducer,
-		userData: userDataSlice.reducer, // хранится коэффициент и сумма веса компании.
+		data: initialDataSlice.reducer,
+		userData: userDataSlice.reducer,
 	},
 })
 
