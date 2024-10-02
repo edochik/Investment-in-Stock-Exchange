@@ -1,18 +1,14 @@
+import s from "./CoefficientInput.module.scss";
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { updateCoefficents } from "../../redux/userDataSlice/userDataSlice";
 interface CoefficientInputProps {
   ticker: string;
 }
-const style = {
-  backgroundColor: "inherit",
-  border: "none",
-  outline: "none",
-  textAlign: "center",
-  width: "100%",
-};
+
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
-  const [input, setInput] = useState("");
+  const coefficient = useAppSelector((state) => state.userData.coefficients);
+  const [input, setInput] = useState(coefficient[ticker]);
   const dispatch = useAppDispatch();
 
   const handleChangeUpdateCoefficients = (
@@ -32,13 +28,7 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
   return (
     <>
       <input
-        style={{
-          backgroundColor: "inherit",
-          border: "none",
-          outline: "none",
-          textAlign: "center",
-          width: "100%",
-        }}
+        className={s.input}
         type="text"
         value={input}
         onChange={(e) => handleChangeUpdateCoefficients(e)}
