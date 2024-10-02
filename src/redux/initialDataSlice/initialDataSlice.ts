@@ -10,15 +10,18 @@ export interface InitialData {
 	securities: Record<Security["secid"], Security>;
 }
 
-const initialState: InitialData = {
+const data = {
 	loading: "idle",
 	imoex: [],
 	securities: {},
 	error: null,
 };
 
+const dataLocalstorage = JSON.parse(localStorage.getItem('data')) || { data }
+const initialState: InitialData = dataLocalstorage.data
+
 export const initialDataSlice = createSlice({
-	name: "moex",
+	name: "data",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {

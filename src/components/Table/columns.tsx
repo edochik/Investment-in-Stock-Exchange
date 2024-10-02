@@ -7,13 +7,12 @@ export interface Value {
   shortnames: string;
   weight: number;
   price: number;
-  stocks: Record<string, number>;
-  stocksBuyUser: number;
+  totalStocksBuyUser: number;
   weightPortfolio: number;
-  aroundStockOnLotsize: number;
-  totalSum: number;
+  totalStockBuyTarget: number;
+  stocksBuyUser: number;
   stockBuyTarget: number;
-  progressToTarget: number;
+  progressTarget: number;
 }
 
 export interface Columns {
@@ -35,17 +34,17 @@ export const columns: Columns[] = [
         <p className={s.text}>{value.ticker}</p>
       </div>
     ),
-    sortFunction: (a, b) => a.ticker.localeCompare(b.ticker),
+    sortFunction: (a, b) => b.ticker.localeCompare(a.ticker),
   },
   {
     header: "Название компании",
     cell: (value) => value.shortnames,
+    sortFunction: (a, b) => b.shortnames.localeCompare(a.shortnames),
   },
   {
     header: "Вес компании",
-    cell: (value) => {
-      return `${value.weight.toFixed(2)}%`;
-    },
+    cell: (value) => `${value.weight.toFixed(2)}%`,
+    sortFunction: (a, b) => b.weight - a.weight,
   },
   {
     header: "Цена",
@@ -53,13 +52,14 @@ export const columns: Columns[] = [
   },
   {
     header: "Куплено акций (шт)",
-    cell: (value) => <StockNumberInput ticker={value.ticker} />,
+    cell: (value) => (
+      <StockNumberInput ticker={value.ticker} stocks={value.stocksBuyUser} />
+    ),
   },
   {
     header: "Сумма купленных акций",
-    cell: (value) => {
-      return Math.round(value.stocksBuyUser * value.price);
-    },
+    cell: (value) => Math.round(value.totalStocksBuyUser),
+    sortFunction: (a, b) => b.totalStocksBuyUser - a.totalStocksBuyUser,
   },
   {
     header: "Коэффициент",
@@ -67,24 +67,25 @@ export const columns: Columns[] = [
   },
   {
     header: "Вес акций в портфеле",
-    cell: (value) => {
-      return `${value.weightPortfolio.toFixed(2)}%`;
-    },
+    cell: (value) => `${value.weightPortfolio.toFixed(2)}%`,
+    sortFunction: (a, b) => b.weightPortfolio - a.weightPortfolio,
   },
   {
     header: "Купить акций(шт)",
     cell: (value) => Math.round(value.stockBuyTarget),
+    sortFunction: (a, b) => b.stockBuyTarget - a.stockBuyTarget,
   },
   {
     header: "Итого за акции",
-    cell: (value) => Math.round(value.totalSum),
+    cell: (value) => Math.round(value.totalStockBuyTarget),
+    sortFunction: (a, b) => b.totalStockBuyTarget - a.totalStockBuyTarget,
   },
   {
     header: "Цель достигнута в %",
     cell: (value) => {
-      return !Number.isFinite(value.progressToTarget)
+      return !Number.isFinite(value.progressTarget)
         ? 0
-        : Math.round(value.progressToTarget);
+        : Math.round(value.progressTarget);
     },
   },
 ];
