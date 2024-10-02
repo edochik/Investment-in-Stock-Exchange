@@ -19,4 +19,20 @@
   .tr:nth-child(even) {
     background-color: rgba(128, 128, 128, 0.4);
   }
+  .tr {
+    .th {
+      .ticker {
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+        .image {
+          width: 20px;
+          height: 20px;
+        }
+        .text {
+          margin: 0;
+        }
+      }
+    }
+  }
 }

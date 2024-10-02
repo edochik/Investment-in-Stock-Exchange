@@ -1,35 +1,41 @@
+import s from "./Table.module.scss";
 import { CoefficientInput } from "../CoefficientInput/CoefficientInput";
 import { StockNumberInput } from "../StockNumberInput/StockNumberInput";
+
 export interface Value {
   ticker: string;
   shortnames: string;
   weight: number;
   price: number;
+  stocks: Record<string, number>;
   stocksBuyUser: number;
   weightPortfolio: number;
-  stocksBuyLotsize: number;
+  aroundStockOnLotsize: number;
   totalSum: number;
+  stockBuyTarget: number;
   progressToTarget: number;
 }
 
-interface Columns {
+export interface Columns {
   header: string;
   cell: (value: Value) => React.ReactNode;
+  sortFunction?: (a: Value, b: Value) => number;
 }
 
 export const columns: Columns[] = [
   {
     header: "Тикер",
     cell: (value) => (
-      <div style={{ display: "flex", alignItems: "center", columnGap: 10 }}>
+      <div className={s.ticker}>
         <img
+          className={s.image}
           src={`/images/${value.ticker}.png`}
-          style={{ width: 20, height: 20 }}
           alt={`Логотип ${value.ticker}`}
         />
-        {value.ticker}
+        <p className={s.text}>{value.ticker}</p>
       </div>
     ),
+    sortFunction: (a, b) => a.ticker.localeCompare(b.ticker),
   },
   {
     header: "Название компании",
@@ -67,21 +73,17 @@ export const columns: Columns[] = [
   },
   {
     header: "Купить акций(шт)",
-    cell: (value) => {
-      return Math.round(value.stocksBuyLotsize);
-    },
+    cell: (value) => Math.round(value.stockBuyTarget),
   },
   {
     header: "Итого за акции",
-    cell: (value) => {
-      return `${Math.round(value.totalSum)} ₽`;
-    },
+    cell: (value) => Math.round(value.totalSum),
   },
   {
     header: "Цель достигнута в %",
     cell: (value) => {
-      return isNaN(value.progressToTarget)
-        ? ""
+      return !Number.isFinite(value.progressToTarget)
+        ? 0
         : Math.round(value.progressToTarget);
     },
   },

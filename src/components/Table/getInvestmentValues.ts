@@ -20,10 +20,11 @@ export function getInvestmentValues(userData: UserData, securitiesData: InitialD
 		const coefficient = coefficients[ticker] ?? 1;
 		const weightPortfolio = coefficient * weight * weightCompanies * 100;
 		//Math.round - нужен чтобы правильно округлить акции и посчитать процент
-		const stockBuyTarget = Math.round((moneyUser * weightPortfolio) / (price * 100)); //* купить акций шт
-		const stocksBuyLotsize = Math.round(stockBuyTarget / lotsize) * lotsize
-		const totalSum = stocksBuyLotsize * price
-		const progressToTarget = stocksBuyUser * 100 / stocksBuyLotsize;
+		const stockBuy = Math.round((moneyUser * weightPortfolio) / (price * 100)); //* купить акций шт
+		const aroundStockOnLotsize = Math.round(stockBuy / lotsize) * lotsize;
+		const stockBuyTarget = stocks[ticker] ? aroundStockOnLotsize - stocks[ticker] : aroundStockOnLotsize
+		const totalSum = stockBuyTarget * price
+		const progressToTarget = stocksBuyUser * 100 / aroundStockOnLotsize;
 
 		weight *= coefficient
 		return {
@@ -31,9 +32,11 @@ export function getInvestmentValues(userData: UserData, securitiesData: InitialD
 			shortnames,
 			weight,
 			price,
+			stocks,
 			stocksBuyUser,
 			weightPortfolio,
-			stocksBuyLotsize,
+			aroundStockOnLotsize,
+			stockBuyTarget,
 			totalSum,
 			progressToTarget,
 		};

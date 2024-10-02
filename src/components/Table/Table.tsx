@@ -1,8 +1,18 @@
 import s from "./Table.module.scss";
 import { useAppSelector } from "../../hooks";
-import { columns } from "./columns";
+import { Columns, columns } from "./columns";
 import { selectInvestmentValues } from "./createSelector";
+import { useState } from "react";
+
+interface SelectedColumn {
+  direction: "desc" | "asc";
+  column: Columns | null;
+}
 export const Table = () => {
+  const [selectedColumn, setSelectedColumn] = useState<SelectedColumn>({
+    direction: "desc",
+    column: null,
+  });
   const { loading } = useAppSelector((state) => state.data); // достаем как обычные selector но без
   const investmentValues = useAppSelector(selectInvestmentValues); // select
 
