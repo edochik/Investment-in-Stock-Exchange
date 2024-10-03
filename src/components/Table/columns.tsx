@@ -28,7 +28,7 @@ export const columns: Columns[] = [
       <div className={s.ticker}>
         <img
           className={s.image}
-          src={`/images/${value.ticker}.png`}
+          src={`images/${value.ticker}.png`}
           alt={`Логотип ${value.ticker}`}
         />
         <p className={s.text}>{value.ticker}</p>
