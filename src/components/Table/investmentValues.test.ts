@@ -16,9 +16,11 @@ const initialData = {
 	securities: {
 		'AABB': {
 			prevprice: 300,
+			lotsize: 10
 		},
 		'ZZBB': {
 			prevprice: 500,
+			lotsize: 1
 		}
 	},
 	error: null,
@@ -33,25 +35,27 @@ describe('Тестирование функции getInvestmentValues', () => {
 		} as UserData
 		const result = getInvestmentValues(userData, initialData);
 		expect(result).toEqual([{
-			ticker: 'AABB',
-			shortnames: 'Какой то банк',
-			weight: 0.50,
 			price: 300,
-			buyStocksUser: 0, //
+			progressTarget: NaN,
+			shortnames: "Какой то банк",
+			stockBuyTarget: 0,
+			stocksBuyUser: 0,
+			ticker: "AABB",
+			totalStockBuyTarget: 0,
+			totalStocksBuyUser: 0,
+			weight: 0.5,
 			weightPortfolio: 50,
-			targetStocksToBuy: 0,
-			totalStocks: 0,
-			progressToTarget: 0,
 		}, {
-			ticker: 'ZZBB',
-			shortnames: 'Не такой банк',
-			weight: 0.50,
 			price: 500,
-			buyStocksUser: 0, //
+			progressTarget: NaN,
+			shortnames: "Не такой банк",
+			stockBuyTarget: 0,
+			stocksBuyUser: 0,
+			ticker: "ZZBB",
+			totalStockBuyTarget: 0,
+			totalStocksBuyUser: 0,
+			weight: 0.5,
 			weightPortfolio: 50,
-			targetStocksToBuy: 0,
-			totalStocks: 0,
-			progressToTarget: 0,
 		}])
 	})
 	test('Функция производит расчет с коэффициентом, акциями и деньгами пользователя', () => {
@@ -62,25 +66,27 @@ describe('Тестирование функции getInvestmentValues', () => {
 		} as UserData
 		const result = getInvestmentValues(userData, initialData);
 		expect(result).toEqual([{
-			ticker: 'AABB',
-			shortnames: 'Какой то банк',
-			weight: 0.50,
 			price: 300,
-			buyStocksUser: 0, //
+			progressTarget: 0,
+			shortnames: "Какой то банк",
+			stockBuyTarget: 20,
+			stocksBuyUser: 0,
+			ticker: "AABB",
+			totalStockBuyTarget: 6000,
+			totalStocksBuyUser: 0,
+			weight: 1,
 			weightPortfolio: 66.66666666666666,
-			targetStocksToBuy: 22.22222222222222,
-			progressToTarget: 0,
-			totalStocks: 6666.666666666666,
 		}, {
-			ticker: 'ZZBB',
-			shortnames: 'Не такой банк',
-			weight: 0.50,
+			ticker: "ZZBB",
 			price: 500,
-			buyStocksUser: 100,
+			progressTarget:  1428.5714285714287,
+			shortnames: "Не такой банк",
+			stockBuyTarget: -93,
+			stocksBuyUser: 100,
+			totalStockBuyTarget: -46500,
+			totalStocksBuyUser: 50000,
+			weight: 0.5,
 			weightPortfolio: 33.33333333333333,
-			targetStocksToBuy: 6.666666666666666,
-			progressToTarget: 1500.0000000000002,
-			totalStocks: 3333.333333333333,
 		}])
 	})
 })

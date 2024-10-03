@@ -30,7 +30,6 @@ export function getInvestmentValues(userData: UserData, securitiesData: InitialD
 		//*Купить акций (шт)
 		const totalStockBuyTarget = stockBuyTarget * price; //*итого за акции
 		const progressTarget = stocksBuyUser * 100 / aroundStockLotsize; //*Цель достигнута в %
-
 		weight *= coefficient
 		return {
 			ticker,
