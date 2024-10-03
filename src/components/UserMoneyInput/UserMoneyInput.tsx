@@ -10,8 +10,8 @@ const UserMoneyInput = () => {
   const dispatch = useAppDispatch();
   const handleChangeUpdateMoney = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value.replaceAll(" ", ""));
-    setUserMoney(formatPrice(value)); // => строка
-    dispatch(updateUserMoney(value)); // => число
+    setUserMoney(formatPrice(value));
+    dispatch(updateUserMoney(value));
   };
   return (
     <div className={s.UserMoneyInput}>

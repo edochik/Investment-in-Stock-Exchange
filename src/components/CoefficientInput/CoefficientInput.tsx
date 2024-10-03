@@ -8,7 +8,7 @@ interface CoefficientInputProps {
 
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
   const coefficient = useAppSelector((state) => state.userData.coefficients);
-  const [input, setInput] = useState(coefficient[ticker]);
+  const [input, setInput] = useState(coefficient[ticker] || "1");
   const dispatch = useAppDispatch();
 
   const handleChangeUpdateCoefficients = (

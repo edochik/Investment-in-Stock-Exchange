@@ -10,15 +10,12 @@ export interface InitialData {
 	securities: Record<Security["secid"], Security>;
 }
 
-const data = {
+const initialState: InitialData = {
 	loading: "idle",
 	imoex: [],
 	securities: {},
 	error: null,
 };
-
-const dataLocalstorage = JSON.parse(localStorage.getItem('data')) || { data }
-const initialState: InitialData = dataLocalstorage.data
 
 export const initialDataSlice = createSlice({
 	name: "data",

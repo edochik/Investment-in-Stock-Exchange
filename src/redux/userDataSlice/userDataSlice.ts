@@ -6,15 +6,14 @@ export interface UserData {
 	moneyUser: number
 }
 
-const userData = {
+const emptyData = {
 	coefficients: {},
-	stocks: {},
 	moneyUser: 0,
+	stocks: {}
 }
 
-const dataLocalstorage = JSON.parse(localStorage.getItem('data')) || { userData }
-
-const initialState: UserData = dataLocalstorage.userData
+const userDate = JSON.parse(localStorage.getItem('userData')) || emptyData
+const initialState: UserData = userDate
 
 export const userDataSlice = createSlice({
 	name: 'userData',
@@ -31,7 +30,6 @@ export const userDataSlice = createSlice({
 		}
 	},
 })
-
 
 export const { updateCoefficents, updateStocks, updateUserMoney } = userDataSlice.actions
 

@@ -9,7 +9,7 @@ interface StockNumberInputProps {
 
 const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
   const stocks = useAppSelector((state) => state.userData.stocks);
-  const [input, setInput] = useState(stocks[ticker] ?? 0);
+  const [input, setInput] = useState(stocks[ticker] || "0");
   const dispatch = useAppDispatch();
   const handleChangeUpdateStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
