@@ -17,7 +17,7 @@ export const Table = () => {
   });
   const { loading } = useAppSelector((state) => state.data);
   const investmentValues = useAppSelector(selectInvestmentValues);
-
+  
   const onClickSortHeader = (column: Columns) => {
     setSelectedColumn((prev) => {
       if (prev.column !== column) {
@@ -63,8 +63,8 @@ export const Table = () => {
         </thead>
         <tbody className={s.tbody}>
           {sortInvestmentValues(selectedColumn, investmentValues).map(
-            (value, index) => (
-              <tr key={index} className={s.tr}>
+            (value) => (
+              <tr key={value.ticker} className={s.tr}>
                 {columns.map((column, index) => (
                   <th key={index} className={s.th}>
                     {column.cell(value)}
