@@ -9,7 +9,6 @@ export function getInvestmentValues(userData: UserData, securitiesData: InitialD
 		const coeff = coefficients[company.ticker] ?? 1;
 		return acc + coeff * company.weight;
 	}, 0);
-
 	//* вывод в таблицу
 	//? дополнительные данные для расчета (без вывода)
 

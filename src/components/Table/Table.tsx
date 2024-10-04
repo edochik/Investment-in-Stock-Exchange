@@ -15,9 +15,7 @@ export const Table = () => {
     direction: "desc",
     column: null,
   });
-  const { loading } = useAppSelector((state) => state.data);
   const investmentValues = useAppSelector(selectInvestmentValues);
-  
   const onClickSortHeader = (column: Columns) => {
     setSelectedColumn((prev) => {
       if (prev.column !== column) {
@@ -35,12 +33,6 @@ export const Table = () => {
 
   return (
     <>
-      {loading === "failed" && (
-        <div className={s.disconnect}>Нет соединения с сервером</div>
-      )}
-      {loading === "succeeded" && (
-        <div className={s.connect}> Данные загружены с сервера</div>
-      )}
       <table className={s.table}>
         <thead className={s.thead}>
           <tr className={s.tr}>
@@ -71,8 +63,7 @@ export const Table = () => {
                   </th>
                 ))}
               </tr>
-            )
-          )}
+            ))}
         </tbody>
       </table>
     </>
