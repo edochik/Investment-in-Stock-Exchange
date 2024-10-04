@@ -1,5 +1,5 @@
 export interface Security {
-	secid: string,
+	shortname: string,
 	boardid: string,
 	shortname: string,
 	prevprice: number,

@@ -28,8 +28,8 @@ export const columns: Columns[] = [
       <div className={s.ticker}>
         <img
           className={s.image}
-          src={`images/${value.ticker}.png`}
-          alt={`Логотип ${value.ticker}`}
+          src={`./Investment-in-Stock-Exchange/images/${value.ticker}.png`}
+          alt={`Логотип ${value.shortnames}`}
         />
         <p className={s.text}>{value.ticker}</p>
       </div>

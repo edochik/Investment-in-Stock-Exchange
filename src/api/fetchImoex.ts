@@ -8,3 +8,5 @@ export async function fetchImoex() {
 	const data = await fetchData<"analytics">(API_IMOEX)
 	return formatSecurityData<ImoexSecurity>(data.analytics)
 }
+// 'https://iss.moex.com/iss/securities.json'
+// 'https://iss.moex.com/iss/engines/stock/markets/shares/securities/AFLT.xml'

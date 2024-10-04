@@ -7,7 +7,7 @@ export interface InitialData {
 	loading: "idle" | "pending" | "succeeded" | "failed";
 	error: string | null;
 	imoex: ImoexSecurity[],
-	securities: Record<Security["secid"], Security>;
+	securities: Record<Security["shortname"], Security>;
 }
 
 const initialState: InitialData = {

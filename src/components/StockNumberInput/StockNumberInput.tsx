@@ -16,7 +16,7 @@ const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
     if (!/^[0-9.]*$/.test(value)) {
       return;
     }
-    setInput(+value);
+    setInput(value);
     const valueIsNumber = Number(value);
     if (!Number.isNaN(valueIsNumber)) {
       dispatch(updateStocks({ ticker, count: valueIsNumber }));
