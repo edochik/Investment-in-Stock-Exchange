@@ -15,7 +15,9 @@ export const Table = () => {
     direction: "desc",
     column: null,
   });
+
   const investmentValues = useAppSelector(selectInvestmentValues);
+
   const onClickSortHeader = (column: Columns) => {
     setSelectedColumn((prev) => {
       if (prev.column !== column) {
@@ -63,7 +65,8 @@ export const Table = () => {
                   </th>
                 ))}
               </tr>
-            ))}
+            )
+          )}
         </tbody>
       </table>
     </>

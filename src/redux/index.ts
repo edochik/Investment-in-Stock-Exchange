@@ -2,9 +2,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import { initialDataSlice } from './initialDataSlice/initialDataSlice'
 import { fetchInitialDataThunk } from './initialDataSlice/thunk';
 import { userDataSlice } from './userDataSlice/userDataSlice';
+import { selectedCompanySlice } from './selectedCompanySlice/selectedCompanySlice';
 
-
-const saveToLocalStorageMiddleware = key => (storeApi) => (next) => (action) => {
+// типизиация 
+const saveToLocalStorageMiddleware = (key: string) => (storeApi) => (next) => (action) => {
 	const prevState = storeApi.getState();
 	const result = next(action);
 	const nextState = storeApi.getState();
@@ -20,6 +21,7 @@ export const store = configureStore({
 	reducer: {
 		data: initialDataSlice.reducer,
 		userData: userDataSlice.reducer,
+		selectedCompany: selectedCompanySlice.reducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(dataMiddleware),
 })

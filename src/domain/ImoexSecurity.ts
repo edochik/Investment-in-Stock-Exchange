@@ -3,7 +3,7 @@ export interface ImoexSecurity {
 	tradedate: string,
 	ticker: string,
 	shortnames: string,
-	secids: number,
+	secids: string,
 	weight: number,
 	tradingsession: number,
 }
