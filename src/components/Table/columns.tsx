@@ -1,6 +1,7 @@
 import s from "./Table.module.scss";
 import { CoefficientInput } from "../CoefficientInput/CoefficientInput";
 import { StockNumberInput } from "../StockNumberInput/StockNumberInput";
+import { RemovedCompany } from "../RemovedCompany/RemovedCompany";
 
 export interface Value {
   ticker: string;
@@ -87,5 +88,9 @@ export const columns: Columns[] = [
         ? 0
         : Math.round(value.progressTarget);
     },
+  },
+  {
+    header: "Убрать",
+    cell: (value) => <RemovedCompany ticker={value.ticker} />,
   },
 ];

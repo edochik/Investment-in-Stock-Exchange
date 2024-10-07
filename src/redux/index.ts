@@ -2,14 +2,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import { initialDataSlice } from './initialDataSlice/initialDataSlice'
 import { fetchInitialDataThunk } from './initialDataSlice/thunk';
 import { userDataSlice } from './userDataSlice/userDataSlice';
-import { selectedCompanySlice } from './selectedCompanySlice/selectedCompanySlice';
+import { nonImoexCompanySlice } from './nonImoexCompanySlice/nonImoexCompanySlice';
 import { listenerMiddleware } from './listenerMiddleware';
+import { cartSlice } from './cartSlice/cartSlice';
 
 export const store = configureStore({
 	reducer: {
 		data: initialDataSlice.reducer,
 		userData: userDataSlice.reducer,
-		selectedCompany: selectedCompanySlice.reducer,
+		nonImoexCompany: nonImoexCompanySlice.reducer,
+		cart: cartSlice.reducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().prepend(listenerMiddleware.middleware),

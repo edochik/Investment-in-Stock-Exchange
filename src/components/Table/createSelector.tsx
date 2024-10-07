@@ -5,10 +5,10 @@ import { getInvestmentValues } from "./getInvestmentValues";
 //вытаскиваем селекторы но без useSelect т.е функции вытаскивающие данные из redux
 const selectUserData = (state: RootState) => state.userData;
 const selectSecuritiesData = (state: RootState) => state.data;
-const selectedCompany = (state: RootState) => state.selectedCompany;
+const selectedCompany = (state: RootState) => state.nonImoexCompany;
 
 export const selectInvestmentValues = createSelector(
-  [selectUserData, selectSecuritiesData, selectedCompany], 
+  [selectUserData, selectSecuritiesData, selectedCompany],
   // кладем сюда, отсюда уже будут доставаться selector
   (userData, securitiesData, selectedCompany) => {
     const { imoex, ...rest } = securitiesData;
