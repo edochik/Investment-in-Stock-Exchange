@@ -6,7 +6,7 @@ export const sortInvestmentValues = ({ column, direction }: SelectedColumn, data
 		return data
 	}
 	if (direction === 'desc') {
-		return data.toSorted(column.sortFunction);
+		return [...data].sort(column.sortFunction);
 	}
-	return data.toSorted(column.sortFunction).reverse();
+	return [...data].sort(column.sortFunction).reverse();
 }

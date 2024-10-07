@@ -12,7 +12,7 @@ const initialUserData = {
 	stocks: {}
 }
 
-const userDate = JSON.parse(localStorage.getItem('userData')) || initialUserData
+const userDate = JSON.parse(localStorage.getItem('userData') || '') || initialUserData
 const initialState: UserData = userDate
 
 export const userDataSlice = createSlice({
