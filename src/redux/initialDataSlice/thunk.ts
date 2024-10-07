@@ -1,39 +1,46 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchImoex } from "../../api/fetchImoex";
 import { fetchSecurities } from "../../api/fetchSecurities";
-
-// какой сценарий должен быть
-// 1. moexDataJson может быть null в каком случае? если данных нет Localstorage;
-// - если нет данных запрос к серверну и загрузка данных
-// 2. moexDataJson не null, тогда второй сценарий данные есть актуальны ли они
-// 2.1. данные актульны, ни чего не делаем
-// 2.2  данные не актульны, делаем запрос загружаем данные
-// 2.3  данные не актульны, делаем запрос получаем ошибку, в catch ловим отдаем то что есть в Localstorage
-
-// какие проверки 
+import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
+import { Security } from "../../domain/Security.js";
 
 
-export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async () => {
+//1. Вариант null (нет интернета, есть интернет)
+// - есть интернет делаем запрос возвращаем данные []
+// - нет интернета делаем запрос получаем ошибку ? возвращаем  пустоту []
+//2. Вариант не null, дата просрочена  
+// - есть интернет делаем запрос возвращаем данные []
+// - нет интернета возвращаем то что есть []
+//3. Вариант даты обновлены
+// - возвращаем данные
+
+
+async function extractImoexDataLocalStorage(todayKey: string): Promise<{
+	imoex: ImoexSecurity[];
+	securities: Record<string, Security>;
+}> {
 	try {
-		const today = new Date();
-		const todayKey = `${today.getDate()}.${today.getMonth()}.${today.getFullYear()}`;
-		const moexDataJson = localStorage.getItem("moexData");
-		if (moexDataJson === null) {
-			const [imoex, securities] = await Promise.all([fetchImoex(), fetchSecurities()])
-			localStorage.setItem("moexData", JSON.stringify({ todayKey, imoex, securities }))
-			return { imoex, securities }
-		} else {
-			const getDateKey = JSON.parse(moexDataJson).todayKey;
-			if (todayKey !== getDateKey) {
-				const [imoex, securities] = await Promise.all([fetchImoex(), fetchSecurities()])
-				localStorage.setItem("moexData", JSON.stringify({ todayKey, imoex, securities }))
-				return { imoex, securities }
-			}
-		}
-		const { imoex, securities } = JSON.parse(localStorage.getItem('moexData'))
+		const [imoex, securities] = await Promise.all([fetchImoex(), fetchSecurities()])
+		localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex, securities }))
 		return { imoex, securities }
 	} catch (error) {
-		const { imoex, securities } = JSON.parse(localStorage.getItem('moexData'))
+		
+		const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData'))
 		return { imoex, securities }
 	}
+}
+
+export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async () => {
+	const today = new Date();
+	const todayKey = `${today.getDate()}.${today.getMonth()}.${today.getFullYear()}`;
+	const imoexDataJson = localStorage.getItem("imoexData");
+	if (imoexDataJson === null) {
+		return extractImoexDataLocalStorage(todayKey)
+	}
+	const getDateKey = JSON.parse(imoexDataJson).todayKey
+	if (todayKey !== getDateKey) {
+		return extractImoexDataLocalStorage(todayKey)
+	}
+	const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData'))
+	return { imoex, securities }
 })

@@ -4,7 +4,7 @@ import { fetchInitialDataThunk } from './initialDataSlice/thunk';
 import { userDataSlice } from './userDataSlice/userDataSlice';
 import { selectedCompanySlice } from './selectedCompanySlice/selectedCompanySlice';
 
-// типизиация 
+// типизиация ???
 const saveToLocalStorageMiddleware = (key: string) => (storeApi) => (next) => (action) => {
 	const prevState = storeApi.getState();
 	const result = next(action);

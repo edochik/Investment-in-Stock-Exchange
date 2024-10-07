@@ -1,5 +1,5 @@
 export interface Security {
-	shortname: string,
+	secid: string,
 	boardid: string,
 	shortname: string,
 	prevprice: number,
@@ -25,5 +25,5 @@ export interface Security {
 	currencyid: string,
 	sectype: string,
 	listlevel: number,
-	settledate: string,
-};
+	settledate: string
+}

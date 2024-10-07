@@ -7,7 +7,7 @@ export interface InitialData {
 	loading: "idle" | "pending" | "succeeded" | "failed";
 	error: string | null;
 	imoex: ImoexSecurity[],
-	securities: Record<Security["shortname"], Security>;
+	securities: Record<Security["secid"], Security>;
 }
 
 const initialState: InitialData = {
@@ -30,7 +30,7 @@ export const initialDataSlice = createSlice({
 				state.loading = "succeeded";
 				const { imoex, securities } = action.payload
 				state.imoex = imoex;
-				state.securities = Object.fromEntries(securities.map(s => [s.secid, s]));
+				state.securities = Object.fromEntries(securities.map(s => [s.secid, s]))
 			})
 			.addCase(fetchInitialDataThunk.rejected, (state, action) => {
 				state.loading = "failed";
