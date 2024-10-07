@@ -1,9 +1,8 @@
 import { useState } from "react";
 import s from "./SelectedCompany.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { addCompany } from "../../redux/selectedCompanySlice/selectedCompanySlice";
 import { getFilterCompany } from "./getFilterCompany";
-
+import { addCompany } from "../../redux/selectedCompanySlice/selectedCompanySlice";
 const SelectedCompany = () => {
   const [inputValues, setInputValues] = useState("");
   const [ticker, setTicker] = useState("");

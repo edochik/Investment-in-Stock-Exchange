@@ -12,8 +12,19 @@ const initialUserData = {
 	stocks: {}
 }
 
-const userDate = JSON.parse(localStorage.getItem('userData') || '') || initialUserData
-const initialState: UserData = userDate
+const extractDataUserLocalStorage = () => {
+	const dataUserJson = localStorage.getItem('userData')
+	if (dataUserJson === null) {
+		return initialUserData
+	}
+	try {
+		return JSON.parse(dataUserJson) as unknown as UserData;
+	} catch (error) {
+		return initialUserData
+	}
+}
+
+const initialState: UserData = extractDataUserLocalStorage()
 
 export const userDataSlice = createSlice({
 	name: 'userData',
