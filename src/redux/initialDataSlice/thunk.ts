@@ -29,7 +29,10 @@ async function extractImoexDataLocalStorage(todayKey: string): Promise<{
 	}
 }
 
-export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async () => {
+export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async (): Promise<{
+	imoex: ImoexSecurity[];
+	securities: Security[];
+}> => {
 	const today = new Date();
 	const todayKey = `${today.getDate()}.${today.getMonth()}.${today.getFullYear()}`;
 	const imoexDataJson = localStorage.getItem("imoexData");
