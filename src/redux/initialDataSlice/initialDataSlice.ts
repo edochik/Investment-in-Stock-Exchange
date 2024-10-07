@@ -20,7 +20,11 @@ const initialState: InitialData = {
 export const initialDataSlice = createSlice({
 	name: "data",
 	initialState,
-	reducers: {},
+	reducers: {
+		removedCompanyImoex: (state, action) => {
+			state.imoex = state.imoex.filter(company => company.ticker !== action.payload)
+		}
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchInitialDataThunk.pending, (state) => {
@@ -39,3 +43,4 @@ export const initialDataSlice = createSlice({
 	},
 });
 
+export const { removedCompanyImoex } = initialDataSlice.actions

@@ -17,15 +17,17 @@ const extractSelectedCompanyLocalStorage = () => {
 const initialState: ImoexSecurity[] = extractSelectedCompanyLocalStorage()
 
 
-
-export const selectedCompanySlice = createSlice({
+export const nonImoexCompanySlice = createSlice({
 	name: 'selectedSecurities',
 	initialState,
 	reducers: {
-		addCompany: (state, action) => {
+		selectedNonImoex: (state, action) => {
 			state.push(action.payload);
+		},
+		removedCompanyNonImoex: (state, action) => {
+			return state.filter(company => company.ticker !== action.payload)
 		}
 	}
 })
 
-export const { addCompany } = selectedCompanySlice.actions
+export const { selectedNonImoex, removedCompanyNonImoex } = nonImoexCompanySlice.actions

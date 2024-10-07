@@ -2,15 +2,15 @@ import { useState } from "react";
 import s from "./SelectedCompany.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getFilterCompany } from "./getFilterCompany";
-import { addCompany } from "../../redux/selectedCompanySlice/selectedCompanySlice";
+import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 const SelectedCompany = () => {
   const [inputValues, setInputValues] = useState("");
   const [ticker, setTicker] = useState("");
   const [weight, setWeight] = useState("");
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
-  const selectedCompany = useAppSelector((state) => state.selectedCompany);
-  const companies = getFilterCompany(securities, imoex.concat(selectedCompany));
+  const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
+  const companies = getFilterCompany(securities, imoex.concat(nonImoexCompany));
 
   const onClickSelectedCompany = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -24,8 +24,8 @@ const SelectedCompany = () => {
   const onClickAddCompany = () => {
     const { shortname, secid, prevdate } = securities[ticker];
     dispatch(
-      addCompany({
-        indexid: "MOEX",
+      selectedNonImoex({
+        indexid: "NONIMOEX",
         tradedate: prevdate,
         ticker: secid,
         shortnames: shortname,
