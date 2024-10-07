@@ -28,7 +28,7 @@ export const initialDataSlice = createSlice({
 			})
 			.addCase(fetchInitialDataThunk.fulfilled, (state, action) => {
 				state.loading = "succeeded";
-				const { imoex, securities } = action.payload
+				const { imoex, securities } = action.payload;
 				state.imoex = imoex;
 				state.securities = Object.fromEntries(securities.map(s => [s.secid, s]))
 			})
