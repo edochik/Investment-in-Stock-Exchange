@@ -1,18 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchImoex } from "../../api/fetchImoex";
 import { fetchSecurities } from "../../api/fetchSecurities";
-import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
-import { Security } from "../../domain/Security.js";
-
-
-//1. Вариант null (нет интернета, есть интернет)
-// - есть интернет делаем запрос возвращаем данные []
-// - нет интернета делаем запрос получаем ошибку ? возвращаем  пустоту []
-//2. Вариант не null, дата просрочена  
-// - есть интернет делаем запрос возвращаем данные []
-// - нет интернета возвращаем то что есть []
-//3. Вариант даты обновлены
-// - возвращаем данные
+import { ImoexSecurity } from "../../domain/ImoexSecurity";
+import { Security } from "../../domain/Security";
 
 
 async function extractImoexDataLocalStorage(todayKey: string): Promise<{
@@ -24,7 +14,11 @@ async function extractImoexDataLocalStorage(todayKey: string): Promise<{
 		localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex, securities }))
 		return { imoex, securities }
 	} catch (error) {
-		const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData') || '')
+		const imoexDataJson = localStorage.getItem("imoexData")
+		if (imoexDataJson === null) {
+			return { imoex: [], securities: [] }
+		}
+		const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData')!)
 		return { imoex, securities }
 	}
 }
@@ -43,6 +37,6 @@ export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async 
 	if (todayKey !== getDateKey) {
 		return extractImoexDataLocalStorage(todayKey)
 	}
-	const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData') || '')
+	const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData')!)
 	return { imoex, securities }
 })

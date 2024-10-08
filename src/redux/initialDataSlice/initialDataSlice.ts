@@ -10,7 +10,7 @@ export interface InitialData {
 	securities: Record<Security["secid"], Security>;
 }
 
-const initialState: InitialData = {
+export const initialState: InitialData = {
 	loading: "idle",
 	imoex: [],
 	securities: {},
@@ -21,8 +21,16 @@ export const initialDataSlice = createSlice({
 	name: "data",
 	initialState,
 	reducers: {
-		removedCompanyImoex: (state, action) => {
-			state.imoex = state.imoex.filter(company => company.ticker !== action.payload)
+		removedImoex: (state, action) => {
+			const { type, ticker } = action.payload;
+			if (type === "IMOEX") {
+				state.imoex = state.imoex.filter(company => company.ticker !== ticker)
+			}
+		},
+		addImoex: (state, action) => {
+			if (action.payload.indexid === "IMOEX") {
+				state.imoex.push(action.payload)
+			}
 		}
 	},
 	extraReducers: (builder) => {
@@ -43,4 +51,4 @@ export const initialDataSlice = createSlice({
 	},
 });
 
-export const { removedCompanyImoex } = initialDataSlice.actions
+export const { removedImoex, addImoex } = initialDataSlice.actions
