@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Investment-in-Stock-Exchange/static/css/main.c3b0888a.css",
-    "main.js": "/Investment-in-Stock-Exchange/static/js/main.9773c261.js",
+    "main.css": "/Investment-in-Stock-Exchange/static/css/main.634edc5d.css",
+    "main.js": "/Investment-in-Stock-Exchange/static/js/main.1523efa9.js",
     "index.html": "/Investment-in-Stock-Exchange/index.html",
-    "main.c3b0888a.css.map": "/Investment-in-Stock-Exchange/static/css/main.c3b0888a.css.map",
-    "main.9773c261.js.map": "/Investment-in-Stock-Exchange/static/js/main.9773c261.js.map"
+    "main.634edc5d.css.map": "/Investment-in-Stock-Exchange/static/css/main.634edc5d.css.map",
+    "main.1523efa9.js.map": "/Investment-in-Stock-Exchange/static/js/main.1523efa9.js.map"
   },
   "entrypoints": [
-    "static/css/main.c3b0888a.css",
-    "static/js/main.9773c261.js"
+    "static/css/main.634edc5d.css",
+    "static/js/main.1523efa9.js"
   ]
 }
