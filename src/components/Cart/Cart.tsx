@@ -10,8 +10,8 @@ const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const cart = useAppSelector((state) => state.cart);
-
   const dispatch = useAppDispatch();
+  
   const onClickRemoveCart = (secids: string) => {
     const company = cart.find((item) => item.secids === secids);
     dispatch(addImoex(company));

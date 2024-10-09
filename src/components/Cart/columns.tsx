@@ -10,6 +10,7 @@ export interface Columns {
   header: string;
   cell: (value: Value) => React.ReactNode;
 }
+
 export const columns: Columns[] = [
   {
     header: "На какой бирже",
