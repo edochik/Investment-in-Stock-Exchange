@@ -3,12 +3,12 @@ import { ImoexSecurity } from "../../domain/ImoexSecurity.js"
 
 
 const extractSelectedNonImoexLocalStorage = () => {
-	const selectedCompanyJson = localStorage.getItem('nonImoex');
-	if (selectedCompanyJson === null) {
+	const nonImoexCompany = localStorage.getItem('nonImoex');
+	if (nonImoexCompany === null) {
 		return []
 	}
 	try {
-		return JSON.parse(selectedCompanyJson)
+		return JSON.parse(nonImoexCompany)
 	} catch (error) {
 		return []
 	}

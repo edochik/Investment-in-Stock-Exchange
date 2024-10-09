@@ -5,6 +5,7 @@ import { Value } from "./columns";
 export function getInvestmentValues(userData: UserData, securitiesData: InitialData): Value[] {
 	const { coefficients, stocks, moneyUser } = userData;
 	const { imoex, securities } = securitiesData;
+
 	const weightCompanies = 1 / imoex.reduce((acc, company) => {
 		const coeff = coefficients[company.ticker] ?? 1;
 		return acc + coeff * company.weight;
@@ -15,7 +16,7 @@ export function getInvestmentValues(userData: UserData, securitiesData: InitialD
 	return imoex.map((dataCompany) => {
 		const { ticker, shortnames } = dataCompany; //* ticker и shornames Api
 		let { weight } = dataCompany //* вес компании Api
-		
+
 		const price = securities[ticker].prevprice; //* цена за акцию Api
 		const lotsize = securities[ticker].lotsize; //? лотность  Api
 

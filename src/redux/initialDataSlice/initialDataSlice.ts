@@ -10,10 +10,27 @@ export interface InitialData {
 	securities: Record<Security["secid"], Security>;
 }
 
+
+const extractImoexDataLocalStorage = (): Pick<InitialData, "imoex" | 'securities'> => {
+	const imoexCompany = localStorage.getItem('imoexData')
+	if (imoexCompany === null) {
+		return { imoex: [], securities: {} }
+	}
+	try {
+		const { imoex, securities } = JSON.parse(imoexCompany);
+		const result = Object.fromEntries(securities.map((s: Security) => [s.secid, s]))
+		return { imoex, securities: result }
+	} catch (error) {
+		return { imoex: [], securities: {} }
+	}
+}
+
+const { imoex, securities } = extractImoexDataLocalStorage();
+
 export const initialState: InitialData = {
 	loading: "idle",
-	imoex: [],
-	securities: {},
+	imoex,
+	securities,
 	error: null,
 };
 

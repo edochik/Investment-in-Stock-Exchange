@@ -11,7 +11,6 @@ export const cartSlice = createSlice({
 			state.push(action.payload)
 		},
 		removeCompanyCart: (state, action) => {
-			console.log(action);
 			return state.filter(item => item.secids !== action.payload)
 		}
 	}
