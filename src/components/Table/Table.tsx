@@ -16,21 +16,17 @@ export const Table = () => {
     column: null,
   });
   const investmentValues = useAppSelector(selectInvestmentValues);
-  const onClickSortHeader = (column: Columns) => {
+
+  const onClickSelectedColumn = (column: Columns) => {
     setSelectedColumn((prev) => {
-      if (prev.column !== column) {
-        return {
-          direction: "desc",
-          column,
-        };
-      }
       return {
-        direction: prev.direction === "desc" ? "asc" : "desc",
+        direction:
+          prev.column === column && prev.direction === "desc" ? "asc" : "desc",
         column,
       };
     });
   };
-  
+
   if (investmentValues === null) {
     return <div>...Loading</div>;
   }
@@ -47,7 +43,7 @@ export const Table = () => {
                     [s.show]: column === selectedColumn.column,
                     [s.rotate]: selectedColumn.direction === "desc",
                   })}
-                  onClick={() => onClickSortHeader(column)}
+                  onClick={() => onClickSelectedColumn(column)}
                   disabled={column.sortFunction === undefined}
                 >
                   {column.header}

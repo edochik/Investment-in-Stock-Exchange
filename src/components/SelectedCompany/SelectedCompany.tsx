@@ -1,22 +1,24 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import s from "./SelectedCompany.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getFilterCompany } from "./getFilterCompany";
 import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
+import classNames from "classnames";
 const SelectedCompany = () => {
   const [inputValues, setInputValues] = useState("");
   const [ticker, setTicker] = useState("");
-  const [weight, setWeight] = useState("");
+  console.log(ticker);
+  const [userWeight, setUserWeight] = useState("");
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
   const companies = getFilterCompany(securities, imoex.concat(nonImoexCompany));
 
   const onClickSelectedCompany = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
     ticker: string
   ) => {
-    const target = e.target as HTMLElement; //?? возникает ошибка
+    const target = e.target as HTMLElement;
     setTicker(securities[ticker].secid);
     setInputValues(target.innerText);
   };
@@ -30,13 +32,13 @@ const SelectedCompany = () => {
         ticker: secid,
         shortnames: shortname,
         secids: secid,
-        weight: Number(weight),
+        weight: Number(userWeight),
         tradingsession: 0,
       })
     );
     setInputValues("");
     setTicker("");
-    setWeight("");
+    setUserWeight("");
   };
 
   const handleChangeWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,10 +48,9 @@ const SelectedCompany = () => {
     }
     const valueAsNumber = Number(value);
     if (!Number.isNaN(valueAsNumber)) {
-      setWeight(value);
+      setUserWeight(value);
     }
   };
-
   return (
     <div className={s.SelectedCompany}>
       <div className={s.wrapper}>
@@ -62,28 +63,32 @@ const SelectedCompany = () => {
               value={inputValues}
               onChange={(e) => setInputValues(e.target.value)}
             />
-            <div className={s.list}>
-              {inputValues.length > 1 &&
+            <ul className={s.list}>
+              {inputValues.length > 0 &&
                 companies
-                  .filter((company) =>
-                    company.shortname
-                      .toLocaleLowerCase()
-                      .includes(inputValues.toLocaleLowerCase())
+                  .filter(
+                    (company) =>
+                      company.shortname
+                        .toLocaleLowerCase()
+                        .includes(inputValues.toLocaleLowerCase()) ||
+                      company.secid
+                        .toLocaleLowerCase()
+                        .includes(inputValues.toLocaleLowerCase())
                   )
-                  .map((company) =>
+                  .map((company, index) =>
                     company.shortname !== inputValues ? (
-                      <div
+                      <li
                         key={company.shortname}
                         className={s.company}
                         onClick={(e) =>
                           onClickSelectedCompany(e, company.secid)
                         }
                       >
-                        {company.shortname}
-                      </div>
+                        {company.secid} {company.shortname}
+                      </li>
                     ) : null
                   )}
-            </div>
+            </ul>
           </div>
         </label>
         <label className={s.label}>
@@ -91,14 +96,14 @@ const SelectedCompany = () => {
           <input
             className={s.input}
             type="text"
-            value={weight}
+            value={userWeight}
             onChange={(e) => handleChangeWeight(e)}
           />
         </label>
         <button
           className={s.btn_add}
           onClick={onClickAddCompany}
-          disabled={!securities[ticker] || weight.length === 0}
+          disabled={!securities[ticker] || userWeight.length === 0}
         >
           Добавить компанию
         </button>

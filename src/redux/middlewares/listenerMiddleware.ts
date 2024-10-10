@@ -1,11 +1,9 @@
 import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
-import { AppDispatch, RootState } from "./index";
-import { updateCoefficents, updateStocks, updateUserMoney } from "./userDataSlice/userDataSlice";
-import { selectedNonImoex } from "./nonImoexCompanySlice/nonImoexCompanySlice";
-import { fetchInitialDataThunk } from "./initialDataSlice/thunk";
+import { AppDispatch, RootState } from "../index";
+import { updateCoefficients, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
+import { selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
 
 export const listenerMiddleware = createListenerMiddleware()
-
 export const startAppListening = listenerMiddleware.startListening.withTypes<
 	RootState,
 	AppDispatch
@@ -13,17 +11,13 @@ export const startAppListening = listenerMiddleware.startListening.withTypes<
 
 startAppListening({
 	matcher: isAnyOf(
-		updateCoefficents, // коэффициент пользователя
-		updateStocks, // акции пользователя 
-		updateUserMoney, // деньги пользователя
-		selectedNonImoex, // выбранные компании пользователя
-		fetchInitialDataThunk.fulfilled // ?? добавил на изменение
+		updateCoefficients,
+		updateStocks,
+		updateUserMoney,
+		selectedNonImoex
 	),
 	// одно из четырех полей  type | actionCreator | matcher |predicate
 	effect: async (action, listenerApi) => {
-		// console.log(listenerApi.getState(), 'getState');
-		// console.log(listenerApi.getOriginalState(), 'getOriginalState');
-		// getOriginalState при первой загрузке будет pending c imoex.length = 0
 		const { userData, nonImoexCompany } = listenerApi.getState()
 		localStorage.setItem('userData', JSON.stringify(userData))
 		localStorage.setItem('nonImoex', JSON.stringify(nonImoexCompany))

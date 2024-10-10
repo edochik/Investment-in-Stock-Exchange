@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import s from "./Cart.module.scss";
-import { addImoex } from "../../redux/initialDataSlice/initialDataSlice";
-import { addNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
+import { addedImoex } from "../../redux/initialDataSlice/initialDataSlice";
+import { addedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { removeCompanyCart } from "../../redux/cartSlice/cartSlice";
 import classNames from "classnames";
 
@@ -11,11 +11,11 @@ const Cart = () => {
   const ref = useRef<HTMLDivElement>(null);
   const cart = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
-  
+
   const onClickRemoveCart = (secids: string) => {
     const company = cart.find((item) => item.secids === secids);
-    dispatch(addImoex(company));
-    dispatch(addNonImoex(company));
+    dispatch(addedImoex(company));
+    dispatch(addedNonImoex(company));
     dispatch(removeCompanyCart(secids));
   };
   useEffect(() => {
@@ -34,7 +34,6 @@ const Cart = () => {
       window.addEventListener("scroll", scroll);
     };
   }, []);
-
   return (
     <div className={s.Cart} ref={ref}>
       <button

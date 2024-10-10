@@ -38,15 +38,15 @@ export const initialDataSlice = createSlice({
 	name: "data",
 	initialState,
 	reducers: {
+		addedImoex: (state, action) => {
+			if (action.payload.indexid === "IMOEX") {
+				state.imoex.push(action.payload)
+			}
+		},
 		removedImoex: (state, action) => {
 			const { type, ticker } = action.payload;
 			if (type === "IMOEX") {
 				state.imoex = state.imoex.filter(company => company.ticker !== ticker)
-			}
-		},
-		addImoex: (state, action) => {
-			if (action.payload.indexid === "IMOEX") {
-				state.imoex.push(action.payload)
 			}
 		}
 	},
@@ -68,4 +68,4 @@ export const initialDataSlice = createSlice({
 	},
 });
 
-export const { removedImoex, addImoex } = initialDataSlice.actions
+export const { removedImoex, addedImoex } = initialDataSlice.actions
