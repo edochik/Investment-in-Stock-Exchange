@@ -23,18 +23,18 @@ export const nonImoexCompanySlice = createSlice({
 		selectedNonImoex: (state, action) => {
 			state.push(action.payload);
 		},
+		addedNonImoex: (state, action) => {
+			if (action.payload.indexid === "NONIMOEX") {
+				state.push(action.payload)
+			}
+		},
 		removedNonImoex: (state, action) => {
 			const { type, ticker } = action.payload;
 			if (type === "NONIMOEX") {
 				return state.filter(company => company.ticker !== ticker)
 			}
-		},
-		addNonImoex: (state, action) => {
-			if (action.payload.indexid === "NONIMOEX") {
-				state.push(action.payload)
-			}
 		}
 	}
 })
 
-export const { selectedNonImoex, removedNonImoex, addNonImoex } = nonImoexCompanySlice.actions
+export const { selectedNonImoex, removedNonImoex, addedNonImoex } = nonImoexCompanySlice.actions

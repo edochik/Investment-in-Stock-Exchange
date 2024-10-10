@@ -11,7 +11,7 @@ export const selectInvestmentValues = createSelector(
   [selectUserData, selectSecuritiesData, selectedNonImoex],
   (userData, securitiesData, selectedCompany) => {
     const { imoex, ...rest } = securitiesData;
-    console.log(rest);
+    // правильно ли это?????
     if (Object.values(rest.securities).length === 0) {
       return null;
     }

@@ -3,7 +3,7 @@ import { initialDataSlice } from './initialDataSlice/initialDataSlice'
 import { fetchInitialDataThunk } from './initialDataSlice/thunk';
 import { userDataSlice } from './userDataSlice/userDataSlice';
 import { nonImoexCompanySlice } from './nonImoexCompanySlice/nonImoexCompanySlice';
-import { listenerMiddleware } from './listenerMiddleware';
+import { listenerMiddleware } from './middlewares/listenerMiddleware';
 import { cartSlice } from './cartSlice/cartSlice';
 
 export const store = configureStore({

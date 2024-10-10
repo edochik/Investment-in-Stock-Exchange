@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { addCompanyCart } from "../../redux/cartSlice/cartSlice";
 import { removedImoex } from "../../redux/initialDataSlice/initialDataSlice";
@@ -11,7 +12,7 @@ const RemovedCompany = ({ ticker }: RemoveCompanyProps) => {
   const dispatch = useAppDispatch();
   const { imoex } = useAppSelector((state) => state.data);
   const nonImoex = useAppSelector((state) => state.nonImoexCompany);
-  const cart = useAppSelector((state) => state.cart);
+
   const onClickRemove = (ticker: string) => {
     const company = imoex
       .concat(nonImoex)

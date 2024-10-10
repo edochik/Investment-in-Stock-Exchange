@@ -29,7 +29,7 @@ export const columns: Columns[] = [
       <div className={s.ticker}>
         <img
           className={s.image}
-          src={`./Investment-in-Stock-Exchange/images/${value.ticker}.png`}
+          src={`./images/${value.ticker}.png`}
           alt={`Логотип ${value.shortnames}`}
         />
         <p className={s.text}>{value.ticker}</p>
@@ -49,7 +49,10 @@ export const columns: Columns[] = [
   },
   {
     header: "Цена",
-    cell: (value) => `${value.price} ₽`,
+    cell: (value) =>
+      Number.isInteger(value.price)
+        ? `${value.price} ₽`
+        : `${value.price.toFixed(2)}`,
   },
   {
     header: "Куплено акций (шт)",
