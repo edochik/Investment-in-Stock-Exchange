@@ -1,7 +1,7 @@
 import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
 import { Security } from "../../domain/Security.js";
 
-export function getFilterCompany(
+export function filterByImoex(
   securities: Record<string, Security>,
   imoex: ImoexSecurity[]
 ) {
