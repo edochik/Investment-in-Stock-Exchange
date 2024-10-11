@@ -76,12 +76,16 @@ export const columns: Columns[] = [
   },
   {
     header: "Купить акций(шт)",
-    cell: (value) => Math.round(value.stockBuyTarget),
+    cell: (value) =>
+      isNaN(value.stockBuyTarget) ? "0" : Math.round(value.stockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
     sortFunction: (a, b) => b.stockBuyTarget - a.stockBuyTarget,
   },
   {
     header: "Итого за акции",
-    cell: (value) => Math.round(value.totalStockBuyTarget),
+    cell: (value) =>
+      isNaN(value.totalStockBuyTarget)
+        ? "0"
+        : Math.round(value.totalStockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
     sortFunction: (a, b) => b.totalStockBuyTarget - a.totalStockBuyTarget,
   },
   {

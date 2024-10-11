@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { ImoexSecurity } from "../../domain/ImoexSecurity.js"
 
 
-const extractSelectedNonImoexLocalStorage = () => {
+const extractSelectedNonImoexLocalStorage = (): ImoexSecurity[] => {
 	const nonImoexCompany = localStorage.getItem('nonImoex');
 	if (nonImoexCompany === null) {
 		return []

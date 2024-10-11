@@ -5,20 +5,36 @@ import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { Security } from "../../domain/Security";
 
 
-async function extractImoexDataLocalStorage(todayKey: string): Promise<{
+// должны использовать когда даты разные и когда у нас null изначально
+const filterImoexByCart = (imoex: ImoexSecurity[]) => {
+	const rawCart = localStorage.getItem('cart');
+	if (rawCart === null) {
+		return imoex
+	}
+	try {
+		const cart: ImoexSecurity[] = JSON.parse(rawCart)
+		const keys = new Set(cart.map(item => item.ticker));
+		return imoex.filter(item => !keys.has(item.ticker))
+	} catch (error) {
+		return imoex
+	}
+}
+
+const extractImoexDataLocalStorage = async (todayKey: string): Promise<{
 	imoex: ImoexSecurity[];
 	securities: Security[];
-}> {
+}> => {
 	try {
 		const [imoex, securities] = await Promise.all([fetchImoex(), fetchSecurities()])
-		localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex, securities }))
-		return { imoex, securities }
+		const filterImoex = filterImoexByCart(imoex)
+		localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex: filterImoex, securities }))
+		return { imoex: filterImoex, securities }
 	} catch (error) {
-		const imoexDataJson = localStorage.getItem("imoexData")
+		const imoexDataJson = localStorage.getItem("imoexData");
 		if (imoexDataJson === null) {
 			return { imoex: [], securities: [] }
 		}
-		const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData')!)
+		const { imoex, securities } = JSON.parse(imoexDataJson);
 		return { imoex, securities }
 	}
 }
