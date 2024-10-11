@@ -1,3 +1,4 @@
+@import '../../style/mixin.scss';
 .SelectedCompany {
 	margin-bottom: 300px;
 	display: flex;
@@ -11,14 +12,10 @@
 			flex-direction: column;
 			.inner {
 				position: relative;
-
 			}
 		}
 		.input {
-			background-color: rgb(237 238 242);
-			border: 1px solid rgb(160 160 160);
-			padding: 5px;
-			font-size: 18px;
+			@include input-style();
 		}
 		.btn_add {
 			margin-top: auto;
