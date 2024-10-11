@@ -1,7 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { ImoexSecurity } from "../../domain/ImoexSecurity"
 
-const initialState: ImoexSecurity[] = []
+
+const extractCartDataLocalStorage = (): ImoexSecurity[] => {
+	const cart = localStorage.getItem('cart');
+	if (cart === null) {
+		return []
+	}
+	try {
+		return JSON.parse(cart)
+	} catch (error) {
+		return []
+	}
+}
+
+
+const initialState: ImoexSecurity[] = extractCartDataLocalStorage()
+
 
 export const cartSlice = createSlice({
 	name: 'cart',

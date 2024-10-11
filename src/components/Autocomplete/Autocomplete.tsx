@@ -65,7 +65,7 @@ const Autocomplete = (props: AutocompleteProps<Security>) => {
     return () => {
       document.removeEventListener("keydown", pressKeydownBackspace);
     };
-  }, [cleanInput, setCleanInput, setTicker, selectedInput]);
+  }, [cleanInput, setCleanInput, setTicker, selectedInput, noOptions]);
 
   return (
     <div className={s.Autocomplete}>
@@ -116,6 +116,5 @@ export { Autocomplete };
 // при перемещении строка должна быть выделена
 // при фокусе на мышку, выделение строки должно быть снято и переключено на мышку
 // при нажатии на enter компания должна быть выбрана
-
 
 //! если выбрать слово полностью и потом удалить и набрать букву, слово не показывается хотя подходит
