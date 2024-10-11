@@ -14,9 +14,11 @@ const SelectedCompany = () => {
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
   const companies = filterByImoex(securities, imoex.concat(nonImoexCompany));
 
+  //для работы с кнопкой добавить компанию, когда нажимаем чтобы произошла очистка в input
   const [cleanInput, setCleanInput] = useState(false);
+  //для этого вешаем ref на элемент, чтобы понимать что нажали на кнопку
   const refBtnAddCompany = useRef(null);
-  console.log(ticker);
+  
   const onClickAddCompany = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -32,6 +34,7 @@ const SelectedCompany = () => {
         tradingsession: 0,
       })
     );
+    // когда нажали на кнопку меняем состояние
     if (refBtnAddCompany.current && refBtnAddCompany.current === event.target) {
       setCleanInput(true);
     }
