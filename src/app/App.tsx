@@ -1,7 +1,7 @@
 import s from "./App.module.scss";
 import { Table } from "../components/Table/Table";
 import { UserMoneyInput } from "../components/UserMoneyInput/UserMoneyInput";
-import { SelectedCompany } from "../components/SelectedCompany/SelectedCompany";
+import { CompanySelector } from "../components/CompanySelector/CompanySelector";
 import { Cart } from "../components/Cart/Cart";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
         <Cart />
       </div>
       <Table />
-      <SelectedCompany />
+      <CompanySelector />
     </div>
   );
 }

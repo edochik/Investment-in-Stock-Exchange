@@ -1,9 +1,9 @@
 import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../index";
-import { updateCoefficients, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
-import { addedNonImoex, removedNonImoex, selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
-import { addedImoex, removedImoex } from "../initialDataSlice/initialDataSlice";
-import { addCompanyCart, removeCompanyCart } from "../cartSlice/cartSlice";
+import { updateCoefficient, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
+import { addNonImoex, removeNonImex, selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
+import { addImoex, removeImoex } from "../initialDataSlice/initialDataSlice";
+import { addCompanyToCart, removeCompanyFromCart } from "../cartSlice/cartSlice";
 import { fetchInitialDataThunk } from "../initialDataSlice/thunk";
 
 export const listenerMiddleware = createListenerMiddleware()
@@ -14,16 +14,16 @@ export const startAppListening = listenerMiddleware.startListening.withTypes<
 
 startAppListening({
 	matcher: isAnyOf(
-		updateCoefficients, //userData function => local
+		updateCoefficient, //userData function => local
 		updateStocks, //userData function => local
 		updateUserMoney, //userData function => local
 		selectedNonImoex, // nonImoex function => local
-		addedNonImoex,// nonImoex function ??
-		removedNonImoex,// nonImoex function ??
-		addedImoex, //imoex function 
-		removedImoex,//imoex function
-		addCompanyCart, //cart function
-		removeCompanyCart, //cart function
+		addNonImoex,// nonImoex function ??
+		removeNonImex,// nonImoex function ??
+		addImoex, //imoex function 
+		removeImoex,//imoex function
+		addCompanyToCart, //cart function
+		removeCompanyFromCart, //cart function
 		fetchInitialDataThunk.pending,
 		fetchInitialDataThunk.fulfilled
 	),

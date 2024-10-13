@@ -1,14 +1,14 @@
-import { memo, useMemo } from "react";
+// import { memo, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { addCompanyCart } from "../../redux/cartSlice/cartSlice";
-import { removedImoex } from "../../redux/initialDataSlice/initialDataSlice";
-import { removedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
-import s from "./RemovedCompany.module.scss";
+import { addCompanyToCart } from "../../redux/cartSlice/cartSlice";
+import { removeImoex } from "../../redux/initialDataSlice/initialDataSlice";
+import { removeNonImex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
+import s from "./RemoveCompany.module.scss";
 interface RemoveCompanyProps {
   ticker: string;
 }
 
-const RemovedCompany = ({ ticker }: RemoveCompanyProps) => {
+const RemoveCompany = ({ ticker }: RemoveCompanyProps) => {
   const dispatch = useAppDispatch();
   const { imoex } = useAppSelector((state) => state.data);
   const nonImoex = useAppSelector((state) => state.nonImoexCompany);
@@ -19,9 +19,9 @@ const RemovedCompany = ({ ticker }: RemoveCompanyProps) => {
       .find((company) => company.ticker === ticker);
     if (company !== undefined) {
       const { indexid } = company;
-      dispatch(addCompanyCart(company));
-      dispatch(removedImoex({ ticker, type: indexid }));
-      dispatch(removedNonImoex({ ticker, type: indexid }));
+      dispatch(addCompanyToCart(company));
+      dispatch(removeImoex({ ticker, type: indexid }));
+      dispatch(removeNonImex({ ticker, type: indexid }));
     }
   };
   return (
@@ -31,4 +31,4 @@ const RemovedCompany = ({ ticker }: RemoveCompanyProps) => {
   );
 };
 
-export { RemovedCompany };
+export { RemoveCompany };

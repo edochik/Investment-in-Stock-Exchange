@@ -1,7 +1,7 @@
 import s from "./CoefficientInput.module.scss";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { updateCoefficients } from "../../redux/userDataSlice/userDataSlice";
+import { updateCoefficient } from "../../redux/userDataSlice/userDataSlice";
 interface CoefficientInputProps {
   ticker: string;
 }
@@ -21,7 +21,7 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
     setInput(value);
     const valueAsNumber = Number(value);
     if (!Number.isNaN(valueAsNumber)) {
-      dispatch(updateCoefficients({ ticker, count: valueAsNumber }));
+      dispatch(updateCoefficient({ ticker, count: valueAsNumber }));
     }
   };
 

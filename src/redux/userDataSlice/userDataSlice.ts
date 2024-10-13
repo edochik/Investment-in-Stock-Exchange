@@ -30,7 +30,7 @@ export const userDataSlice = createSlice({
 	name: 'userData',
 	initialState,
 	reducers: {
-		updateCoefficients: (state, action: PayloadAction<{ ticker: string, count: number }>) => {
+		updateCoefficient: (state, action: PayloadAction<{ ticker: string, count: number }>) => {
 			state.coefficients[action.payload.ticker] = action.payload.count;
 		},
 		updateStocks: (state, action: PayloadAction<{ ticker: string, count: number }>) => {
@@ -42,5 +42,5 @@ export const userDataSlice = createSlice({
 	},
 })
 
-export const { updateCoefficients, updateStocks, updateUserMoney } = userDataSlice.actions
+export const { updateCoefficient, updateStocks, updateUserMoney } = userDataSlice.actions
 

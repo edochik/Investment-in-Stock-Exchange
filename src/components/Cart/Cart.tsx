@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import s from "./Cart.module.scss";
-import { addedImoex } from "../../redux/initialDataSlice/initialDataSlice";
-import { addedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
-import { removeCompanyCart } from "../../redux/cartSlice/cartSlice";
+import { addImoex } from "../../redux/initialDataSlice/initialDataSlice";
+import { addNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
+import { removeCompanyFromCart } from "../../redux/cartSlice/cartSlice";
 import classNames from "classnames";
 
 const Cart = () => {
@@ -12,12 +12,13 @@ const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
-  const onClickRemoveCart = (secids: string) => {
+  const onClickRemoveCompany = (secids: string) => {
     const company = cart.find((item) => item.secids === secids);
-    dispatch(addedImoex(company));
-    dispatch(addedNonImoex(company));
-    dispatch(removeCompanyCart(secids));
+    dispatch(addImoex(company));
+    dispatch(addNonImoex(company));
+    dispatch(removeCompanyFromCart(secids));
   };
+
   useEffect(() => {
     const onClickOutside = (event: MouseEvent) => {
       if (!ref.current?.contains(event.target as Node)) {
@@ -59,7 +60,7 @@ const Cart = () => {
                 <p className={s.text}>{shortnames}</p>
                 <button
                   className={s.button}
-                  onClick={() => onClickRemoveCart(secids)}
+                  onClick={() => onClickRemoveCompany(secids)}
                 >
                   📓
                 </button>
