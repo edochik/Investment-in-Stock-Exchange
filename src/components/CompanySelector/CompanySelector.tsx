@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import s from "./SelectedCompany.module.scss";
+import s from "./CompanySelector.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { filterByImoex } from "./filterByImoex";
 import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { filterByKey } from "./filterByKey";
 
-const SelectedCompany = () => {
+const CompanySelector = () => {
   const [ticker, setTicker] = useState("");
   const [inputWeight, setInputWeight] = useState("");
   const dispatch = useAppDispatch();
@@ -15,7 +15,7 @@ const SelectedCompany = () => {
   const companies = filterByImoex(securities, imoex.concat(nonImoexCompany));
 
   //для работы с кнопкой добавить компанию, когда нажимаем чтобы произошла очистка в input
-  const [cleanInput, setCleanInput] = useState(false);
+  const [isCleanInput, setIsCleanInput] = useState(false);
   //для этого вешаем ref на элемент, чтобы понимать что нажали на кнопку
   const refBtnAddCompany = useRef(null);
   
@@ -36,7 +36,7 @@ const SelectedCompany = () => {
     );
     // когда нажали на кнопку меняем состояние
     if (refBtnAddCompany.current && refBtnAddCompany.current === event.target) {
-      setCleanInput(true);
+      setIsCleanInput(true);
     }
     setTicker("");
     setInputWeight("");
@@ -63,8 +63,8 @@ const SelectedCompany = () => {
               list={companies}
               filterByKey={filterByKey}
               setTicker={setTicker}
-              cleanInput={cleanInput}
-              setCleanInput={setCleanInput}
+              cleanInput={isCleanInput}
+              setCleanInput={setIsCleanInput}
             />
           </div>
         </label>
@@ -90,7 +90,7 @@ const SelectedCompany = () => {
   );
 };
 
-export { SelectedCompany };
+export { CompanySelector };
 
 // parent
 // button in parent => press

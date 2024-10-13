@@ -15,12 +15,12 @@ const Autocomplete = (props: AutocompleteProps<Security>) => {
   const { list, filterByKey, setTicker, cleanInput, setCleanInput } = props;
   const [selectedInput, setSelectedInput] = useState("");
   const { securities } = useAppSelector((state) => state.data);
+  // применяю сразу фильтр, чтобы использовать длину для отображения слов которых нет в ticker и shortname
+  const filterList = list.filter((company) =>
+    filterByKey(securities[company.secid], selectedInput)
+  );
   // нужно для отслеживания, нахождения внутри инпут
   const refSelectedInput = useRef(null);
-  // если все не подходит значит набирает не правильное имя
-  const noOptions = list.every(
-    (company) => filterByKey(securities[company.secid], selectedInput) === false
-  );
   // нажатие на элемент из списка, устанавливается ticker и инпут
   const onClickSelectedItem = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>,
@@ -45,16 +45,13 @@ const Autocomplete = (props: AutocompleteProps<Security>) => {
     // меняем обратно на false
     setCleanInput(false);
     //если выделить всю строку в инпуте и заменить на 1 символ должны удалить ticket
-    if (selectedInput.length < 2 || noOptions) {
+    if (selectedInput.length < 2 || filterList.length === 0) {
       setTicker("");
     }
     // при нажатии на клавиатуру backspace удаляем ticket
     const pressKeydownBackspace = (event: KeyboardEvent) => {
       // проверяем что мы находимся внутри input
-      if (
-        refSelectedInput.current &&
-        refSelectedInput.current === event.target
-      ) {
+      if (refSelectedInput?.current === event.target) {
         const button = event.key.toUpperCase();
         if (button === "BACKSPACE") {
           setTicker("");
@@ -65,7 +62,7 @@ const Autocomplete = (props: AutocompleteProps<Security>) => {
     return () => {
       document.removeEventListener("keydown", pressKeydownBackspace);
     };
-  }, [cleanInput, setCleanInput, setTicker, selectedInput, noOptions]);
+  }, [cleanInput, setCleanInput, setTicker, selectedInput, filterList]);
 
   return (
     <div className={s.Autocomplete}>
@@ -78,25 +75,21 @@ const Autocomplete = (props: AutocompleteProps<Security>) => {
       />
       {selectedInput.length > 0 && (
         <ul className={s.list}>
-          {list
-            .filter((company) =>
-              filterByKey(securities[company.secid], selectedInput)
-            )
-            .map((company) => {
-              return (
-                `${company.secid} ${company.shortname}` !== selectedInput && (
-                  <li
-                    key={company.secid}
-                    className={s.company}
-                    onClick={(e) => onClickSelectedItem(e, company.secid)}
-                  >
-                    {company.secid} {company.shortname}
-                  </li>
-                )
-              );
-            })}
+          {filterList.map((company) => {
+            return (
+              `${company.secid} ${company.shortname}` !== selectedInput && (
+                <li
+                  key={company.secid}
+                  className={s.company}
+                  onClick={(e) => onClickSelectedItem(e, company.secid)}
+                >
+                  {company.secid} {company.shortname}
+                </li>
+              )
+            );
+          })}
           {/* показываем пользователю что он не правильно набрал */}
-          {noOptions && <li>Нет вариантов</li>}
+          {filterList.length === 0 && <li>Нет вариантов</li>}
         </ul>
       )}
       {selectedInput && (
@@ -116,5 +109,3 @@ export { Autocomplete };
 // при перемещении строка должна быть выделена
 // при фокусе на мышку, выделение строки должно быть снято и переключено на мышку
 // при нажатии на enter компания должна быть выбрана
-
-//! если выбрать слово полностью и потом удалить и набрать букву, слово не показывается хотя подходит

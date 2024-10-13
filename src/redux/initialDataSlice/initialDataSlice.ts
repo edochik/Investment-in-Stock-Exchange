@@ -10,7 +10,6 @@ export interface InitialData {
 	securities: Record<Security["secid"], Security>;
 }
 
-
 const extractImoexDataLocalStorage = (): Pick<InitialData, "imoex" | 'securities'> => {
 	const imoexCompany = localStorage.getItem('imoexData')
 	if (imoexCompany === null) {
@@ -38,12 +37,12 @@ export const initialDataSlice = createSlice({
 	name: "data",
 	initialState,
 	reducers: {
-		addedImoex: (state, action) => {
+		addImoex: (state, action) => {
 			if (action.payload.indexid === "IMOEX") {
 				state.imoex.push(action.payload)
 			}
 		},
-		removedImoex: (state, action) => {
+		removeImoex: (state, action) => {
 			const { type, ticker } = action.payload;
 			if (type === "IMOEX") {
 				state.imoex = state.imoex.filter(company => company.ticker !== ticker)
@@ -68,4 +67,4 @@ export const initialDataSlice = createSlice({
 	},
 });
 
-export const { removedImoex, addedImoex } = initialDataSlice.actions
+export const { removeImoex, addImoex } = initialDataSlice.actions
