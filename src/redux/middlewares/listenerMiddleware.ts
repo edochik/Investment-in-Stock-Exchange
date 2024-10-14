@@ -2,8 +2,8 @@ import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../index";
 import { updateCoefficient, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
 import { addNonImoex, removeNonImex, selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
-import { addImoex, removeImoex } from "../initialDataSlice/initialDataSlice";
-import { addCompanyToCart, removeCompanyFromCart } from "../cartSlice/cartSlice";
+import { addImoex, removeImoex, imoexExcludingCartItem } from "../initialDataSlice/initialDataSlice";
+import { addCompanyToCart, removeCompanyFromCart, updateItemCart } from "../cartSlice/cartSlice";
 import { fetchInitialDataThunk } from "../initialDataSlice/thunk";
 
 export const listenerMiddleware = createListenerMiddleware()
@@ -14,18 +14,17 @@ export const startAppListening = listenerMiddleware.startListening.withTypes<
 
 startAppListening({
 	matcher: isAnyOf(
-		updateCoefficient, //userData function => local
-		updateStocks, //userData function => local
-		updateUserMoney, //userData function => local
-		selectedNonImoex, // nonImoex function => local
-		addNonImoex,// nonImoex function ??
-		removeNonImex,// nonImoex function ??
-		addImoex, //imoex function 
-		removeImoex,//imoex function
-		addCompanyToCart, //cart function
-		removeCompanyFromCart, //cart function
-		fetchInitialDataThunk.pending,
-		fetchInitialDataThunk.fulfilled
+		updateCoefficient,
+		updateStocks,
+		updateUserMoney,
+		selectedNonImoex,
+		addNonImoex,
+		removeNonImex,
+		addImoex,
+		removeImoex,
+		addCompanyToCart,
+		removeCompanyFromCart,
+		imoexExcludingCartItem
 	),
 	// одно из четырех полей  type | actionCreator | matcher |predicate
 	effect: async (action, listenerApi) => {
@@ -42,9 +41,17 @@ startAppListening({
 	}
 });
 
+// слушатель для обновление при null = imoex или разная дата
+startAppListening({
+	matcher: isAnyOf(fetchInitialDataThunk.fulfilled),
+	effect: async (action, listenerApi) => {
+		const { cart, data } = listenerApi.getState();
+		const updateImoex = Object.fromEntries(data.imoex.map(s => [s.ticker, s]))
+		const cartItem = new Set(cart.map(item => item.ticker))
+		const imoex = data.imoex.filter(item => !cartItem.has(item.ticker));
+		const resultCart = cart.map(item => updateImoex[item.ticker] ? updateImoex[item.ticker] : item)
+		listenerApi.dispatch(imoexExcludingCartItem(imoex))
+		listenerApi.dispatch(updateItemCart(resultCart))
+	}
+});
 
-
-// при загрузке лежит старая дата а нужна новая дата, отфильтровать то что лежит и вернуть.
-// в cart,nonImoex,imoexData.
-
-// при загрузке imoexData = null, в cart, лежит imoex, отфильтровать то что лежит и вернуть

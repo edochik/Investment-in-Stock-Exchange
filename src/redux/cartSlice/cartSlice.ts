@@ -24,9 +24,13 @@ export const cartSlice = createSlice({
 		},
 		removeCompanyFromCart: (state, action) => {
 			return state.filter(item => item.secids !== action.payload)
+		},
+		updateItemCart: (state, action) => {
+			// console.log(action);
+			return action.payload
 		}
 	}
 })
 
-export const { addCompanyToCart, removeCompanyFromCart } = cartSlice.actions
+export const { addCompanyToCart, removeCompanyFromCart, updateItemCart } = cartSlice.actions
 
