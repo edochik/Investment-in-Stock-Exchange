@@ -15,6 +15,7 @@ const extractImoexDataLocalStorage = (): Pick<InitialData, "imoex" | 'securities
 	if (imoexCompany === null) {
 		return { imoex: [], securities: {} }
 	}
+	// console.log('extractImoexDataLocalStorage');
 	try {
 		const { imoex, securities } = JSON.parse(imoexCompany);
 		const result = Object.fromEntries(securities.map((s: Security) => [s.secid, s]))
@@ -28,8 +29,7 @@ const { imoex, securities } = extractImoexDataLocalStorage();
 
 export const initialState: InitialData = {
 	loading: "idle",
-	imoex,
-	securities,
+	imoex, securities,
 	error: null,
 };
 
@@ -47,6 +47,9 @@ export const initialDataSlice = createSlice({
 			if (type === "IMOEX") {
 				state.imoex = state.imoex.filter(company => company.ticker !== ticker)
 			}
+		},
+		imoexExcludingCartItem: (state, action) => {
+			state.imoex = action.payload;
 		}
 	},
 	extraReducers: (builder) => {
@@ -67,4 +70,4 @@ export const initialDataSlice = createSlice({
 	},
 });
 
-export const { removeImoex, addImoex } = initialDataSlice.actions
+export const { removeImoex, addImoex, imoexExcludingCartItem } = initialDataSlice.actions

@@ -4,36 +4,20 @@ import { fetchSecurities } from "../../api/fetchSecurities";
 import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { Security } from "../../domain/Security";
 
-
-// должны использовать когда даты разные и когда у нас null изначально
-const filterImoexByCart = (imoex: ImoexSecurity[]) => {
-	const rawCart = localStorage.getItem('cart');
-	if (rawCart === null) {
-		return imoex
-	}
-	try {
-		const cart: ImoexSecurity[] = JSON.parse(rawCart)
-		const keys = new Set(cart.map(item => item.ticker));
-		return imoex.filter(item => !keys.has(item.ticker))
-	} catch (error) {
-		return imoex
-	}
-}
-
 const extractImoexDataLocalStorage = async (todayKey: string): Promise<{
 	imoex: ImoexSecurity[];
 	securities: Security[];
 }> => {
 	try {
 		const [imoex, securities] = await Promise.all([fetchImoex(), fetchSecurities()])
-		const filterImoex = filterImoexByCart(imoex)
-		localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex: filterImoex, securities }))
-		return { imoex: filterImoex, securities }
+		localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex, securities }))
+		return { imoex, securities }
 	} catch (error) {
 		const imoexDataJson = localStorage.getItem("imoexData");
-		if (imoexDataJson === null) {
+		if (imoexDataJson === null) { // нет интернета и нет данных в local storage
 			return { imoex: [], securities: [] }
 		}
+		// нет интернет и есть данные в local storage
 		const { imoex, securities } = JSON.parse(imoexDataJson);
 		return { imoex, securities }
 	}
@@ -46,11 +30,11 @@ export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async 
 	const today = new Date();
 	const todayKey = `${today.getDate()}.${today.getMonth()}.${today.getFullYear()}`;
 	const imoexDataJson = localStorage.getItem("imoexData");
-	if (imoexDataJson === null) {
+	if (imoexDataJson === null) { // localstorage пустой
 		return extractImoexDataLocalStorage(todayKey)
 	}
 	const getDateKey: string = JSON.parse(imoexDataJson).todayKey
-	if (todayKey !== getDateKey) {
+	if (todayKey !== getDateKey) { // в localstorage даты разные
 		return extractImoexDataLocalStorage(todayKey)
 	}
 	const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData')!)
