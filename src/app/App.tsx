@@ -3,6 +3,8 @@ import { Table } from "../components/Table/Table";
 import { UserMoneyInput } from "../components/UserMoneyInput/UserMoneyInput";
 import { CompanySelector } from "../components/CompanySelector/CompanySelector";
 import { Cart } from "../components/Cart/Cart";
+import { Autocomplete } from "../components/Autocomplete/Autocomplete";
+import { useState } from "react";
 
 function App() {
   return (

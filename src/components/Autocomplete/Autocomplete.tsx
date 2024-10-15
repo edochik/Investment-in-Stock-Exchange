@@ -1,111 +1,58 @@
-import { useEffect, useRef, useState } from "react";
-import { Security } from "../../domain/Security";
-import { useAppSelector } from "../../hooks";
+import { useEffect, useState } from "react";
 import s from "./Autocomplete.module.scss";
 
 interface AutocompleteProps<T> {
   list: T[];
-  filterByKey: (object: T, value: string) => boolean;
-  setTicker: (ticker: string) => void;
-  cleanInput: boolean;
-  setCleanInput: (arg: boolean) => void;
+  filterByKey: (arg: T, query: string) => boolean;
+  showElement: (arg: T) => string;
+  value: T | null;
+  setValue: (arg: T) => void;
 }
-
-const Autocomplete = (props: AutocompleteProps<Security>) => {
-  const { list, filterByKey, setTicker, cleanInput, setCleanInput } = props;
-  const [selectedInput, setSelectedInput] = useState("");
-  const { securities } = useAppSelector((state) => state.data);
-  // применяю сразу фильтр, чтобы использовать длину для отображения слов которых нет в ticker и shortname
-  const filterList = list.filter((company) =>
-    filterByKey(securities[company.secid], selectedInput)
-  );
-  // нужно для отслеживания, нахождения внутри инпут
-  const refSelectedInput = useRef(null);
-  // нажатие на элемент из списка, устанавливается ticker и инпут
-  const onClickSelectedItem = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    ticker: string
-  ) => {
-    const target = e.target as HTMLElement;
-    setSelectedInput(target.innerText);
-    setTicker(ticker);
-  };
-  // в интпуте x удаляются данные из инпута и тикер удалятся
-  const onClickCleanInput = () => {
-    setSelectedInput("");
-    setTicker("");
-  };
-
+// если фильтрую из вне, так и выводить информацию я должен из вне
+// внутри не получится сделать, item.shortname, item.secid ??? внутри не должен знать об этом снаружи
+const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
+  const { list, filterByKey, showElement, value, setValue } = props;
+  const [valueInput, setValueInput] = useState("");
+  
   useEffect(() => {
-    //если cleanInput true => обнуляем setTicer и selectedInput
-    if (cleanInput) {
-      setSelectedInput("");
-      setTicker("");
+    if (value === null) {
+      setValueInput("");
     }
-    // меняем обратно на false
-    setCleanInput(false);
-    //если выделить всю строку в инпуте и заменить на 1 символ должны удалить ticket
-    if (selectedInput.length < 2 || filterList.length === 0) {
-      setTicker("");
-    }
-    // при нажатии на клавиатуру backspace удаляем ticket
-    const pressKeydownBackspace = (event: KeyboardEvent) => {
-      // проверяем что мы находимся внутри input
-      if (refSelectedInput?.current === event.target) {
-        const button = event.key.toUpperCase();
-        if (button === "BACKSPACE") {
-          setTicker("");
-        }
-      }
-    };
-    document.addEventListener("keydown", pressKeydownBackspace);
-    return () => {
-      document.removeEventListener("keydown", pressKeydownBackspace);
-    };
-  }, [cleanInput, setCleanInput, setTicker, selectedInput, filterList]);
+  }, [value]);
+
+  const onClickValue = (item: T) => {
+    setValue(item);
+    setValueInput(showElement(item));
+  };
 
   return (
     <div className={s.Autocomplete}>
       <input
-        ref={refSelectedInput}
         className={s.input}
         type="text"
-        value={selectedInput}
-        onChange={(e) => setSelectedInput(e.target.value)}
+        value={valueInput}
+        onChange={(e) => setValueInput(e.target.value)}
       />
-      {selectedInput.length > 0 && (
-        <ul className={s.list}>
-          {filterList.map((company) => {
-            return (
-              `${company.secid} ${company.shortname}` !== selectedInput && (
+      <ul className={s.list}>
+        {valueInput.length !== 0 &&
+          list
+            .filter((security) => filterByKey(security, valueInput))
+            .map((item, index) => {
+              return (
                 <li
-                  key={company.secid}
+                  key={index}
                   className={s.company}
-                  onClick={(e) => onClickSelectedItem(e, company.secid)}
+                  onClick={() => onClickValue(item)}
                 >
-                  {company.secid} {company.shortname}
+                  {showElement(item)}
                 </li>
-              )
-            );
-          })}
-          {/* показываем пользователю что он не правильно набрал */}
-          {filterList.length === 0 && <li>Нет вариантов</li>}
-        </ul>
-      )}
-      {selectedInput && (
-        <button className={s.button} onClick={onClickCleanInput}></button>
-      )}
+              );
+            })}
+        {/* filterByKey сделать в компоненте а потом выводить информацию */}
+        {/* {list.length === 0 && <li>Нет данных</li>} */}
+      </ul>
     </div>
   );
 };
 
 export { Autocomplete };
-
-// поведение
-// когда в инпуте удаляешь хотябы одну букву то ticker должен быть ""
-// происходит сброс , и заново надо выбрать
-
-// перемещаться по списку с помощью клавиатуры down или up
-// при перемещении строка должна быть выделена
-// при фокусе на мышку, выделение строки должно быть снято и переключено на мышку
-// при нажатии на enter компания должна быть выбрана

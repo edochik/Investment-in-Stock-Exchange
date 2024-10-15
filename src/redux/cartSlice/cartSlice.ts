@@ -26,7 +26,6 @@ export const cartSlice = createSlice({
 			return state.filter(item => item.secids !== action.payload)
 		},
 		updateItemCart: (state, action) => {
-			// console.log(action);
 			return action.payload
 		}
 	}

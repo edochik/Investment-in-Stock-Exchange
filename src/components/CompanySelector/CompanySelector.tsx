@@ -4,42 +4,38 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { filterByImoex } from "./filterByImoex";
 import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
-import { filterByKey } from "./filterByKey";
+import { Security } from "../../domain/Security";
 
 const CompanySelector = () => {
-  const [ticker, setTicker] = useState("");
+  const [ticker, setTicker] = useState<Security | null>(null);
+  const [color, setColor] = useState<string | null>(null);
   const [inputWeight, setInputWeight] = useState("");
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
   const companies = filterByImoex(securities, imoex.concat(nonImoexCompany));
-
   //для работы с кнопкой добавить компанию, когда нажимаем чтобы произошла очистка в input
-  const [isCleanInput, setIsCleanInput] = useState(false);
   //для этого вешаем ref на элемент, чтобы понимать что нажали на кнопку
   const refBtnAddCompany = useRef(null);
-  
-  const onClickAddCompany = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    const { shortname, secid, prevdate } = securities[ticker];
-    dispatch(
-      selectedNonImoex({
-        indexid: "NONIMOEX",
-        tradedate: prevdate,
-        ticker: secid,
-        shortnames: shortname,
-        secids: secid,
-        weight: Number(inputWeight),
-        tradingsession: 0,
-      })
-    );
-    // когда нажали на кнопку меняем состояние
-    if (refBtnAddCompany.current && refBtnAddCompany.current === event.target) {
-      setIsCleanInput(true);
+  console.log(ticker === null && inputWeight.length === 0);
+  console.log(ticker === null, inputWeight.length === 0);
+  const onClickAddCompany = (ticker: Security | null) => {
+    if (ticker !== null) {
+      const { shortname, secid, prevdate } = ticker;
+      dispatch(
+        selectedNonImoex({
+          indexid: "NONIMOEX",
+          tradedate: prevdate,
+          ticker: secid,
+          shortnames: shortname,
+          secids: secid,
+          weight: Number(inputWeight),
+          tradingsession: 0,
+        })
+      );
+      setTicker(null);
+      setInputWeight("");
     }
-    setTicker("");
-    setInputWeight("");
   };
 
   const handleChangeWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,15 +54,28 @@ const CompanySelector = () => {
       <div className={s.wrapper}>
         <label className={s.label}>
           Введите название:
-          <div className={s.inner}>
-            <Autocomplete
-              list={companies}
-              filterByKey={filterByKey}
-              setTicker={setTicker}
-              cleanInput={isCleanInput}
-              setCleanInput={setIsCleanInput}
-            />
-          </div>
+          <Autocomplete
+            list={companies}
+            filterByKey={(element, query) =>
+              element.secid.toLowerCase().startsWith(query.toLowerCase()) ||
+              element.shortname.toLowerCase().startsWith(query.toLowerCase())
+            }
+            showElement={(element) => `${element.secid} ${element.shortname}`}
+            value={ticker}
+            setValue={setTicker}
+          />
+        </label>
+        <label className={s.label}>
+          Выберите цвет:
+          <Autocomplete
+            list={["red", "blue", "green"]}
+            filterByKey={(element, query) =>
+              element.toLowerCase().includes(query.toLowerCase())
+            }
+            showElement={(element) => element}
+            value={color}
+            setValue={setColor}
+          />
         </label>
         <label className={s.label}>
           Введите вес компании:
@@ -80,8 +89,8 @@ const CompanySelector = () => {
         <button
           ref={refBtnAddCompany}
           className={s.btn_add}
-          onClick={onClickAddCompany}
-          disabled={!securities[ticker] || inputWeight.length === 0}
+          onClick={() => onClickAddCompany(ticker)}
+          disabled={ticker === null || inputWeight.length === 0}
         >
           Добавить компанию
         </button>
@@ -91,15 +100,3 @@ const CompanySelector = () => {
 };
 
 export { CompanySelector };
-
-// parent
-// button in parent => press
-// if press button => true =>
-
-// children
-// input in children => clear
-// useEffect(() =>{
-// if(true){
-// clean input
-// }
-//} ,[])
