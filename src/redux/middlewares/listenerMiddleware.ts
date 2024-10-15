@@ -46,10 +46,10 @@ startAppListening({
 	matcher: isAnyOf(fetchInitialDataThunk.fulfilled),
 	effect: async (action, listenerApi) => {
 		const { cart, data } = listenerApi.getState();
-		const updateImoex = Object.fromEntries(data.imoex.map(s => [s.ticker, s]))
-		const cartItem = new Set(cart.map(item => item.ticker))
-		const imoex = data.imoex.filter(item => !cartItem.has(item.ticker));
-		const resultCart = cart.map(item => updateImoex[item.ticker] ? updateImoex[item.ticker] : item)
+		const imoexDictionary = Object.fromEntries(data.imoex.map(s => [s.ticker, s]));
+		const keys = new Set(cart.map(item => item.ticker));
+		const imoex = data.imoex.filter(item => !keys.has(item.ticker));
+		const resultCart = cart.map(item => imoexDictionary[item.ticker] ? imoexDictionary[item.ticker] : item)
 		listenerApi.dispatch(imoexExcludingCartItem(imoex))
 		listenerApi.dispatch(updateItemCart(resultCart))
 	}

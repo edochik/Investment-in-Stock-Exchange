@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { filterByImoex } from "./filterByImoex";
 import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
-import { filterByKey } from "./filterByKey";
 
 const CompanySelector = () => {
   const [ticker, setTicker] = useState("");
@@ -13,12 +12,10 @@ const CompanySelector = () => {
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
   const companies = filterByImoex(securities, imoex.concat(nonImoexCompany));
-
   //для работы с кнопкой добавить компанию, когда нажимаем чтобы произошла очистка в input
-  const [isCleanInput, setIsCleanInput] = useState(false);
   //для этого вешаем ref на элемент, чтобы понимать что нажали на кнопку
   const refBtnAddCompany = useRef(null);
-  
+
   const onClickAddCompany = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -34,10 +31,6 @@ const CompanySelector = () => {
         tradingsession: 0,
       })
     );
-    // когда нажали на кнопку меняем состояние
-    if (refBtnAddCompany.current && refBtnAddCompany.current === event.target) {
-      setIsCleanInput(true);
-    }
     setTicker("");
     setInputWeight("");
   };
@@ -60,11 +53,19 @@ const CompanySelector = () => {
           Введите название:
           <div className={s.inner}>
             <Autocomplete
-              list={companies}
-              filterByKey={filterByKey}
-              setTicker={setTicker}
-              cleanInput={isCleanInput}
-              setCleanInput={setIsCleanInput}
+              list={companies} 
+              filterByKey={(
+                element,
+                query
+              ) =>
+                element.secid.toLowerCase().startsWith(query.toLowerCase()) ||
+                element.shortname.toLowerCase().startsWith(query.toLowerCase())
+              }
+              showElements={(element) =>
+                `${element.secid} ${element.shortname}`
+              }
+              value={ticker}
+              // setValue={setTicker}
             />
           </div>
         </label>
@@ -91,15 +92,3 @@ const CompanySelector = () => {
 };
 
 export { CompanySelector };
-
-// parent
-// button in parent => press
-// if press button => true =>
-
-// children
-// input in children => clear
-// useEffect(() =>{
-// if(true){
-// clean input
-// }
-//} ,[])
