@@ -29,7 +29,8 @@ const { imoex, securities } = extractImoexDataLocalStorage();
 
 export const initialState: InitialData = {
 	loading: "idle",
-	imoex, securities,
+	imoex,
+	securities,
 	error: null,
 };
 

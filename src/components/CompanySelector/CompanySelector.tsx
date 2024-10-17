@@ -5,42 +5,22 @@ import { filterBySecurities } from "./filterBySecurities";
 import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { Security } from "../../domain/Security";
-import { createSelector } from "@reduxjs/toolkit";
-import { RootState } from "../../redux/index.js";
 
 const CompanySelector = () => {
-  const [ticker, setTicker] = useState<Security | null>(null);
-  const [color, setColor] = useState<string | null>(null);
+  const [selectedSecurity, setSelectedSecurity] = useState<Security | null>(
+    null
+  );
   const [inputWeight, setInputWeight] = useState("");
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
   const cart = useAppSelector((state) => state.cart);
- 
+
   const companies = filterBySecurities(securities, [
     ...imoex,
     ...nonImoexCompany,
     ...cart,
   ]);
-  
-  const onClickAddCompany = (ticker: Security | null) => {
-    if (ticker !== null) {
-      const { shortname, secid, prevdate } = ticker;
-      dispatch(
-        selectedNonImoex({
-          indexid: "NONIMOEX",
-          tradedate: prevdate,
-          ticker: secid,
-          shortnames: shortname,
-          secids: secid,
-          weight: Number(inputWeight),
-          tradingsession: 0,
-        })
-      );
-      setTicker(null);
-      setInputWeight("");
-    }
-  };
 
   const handleChangeWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -53,36 +33,50 @@ const CompanySelector = () => {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { shortname, secid, prevdate } = selectedSecurity!;
+    dispatch(
+      selectedNonImoex({
+        indexid: "NONIMOEX",
+        tradedate: prevdate,
+        ticker: secid,
+        shortnames: shortname,
+        secids: secid,
+        weight: Number(inputWeight),
+        tradingsession: 0,
+      })
+    );
+    setSelectedSecurity(null);
+    setInputWeight("");
+  };
+
   return (
     <div className={s.SelectedCompany}>
-      <div className={s.wrapper}>
+      <form className={s.form} onSubmit={handleSubmit}>
         <label className={s.label}>
           Введите название:
           <Autocomplete
-            list={companies}
-            filterByKey={(element, query) =>
-              element.secid.toLowerCase().startsWith(query.toLowerCase()) ||
-              element.shortname.toLowerCase().startsWith(query.toLowerCase())
+            key={selectedSecurity?.secid} //
+            items={companies}
+            filterByKey={({ secid, shortname }, query) =>
+              [secid, shortname].some((val) =>
+                val.toLowerCase().startsWith(query.toLowerCase())
+              )
             }
-            render={(element) => (
+            render={({ secid, shortname }) => (
               <>
-                {element.secid} {element.shortname}
+                <img
+                  className={s.image}
+                  src={`${process.env.PUBLIC_URL}/images/${secid}.png`}
+                  alt={`логотип ${shortname}`}
+                />
+                {secid} {shortname}
               </>
             )}
-            value={ticker}
-            setValue={setTicker}
-          />
-        </label>
-        <label className={s.label}>
-          Выберите цвет:
-          <Autocomplete
-            list={["red", "blue", "green"]}
-            filterByKey={(element, query) =>
-              element.toLowerCase().includes(query.toLowerCase())
-            }
-            render={(element) => <>{element}</>}
-            value={color}
-            setValue={setColor}
+            value={selectedSecurity}
+            setValue={setSelectedSecurity}
+            inputStringValue={({ secid }) => secid}
           />
         </label>
         <label className={s.label}>
@@ -95,13 +89,13 @@ const CompanySelector = () => {
           />
         </label>
         <button
+          type="submit"
           className={s.btn_add}
-          onClick={() => onClickAddCompany(ticker)}
-          disabled={ticker === null || inputWeight.length === 0}
+          disabled={selectedSecurity === null || inputWeight.length === 0}
         >
           Добавить компанию
         </button>
-      </div>
+      </form>
     </div>
   );
 };

@@ -5,5 +5,5 @@ export interface ImoexSecurity {
 	shortnames: string,
 	secids: string,
 	weight: number,
-	tradingsession: number,
+	tradingsession: number, 
 }

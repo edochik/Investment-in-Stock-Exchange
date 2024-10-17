@@ -22,7 +22,10 @@
 		.selected {
 			background-color: green;
 		}
-		.company {
+		.item {
+			.image {
+				height: 1em;
+			}
 			&:hover {
 				cursor: pointer;
 				background-color: green;

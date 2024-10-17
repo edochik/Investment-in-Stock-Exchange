@@ -22,6 +22,9 @@ export interface Columns {
   sortFunction?: (a: Value, b: Value) => number;
 }
 
+
+// https://edochik.github.io/Investment-in-Stock-Exchange/images/CBOM.png
+
 export const columns: Columns[] = [
   {
     header: "Тикер",
@@ -29,7 +32,7 @@ export const columns: Columns[] = [
       <div className={s.ticker}>
         <img
           className={s.image}
-          src={`./images/${value.ticker}.png`}
+          src={`${process.env.PUBLIC_URL}/images/${value.ticker}.png`}
           alt={`Логотип ${value.shortnames}`}
         />
         <p className={s.text}>{value.ticker}</p>

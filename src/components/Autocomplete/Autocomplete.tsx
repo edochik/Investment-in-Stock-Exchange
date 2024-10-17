@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import s from "./Autocomplete.module.scss";
 interface AutocompleteProps<T> {
-  list: T[];
+  items: T[];
   filterByKey: (arg: T, query: string) => boolean;
   render: (arg: T) => React.ReactNode;
+  inputStringValue: (arg: T) => string;
   value: T | null;
-  setValue: (arg: T) => void;
+  setValue: (arg: T | null) => void;
 }
 
 const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
-  const { list, filterByKey, render, value, setValue } = props;
-  const [valueInput, setValueInput] = useState("");
-
-  useEffect(() => {
-    if (value === null) {
-      setValueInput("");
-    }
-  }, [value]);
+  const { items, filterByKey, render, value, setValue, inputStringValue } = props;
+  const [valueInput, setValueInput] = useState(value === null ? "" : inputStringValue(value));
 
   return (
     <div className={s.Autocomplete}>
@@ -24,19 +19,22 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
         className={s.input}
         type="text"
         value={valueInput}
-        onChange={(e) => setValueInput(e.target.value)}
+        onChange={(e) => {
+          setValueInput(e.target.value)
+          setValue(null);
+        }}
       />
       <ul className={s.list}>
-        {valueInput.length !== 0 &&
-          list
+        {value === null &&
+          items
             .filter((security) => filterByKey(security, valueInput))
             .map((item, index) => {
               return (
                 <li
                   key={index}
-                  className={s.company}
+                  className={s.item}
                   onClick={(e) => {
-                    setValueInput(e.currentTarget.innerHTML);
+                    setValueInput(inputStringValue(item));
                     setValue(item);
                   }}
                 >
@@ -44,8 +42,6 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
                 </li>
               );
             })}
-        {/* filterByKey сделать в компоненте а потом выводить информацию */}
-        {/* {list.length === 0 && <li>Нет данных</li>} */}
       </ul>
     </div>
   );
