@@ -1,8 +1,5 @@
-// import { memo, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { addCompanyToCart } from "../../redux/cartSlice/cartSlice";
-import { removeImoex } from "../../redux/initialDataSlice/initialDataSlice";
-import { removeNonImex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import s from "./RemoveCompany.module.scss";
 interface RemoveCompanyProps {
   ticker: string;
@@ -18,9 +15,7 @@ const RemoveCompany = ({ ticker }: RemoveCompanyProps) => {
       .concat(nonImoex)
       .find((company) => company.ticker === ticker);
     if (company !== undefined) {
-      dispatch(addCompanyToCart(company));
-      dispatch(removeImoex(ticker));
-      dispatch(removeNonImex(ticker));
+      dispatch(addCompanyToCart(ticker));
     }
   };
   return (

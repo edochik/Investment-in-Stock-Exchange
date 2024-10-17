@@ -14,13 +14,11 @@ const CompanySelector = () => {
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
-  const cart = useAppSelector((state) => state.cart);
 
-  const companies = filterBySecurities(securities, [
-    ...imoex,
-    ...nonImoexCompany,
-    ...cart,
-  ]);
+  const companies = filterBySecurities(
+    securities,
+    imoex.concat(nonImoexCompany)
+  );
 
   const handleChangeWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -57,7 +55,8 @@ const CompanySelector = () => {
         <label className={s.label}>
           Введите название:
           <Autocomplete
-            key={selectedSecurity?.secid} //
+            // мы даем ключ каждый раз разный в зависимости от ценных бумаг, как итог происходит перерендер компонента, что визуально выглядит как удаление написаного, так как компонент уже другой
+            key={selectedSecurity?.secid}
             items={companies}
             filterByKey={({ secid, shortname }, query) =>
               [secid, shortname].some((val) =>

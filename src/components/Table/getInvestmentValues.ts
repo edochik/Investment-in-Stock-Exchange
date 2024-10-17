@@ -1,19 +1,27 @@
-import { InitialData } from "../../redux/initialDataSlice/initialDataSlice";
+import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
+import { Security } from "../../domain/Security.js";
 import { UserData } from "../../redux/userDataSlice/userDataSlice";
 import { Value } from "./columns";
 
-export function getInvestmentValues(userData: UserData, securitiesData: InitialData): Value[] {
-	const { coefficients, stocks, moneyUser } = userData;
-	const { imoex, securities } = securitiesData;
+interface securitiesData {
+	moex: ImoexSecurity[],
+	securities: Record<string, Security>
+}
 
-	const weightCompanies = 1 / imoex.reduce((acc, company) => {
+export function getInvestmentValues(userData: UserData, securitiesData: securitiesData, cart: string[]): Value[] {
+	const { coefficients, stocks, moneyUser } = userData;
+	const { moex, securities } = securitiesData;
+	const keys = new Set(cart);
+	const weightCompanies = 1 / moex.reduce((acc, company) => {
 		const coeff = coefficients[company.ticker] ?? 1;
 		return acc + coeff * company.weight;
 	}, 0);
+
+
 	//* вывод в таблицу
 	//? дополнительные данные для расчета (без вывода)
 
-	return imoex.map((dataCompany) => {
+	return moex.filter(({ ticker }) => !keys.has(ticker)).map((dataCompany) => {
 		const { ticker, shortnames } = dataCompany; //* ticker и shornames Api
 		let { weight } = dataCompany //* вес компании Api
 

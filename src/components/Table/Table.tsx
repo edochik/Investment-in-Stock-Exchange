@@ -15,6 +15,7 @@ export const Table = () => {
     direction: "desc",
     column: null,
   });
+  
   const investmentValues = useAppSelector(selectInvestmentValues);
 
   const onClickSelectedColumn = (column: Columns) => {

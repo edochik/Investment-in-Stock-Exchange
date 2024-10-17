@@ -22,9 +22,6 @@ export interface Columns {
   sortFunction?: (a: Value, b: Value) => number;
 }
 
-
-// https://edochik.github.io/Investment-in-Stock-Exchange/images/CBOM.png
-
 export const columns: Columns[] = [
   {
     header: "Тикер",

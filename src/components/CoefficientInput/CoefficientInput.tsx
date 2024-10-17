@@ -1,5 +1,5 @@
 import s from "./CoefficientInput.module.scss";
-import { useState } from "react";
+
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { updateCoefficient } from "../../redux/userDataSlice/userDataSlice";
 interface CoefficientInputProps {

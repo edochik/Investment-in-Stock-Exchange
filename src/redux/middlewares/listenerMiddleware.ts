@@ -1,8 +1,8 @@
 import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../index";
 import { updateCoefficient, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
-import { addNonImoex, removeNonImex, selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
-import { addImoex, removeImoex, imoexExcludingCartItem } from "../initialDataSlice/initialDataSlice";
+import { selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
+import { imoexExcludingCartItem } from "../initialDataSlice/initialDataSlice";
 import { addCompanyToCart, removeCompanyFromCart, updateItemCart } from "../cartSlice/cartSlice";
 import { fetchInitialDataThunk } from "../initialDataSlice/thunk";
 
@@ -18,10 +18,6 @@ startAppListening({
 		updateStocks,
 		updateUserMoney,
 		selectedNonImoex,
-		addNonImoex,
-		removeNonImex,
-		addImoex,
-		removeImoex,
 		addCompanyToCart,
 		removeCompanyFromCart,
 		imoexExcludingCartItem
@@ -45,13 +41,13 @@ startAppListening({
 startAppListening({
 	matcher: isAnyOf(fetchInitialDataThunk.fulfilled),
 	effect: async (action, listenerApi) => {
-		const { cart, data } = listenerApi.getState();
-		const imoexDictionary = Object.fromEntries(data.imoex.map(s => [s.ticker, s]));
-		const keys = new Set(cart.map(item => item.ticker));
-		const imoex = data.imoex.filter(item => !keys.has(item.ticker));
-		const resultCart = cart.map(item => imoexDictionary[item.ticker] ? imoexDictionary[item.ticker] : item)
-		listenerApi.dispatch(imoexExcludingCartItem(imoex))
-		listenerApi.dispatch(updateItemCart(resultCart))
+		// const { cart, data } = listenerApi.getState();
+		// const imoexDictionary = Object.fromEntries(data.imoex.map(s => [s.ticker, s]));
+		// const keys = new Set(cart.map(item => item.ticker));
+		// const imoex = data.imoex.filter(item => !keys.has(item.ticker));
+		// const resultCart = cart.map(item => imoexDictionary[item.ticker] ? imoexDictionary[item.ticker] : item)
+		// listenerApi.dispatch(imoexExcludingCartItem(imoex))
+		// listenerApi.dispatch(updateItemCart(resultCart))
 	}
 });
 
