@@ -3,7 +3,7 @@ import s from "./Autocomplete.module.scss";
 interface AutocompleteProps<T> {
   list: T[];
   filterByKey: (arg: T, query: string) => boolean;
-  render: (arg: T) => string;
+  render: (arg: T) => React.ReactNode;
   value: T | null;
   setValue: (arg: T) => void;
 }

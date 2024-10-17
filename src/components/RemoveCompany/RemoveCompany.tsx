@@ -18,10 +18,9 @@ const RemoveCompany = ({ ticker }: RemoveCompanyProps) => {
       .concat(nonImoex)
       .find((company) => company.ticker === ticker);
     if (company !== undefined) {
-      const { indexid } = company;
       dispatch(addCompanyToCart(company));
-      dispatch(removeImoex({ ticker, type: indexid }));
-      dispatch(removeNonImex({ ticker, type: indexid }));
+      dispatch(removeImoex(ticker));
+      dispatch(removeNonImex(ticker));
     }
   };
   return (
