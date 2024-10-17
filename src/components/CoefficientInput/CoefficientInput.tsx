@@ -8,9 +8,7 @@ interface CoefficientInputProps {
 
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
   const coefficient = useAppSelector((state) => state.userData.coefficients);
-  const [input, setInput] = useState(coefficient[ticker] || "1");
   const dispatch = useAppDispatch();
-
   const handleChangeUpdateCoefficients = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -18,7 +16,6 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
     if (!/^[0-9.]*$/.test(value)) {
       return;
     }
-    setInput(value);
     const valueAsNumber = Number(value);
     if (!Number.isNaN(valueAsNumber)) {
       dispatch(updateCoefficient({ ticker, count: valueAsNumber }));
@@ -30,7 +27,7 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
       <input
         className={s.input}
         type="text"
-        value={input}
+        value={coefficient[ticker] || "1"}
         onChange={(e) => handleChangeUpdateCoefficients(e)}
       />
     </>
