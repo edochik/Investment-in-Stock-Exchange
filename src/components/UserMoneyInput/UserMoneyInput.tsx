@@ -1,16 +1,13 @@
 import s from "./UserMoneyInput.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { updateUserMoney } from "../../redux/userDataSlice/userDataSlice";
-import { useState } from "react";
 import { formatPrice } from "./formatPrice";
 
 const UserMoneyInput = () => {
   const money = useAppSelector((state) => state.userData.moneyUser);
-  const [input, setInput] = useState(formatPrice(money));
   const dispatch = useAppDispatch();
   const handleChangeUpdateMoney = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value.replaceAll(" ", ""));
-    setInput(formatPrice(value));
     dispatch(updateUserMoney(value));
   };
   return (
@@ -19,7 +16,7 @@ const UserMoneyInput = () => {
       <input
         type="text"
         className={s.input}
-        value={input}
+        value={formatPrice(money)}
         onChange={(e) => handleChangeUpdateMoney(e)}
       />
     </div>

@@ -9,26 +9,23 @@ interface StockNumberInputProps {
 
 const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
   const stocks = useAppSelector((state) => state.userData.stocks);
-  const [input, setInput] = useState(stocks[ticker] || "0");
   const dispatch = useAppDispatch();
   const handleChangeUpdateStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (!/^[0-9.]*$/.test(value)) {
       return;
     }
-    setInput(value);
     const valueIsNumber = Number(value);
     if (!Number.isNaN(valueIsNumber)) {
       dispatch(updateStocks({ ticker, count: valueIsNumber }));
     }
   };
-
   return (
     <>
       <input
         className={s.input}
         type="text"
-        value={input}
+        value={stocks[ticker] || "0"}
         onChange={(e) => handleChangeUpdateStocks(e)}
       />
     </>

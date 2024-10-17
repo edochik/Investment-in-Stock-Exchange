@@ -1,29 +1,22 @@
 import { useEffect, useState } from "react";
 import s from "./Autocomplete.module.scss";
-
 interface AutocompleteProps<T> {
   list: T[];
   filterByKey: (arg: T, query: string) => boolean;
-  showElement: (arg: T) => string;
+  render: (arg: T) => string;
   value: T | null;
   setValue: (arg: T) => void;
 }
-// если фильтрую из вне, так и выводить информацию я должен из вне
-// внутри не получится сделать, item.shortname, item.secid ??? внутри не должен знать об этом снаружи
+
 const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
-  const { list, filterByKey, showElement, value, setValue } = props;
+  const { list, filterByKey, render, value, setValue } = props;
   const [valueInput, setValueInput] = useState("");
-  
+
   useEffect(() => {
     if (value === null) {
       setValueInput("");
     }
   }, [value]);
-
-  const onClickValue = (item: T) => {
-    setValue(item);
-    setValueInput(showElement(item));
-  };
 
   return (
     <div className={s.Autocomplete}>
@@ -42,9 +35,12 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
                 <li
                   key={index}
                   className={s.company}
-                  onClick={() => onClickValue(item)}
+                  onClick={(e) => {
+                    setValueInput(e.currentTarget.innerHTML);
+                    setValue(item);
+                  }}
                 >
-                  {showElement(item)}
+                  {render(item)}
                 </li>
               );
             })}

@@ -1,12 +1,12 @@
 import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
 import { Security } from "../../domain/Security.js";
 
-export function filterByImoex(
+export function filterBySecurities(
   securities: Record<string, Security>,
-  imoex: ImoexSecurity[]
+  companies: ImoexSecurity[]
 ) {
-  const dictionary = new Set(imoex.map((item) => item.ticker));
+  const map = new Set(companies.map((item) => item.ticker));
   return Object.values(securities).filter(
-    (security) => !dictionary.has(security.secid)
+    (security) => !map.has(security.secid)
   );
 }
