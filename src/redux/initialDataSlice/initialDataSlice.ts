@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Security } from "../../domain/Security";
 import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { fetchInitialDataThunk } from "./thunk";
@@ -42,11 +42,8 @@ export const initialDataSlice = createSlice({
 				state.imoex.push(action.payload)
 			}
 		},
-		removeImoex: (state, action) => {
-			const { type, ticker } = action.payload;
-			if (type === "IMOEX") {
-				state.imoex = state.imoex.filter(company => company.ticker !== ticker)
-			}
+		removeImoex: (state, action: PayloadAction<string>) => {
+			state.imoex = state.imoex.filter(company => company.ticker !== action.payload)
 		},
 		imoexExcludingCartItem: (state, action) => {
 			state.imoex = action.payload;

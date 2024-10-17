@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { ImoexSecurity } from "../../domain/ImoexSecurity.js"
 
 const extractSelectedNonImoexLocalStorage = (): ImoexSecurity[] => {
@@ -19,7 +19,7 @@ export const nonImoexCompanySlice = createSlice({
 	name: 'nonImoex',
 	initialState,
 	reducers: {
-		selectedNonImoex: (state, action) => {
+		selectedNonImoex: (state, action: PayloadAction<ImoexSecurity>) => {
 			state.push(action.payload);
 		},
 		addNonImoex: (state, action) => {
@@ -27,11 +27,8 @@ export const nonImoexCompanySlice = createSlice({
 				state.push(action.payload)
 			}
 		},
-		removeNonImex: (state, action) => {
-			const { type, ticker } = action.payload;
-			if (type === "NONIMOEX") {
-				return state.filter(company => company.ticker !== ticker)
-			}
+		removeNonImex: (state, action: PayloadAction<string>) => {
+			return state.filter(company => company.ticker !== action.payload)
 		}
 	}
 })

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import s from "./CompanySelector.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { filterBySecurities } from "./filterByImoex";
+import { filterBySecurities } from "./filterBySecurities";
 import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { Security } from "../../domain/Security";
+import { createSelector } from "@reduxjs/toolkit";
+import { RootState } from "../../redux/index.js";
 
 const CompanySelector = () => {
   const [ticker, setTicker] = useState<Security | null>(null);
@@ -13,10 +15,14 @@ const CompanySelector = () => {
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
-  const companies = filterBySecurities(
-    securities,
-    imoex.concat(nonImoexCompany)
-  );
+  const cart = useAppSelector((state) => state.cart);
+ 
+  const companies = filterBySecurities(securities, [
+    ...imoex,
+    ...nonImoexCompany,
+    ...cart,
+  ]);
+  
   const onClickAddCompany = (ticker: Security | null) => {
     if (ticker !== null) {
       const { shortname, secid, prevdate } = ticker;
@@ -58,7 +64,11 @@ const CompanySelector = () => {
               element.secid.toLowerCase().startsWith(query.toLowerCase()) ||
               element.shortname.toLowerCase().startsWith(query.toLowerCase())
             }
-            render={(element) => `${element.secid} ${element.shortname}`}
+            render={(element) => (
+              <>
+                {element.secid} {element.shortname}
+              </>
+            )}
             value={ticker}
             setValue={setTicker}
           />
@@ -70,7 +80,7 @@ const CompanySelector = () => {
             filterByKey={(element, query) =>
               element.toLowerCase().includes(query.toLowerCase())
             }
-            render={(element) => element}
+            render={(element) => <>{element}</>}
             value={color}
             setValue={setColor}
           />

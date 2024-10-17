@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { ImoexSecurity } from "../../domain/ImoexSecurity"
 
 const extractCartDataLocalStorage = (): ImoexSecurity[] => {
@@ -19,13 +19,13 @@ export const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		addCompanyToCart: (state, action) => {
+		addCompanyToCart: (state, action: PayloadAction<ImoexSecurity>) => {
 			state.push(action.payload)
 		},
-		removeCompanyFromCart: (state, action) => {
+		removeCompanyFromCart: (state, action: PayloadAction<string>) => {
 			return state.filter(item => item.secids !== action.payload)
 		},
-		updateItemCart: (state, action) => {
+		updateItemCart: (state, action: PayloadAction<ImoexSecurity[]>) => {
 			return action.payload
 		}
 	}
