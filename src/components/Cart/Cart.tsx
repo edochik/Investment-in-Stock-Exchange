@@ -14,6 +14,8 @@ const Cart = () => {
 
   const onClickRemoveCompany = (secids: string) => {
     const company = cart.find((item) => item.secids === secids);
+    // if (action.payload.indexid === "NONIMOEX") {
+
     dispatch(addImoex(company));
     dispatch(addNonImoex(company));
     dispatch(removeCompanyFromCart(secids));

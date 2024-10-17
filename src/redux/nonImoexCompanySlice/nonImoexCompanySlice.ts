@@ -13,6 +13,13 @@ const extractSelectedNonImoexLocalStorage = (): ImoexSecurity[] => {
 	}
 }
 
+export interface UserSecurity {
+	indexId: "IMOEX" | "NONIMOEX",
+	ticker: string,
+	shortname: string,
+	weight: number,
+}
+
 const initialState: ImoexSecurity[] = extractSelectedNonImoexLocalStorage()
 
 export const nonImoexCompanySlice = createSlice({

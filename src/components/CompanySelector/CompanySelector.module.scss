@@ -3,13 +3,16 @@
 	margin-bottom: 300px;
 	display: flex;
 	justify-content: space-between;
-	.wrapper {
+	.form {
 		display: flex;
 		column-gap: 20px;
 		.label {
 			text-align: left;
 			display: flex;
 			flex-direction: column;
+			.image {
+				height: 1em;
+			}
 		}
 		.input {
 			@include input-style();
