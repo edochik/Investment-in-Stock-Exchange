@@ -22,7 +22,7 @@ export function getInvestmentValues(userData: UserData, securitiesData: securiti
 	//? дополнительные данные для расчета (без вывода)
 
 	return moex.filter(({ ticker }) => !keys.has(ticker)).map((dataCompany) => {
-		const { ticker, shortnames } = dataCompany; //* ticker и shornames Api
+		const { ticker, shortnames, indexid } = dataCompany; //* ticker и shornames Api
 		let { weight } = dataCompany //* вес компании Api
 
 		const price = securities[ticker].prevprice; //* цена за акцию Api
@@ -41,6 +41,7 @@ export function getInvestmentValues(userData: UserData, securitiesData: securiti
 		const progressTarget = stocksBuyUser * 100 / aroundStockLotsize; //*Цель достигнута в %
 		weight *= coefficient
 		return {
+			indexid,
 			ticker,
 			shortnames,
 			weight,

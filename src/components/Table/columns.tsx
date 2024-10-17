@@ -4,6 +4,7 @@ import { StockNumberInput } from "../StockNumberInput/StockNumberInput";
 import { RemoveCompany } from "../RemoveCompany/RemoveCompany";
 
 export interface Value {
+  indexid: string;
   ticker: string;
   shortnames: string;
   weight: number;
@@ -41,6 +42,11 @@ export const columns: Columns[] = [
     header: "Название компании",
     cell: (value) => value.shortnames,
     sortFunction: (a, b) => b.shortnames.localeCompare(a.shortnames),
+  },
+  {
+    header: "Imoex | NonImoex",
+    cell: (value) => value.indexid,
+    // sortFunction: (a, b) => b.shortnames.localeCompare(a.shortnames),
   },
   {
     header: "Вес компании",
