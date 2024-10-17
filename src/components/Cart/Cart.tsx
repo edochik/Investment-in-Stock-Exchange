@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import s from "./Cart.module.scss";
-import { addImoex } from "../../redux/initialDataSlice/initialDataSlice";
-import { addNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { removeCompanyFromCart } from "../../redux/cartSlice/cartSlice";
 import classNames from "classnames";
 
@@ -10,15 +8,11 @@ const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const cart = useAppSelector((state) => state.cart);
+  const securities = useAppSelector((state) => state.data.securities);
   const dispatch = useAppDispatch();
 
-  const onClickRemoveCompany = (secids: string) => {
-    const company = cart.find((item) => item.secids === secids);
-    // if (action.payload.indexid === "NONIMOEX") {
-
-    dispatch(addImoex(company));
-    dispatch(addNonImoex(company));
-    dispatch(removeCompanyFromCart(secids));
+  const onClickRemoveCompany = (secid: string) => {
+    dispatch(removeCompanyFromCart(secid));
   };
 
   useEffect(() => {
@@ -54,15 +48,21 @@ const Cart = () => {
           })}
         >
           {cart.map((item) => {
-            const { secids, indexid, shortnames } = item;
+            const { secid, shortname } = securities[item];
             return (
-              <li className={s.item} key={secids}>
-                <p className={s.text}>{indexid}</p>
-                <p className={s.text}>{secids}</p>
-                <p className={s.text}>{shortnames}</p>
+              <li className={s.item} key={secid}>
+                <div className={s.inner}>
+                  <p className={s.text}>{secid}</p>
+                  <img
+                    className={s.image}
+                    src={`${process.env.PUBLIC_URL}/images/${secid}.png`}
+                    alt={`логотип ${shortname}`}
+                  />
+                </div>
+                <p className={s.text}>{shortname}</p>
                 <button
                   className={s.button}
-                  onClick={() => onClickRemoveCompany(secids)}
+                  onClick={() => onClickRemoveCompany(secid)}
                 >
                   📓
                 </button>
