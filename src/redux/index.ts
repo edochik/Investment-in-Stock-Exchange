@@ -19,7 +19,6 @@ export const store = configureStore({
 
 store.dispatch(fetchInitialDataThunk())
 
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

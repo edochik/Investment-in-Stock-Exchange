@@ -23,9 +23,9 @@
 			background-color: green;
 		}
 		.item {
-			.image {
-				height: 1em;
-			}
+			display: flex;
+			align-items: center;
+			column-gap: 5px;
 			&:hover {
 				cursor: pointer;
 				background-color: green;

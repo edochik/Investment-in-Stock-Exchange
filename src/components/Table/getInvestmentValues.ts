@@ -1,5 +1,5 @@
-import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
-import { Security } from "../../domain/Security.js";
+import { ImoexSecurity } from "../../domain/ImoexSecurity";
+import { Security } from "../../domain/Security";
 import { UserData } from "../../redux/userDataSlice/userDataSlice";
 import { Value } from "./columns";
 
@@ -11,12 +11,12 @@ interface securitiesData {
 export function getInvestmentValues(userData: UserData, securitiesData: securitiesData, cart: string[]): Value[] {
 	const { coefficients, stocks, moneyUser } = userData;
 	const { moex, securities } = securitiesData;
+	
 	const keys = new Set(cart);
 	const weightCompanies = 1 / moex.reduce((acc, company) => {
 		const coeff = coefficients[company.ticker] ?? 1;
 		return acc + coeff * company.weight;
 	}, 0);
-
 
 	//* вывод в таблицу
 	//? дополнительные данные для расчета (без вывода)

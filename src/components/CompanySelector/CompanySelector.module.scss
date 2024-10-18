@@ -13,6 +13,10 @@
 			.image {
 				height: 1em;
 			}
+			.text {
+				margin: 0;
+				padding: 0;
+			}
 		}
 		.input {
 			@include input-style();

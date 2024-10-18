@@ -5,6 +5,7 @@ import { filterBySecurities } from "./filterBySecurities";
 import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { Security } from "../../domain/Security";
+import { RenderLogo } from "../RenderLogo/RenderLogo";
 
 const CompanySelector = () => {
   const [selectedSecurity, setSelectedSecurity] = useState<Security | null>(
@@ -14,7 +15,6 @@ const CompanySelector = () => {
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
-
   const companies = filterBySecurities(
     securities,
     imoex.concat(nonImoexCompany)
@@ -65,12 +65,10 @@ const CompanySelector = () => {
             }
             render={({ secid, shortname }) => (
               <>
-                <img
-                  className={s.image}
-                  src={`${process.env.PUBLIC_URL}/images/${secid}.png`}
-                  alt={`логотип ${shortname}`}
-                />
-                {secid} {shortname}
+                <RenderLogo secid={secid} shortname={shortname} />
+                <p className={s.text}>
+                  {secid} {shortname}
+                </p>
               </>
             )}
             value={selectedSecurity}

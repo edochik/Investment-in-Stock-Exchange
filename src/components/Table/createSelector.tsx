@@ -11,12 +11,12 @@ export const selectInvestmentValues = createSelector(
   [selectUserData, selectSecuritiesData, selectNonImoex, selectCart],
   (userData, securitiesData, nonImoex, cart) => {
     const { imoex, securities } = securitiesData;
-    console.log(imoex);
-    console.log(nonImoex);
-    // правильно ли это?????
-    // if (Object.values(rest.securities).length === 0) {
-    //   return null;
-    // }
+    // console.log(imoex, securities, "selectInvestmentValues");
+    // правильно ли это imoex => делается запрос || nonImoex => localStorage - быстрее отрабатывает
+    // возникает ошибка todakey = разные, возникает ошибка
+    if (Object.values(securities).length === 0) {
+      return null;
+    }
     const moex = imoex.concat(nonImoex);
     return getInvestmentValues(userData, { moex, securities }, cart);
   }
