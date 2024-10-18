@@ -2,6 +2,7 @@ import s from "./Table.module.scss";
 import { CoefficientInput } from "../CoefficientInput/CoefficientInput";
 import { StockNumberInput } from "../StockNumberInput/StockNumberInput";
 import { RemoveCompany } from "../RemoveCompany/RemoveCompany";
+import { RenderLogo } from "../RenderLogo/RenderLogo";
 
 export interface Value {
   indexid: string;
@@ -28,11 +29,7 @@ export const columns: Columns[] = [
     header: "Тикер",
     cell: (value) => (
       <div className={s.ticker}>
-        <img
-          className={s.image}
-          src={`${process.env.PUBLIC_URL}/images/${value.ticker}.png`}
-          alt={`Логотип ${value.shortnames}`}
-        />
+        <RenderLogo secid={value.ticker} shortname={value.shortnames} />
         <p className={s.text}>{value.ticker}</p>
       </div>
     ),

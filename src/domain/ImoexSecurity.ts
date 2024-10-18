@@ -1,9 +1,9 @@
 export interface ImoexSecurity {
-	indexid: string,
-	tradedate: string,
+	indexid: string, // Imoex |nonImoex
+	tradedate: string, // не нужно
 	ticker: string,
 	shortnames: string,
-	secids: string,
+	secids: string, // не нужно
 	weight: number,
-	tradingsession: number, 
+	tradingsession: number, // не нужно
 }

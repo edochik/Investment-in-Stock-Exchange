@@ -11,6 +11,7 @@ interface securitiesData {
 export function getInvestmentValues(userData: UserData, securitiesData: securitiesData, cart: string[]): Value[] {
 	const { coefficients, stocks, moneyUser } = userData;
 	const { moex, securities } = securitiesData;
+	
 	const keys = new Set(cart);
 	const weightCompanies = 1 / moex.reduce((acc, company) => {
 		const coeff = coefficients[company.ticker] ?? 1;

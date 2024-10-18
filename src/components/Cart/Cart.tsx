@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import s from "./Cart.module.scss";
 import { removeCompanyFromCart } from "../../redux/cartSlice/cartSlice";
 import classNames from "classnames";
+import { RenderLogo } from "../RenderLogo/RenderLogo";
 
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,7 @@ const Cart = () => {
       window.addEventListener("scroll", scroll);
     };
   }, []);
+
   return (
     <div className={s.Cart} ref={ref}>
       <button
@@ -52,12 +54,8 @@ const Cart = () => {
             return (
               <li className={s.item} key={secid}>
                 <div className={s.inner}>
+                  <RenderLogo secid={secid} shortname={shortname} />
                   <p className={s.text}>{secid}</p>
-                  <img
-                    className={s.image}
-                    src={`${process.env.PUBLIC_URL}/images/${secid}.png`}
-                    alt={`логотип ${shortname}`}
-                  />
                 </div>
                 <p className={s.text}>{shortname}</p>
                 <button
