@@ -5,9 +5,20 @@ const API_IMOEX = 'https://iss.moex.com/iss/statistics/engines/stock/markets/ind
 
 // почему мы не перехватываем здесь ошибку try{}catch()??
 export async function fetchImoex() {
-	const data = await fetchData<"analytics">(API_IMOEX)
-	return formatSecurityData<ImoexSecurity>(data.analytics)
+	const data = await fetchData<"analytics">(API_IMOEX);
+	const result = formatSecurityData<ImoexSecurity>(data.analytics);
+	return result.map(company => {
+		const { ticker, shortnames, weight } = company;
+		return {
+			ticker,
+			shortname: shortnames,
+			weight
+		}
+	})
 }
+
+
+
 
 // 'https://iss.moex.com/iss/securities.json'
 // 'https://iss.moex.com/iss/engines/stock/markets/shares/securities/AFLT.xml'

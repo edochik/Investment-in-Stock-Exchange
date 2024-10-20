@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchImoex } from "../../api/fetchImoex";
 import { fetchSecurities } from "../../api/fetchSecurities";
-import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { Security } from "../../domain/Security";
+import { ClientSecurity } from "../../domain/ClientSecurity.js";
 
 const extractImoexDataLocalStorage = async (todayKey: string): Promise<{
-	imoex: ImoexSecurity[];
+	imoex: ClientSecurity[];
 	securities: Security[];
 }> => {
 	try {
@@ -24,7 +24,7 @@ const extractImoexDataLocalStorage = async (todayKey: string): Promise<{
 }
 
 export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async (): Promise<{
-	imoex: ImoexSecurity[];
+	imoex: ClientSecurity[];
 	securities: Security[];
 }> => {
 	const today = new Date();

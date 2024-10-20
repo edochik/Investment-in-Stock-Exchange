@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { ImoexSecurity } from "../../domain/ImoexSecurity"
 
 const extractCartLocalStorage = () => {
 	const cart = localStorage.getItem('cart');
@@ -25,12 +24,8 @@ export const cartSlice = createSlice({
 		removeCompanyFromCart: (state, action: PayloadAction<string>) => {
 			return state.filter(item => item !== action.payload)
 		},
-		// делал для обновление middleware
-		updateItemCart: (state, action: PayloadAction<ImoexSecurity[]>) => {
-			// return action.payload
-		}
 	}
 })
 
-export const { addCompanyToCart, removeCompanyFromCart, updateItemCart } = cartSlice.actions
+export const { addCompanyToCart, removeCompanyFromCart } = cartSlice.actions
 

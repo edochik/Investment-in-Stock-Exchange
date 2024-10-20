@@ -33,16 +33,12 @@ const CompanySelector = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { shortname, secid, prevdate } = selectedSecurity!;
+    const { shortname, secid } = selectedSecurity!;
     dispatch(
       selectedNonImoex({
-        indexid: "NONIMOEX",
-        tradedate: prevdate,
         ticker: secid,
-        shortnames: shortname,
-        secids: secid,
+        shortname,
         weight: Number(inputWeight),
-        tradingsession: 0,
       })
     );
     setSelectedSecurity(null);

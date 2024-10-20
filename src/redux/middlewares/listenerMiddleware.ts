@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../index";
 import { updateCoefficient, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
 import { selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
 import { imoexExcludingCartItem } from "../initialDataSlice/initialDataSlice";
-import { addCompanyToCart, removeCompanyFromCart, updateItemCart } from "../cartSlice/cartSlice";
+import { addCompanyToCart, removeCompanyFromCart } from "../cartSlice/cartSlice";
 import { fetchInitialDataThunk } from "../initialDataSlice/thunk";
 
 export const listenerMiddleware = createListenerMiddleware()
@@ -25,6 +25,7 @@ startAppListening({
 	// одно из четырех полей  type | actionCreator | matcher |predicate
 	effect: async (action, listenerApi) => {
 		const { userData, nonImoexCompany, cart, data } = listenerApi.getState()
+		console.log(data, 'middleware');
 		const imoexDataRaw = localStorage.getItem('imoexData');
 		if (imoexDataRaw !== null) {
 			const imoexData = JSON.parse(imoexDataRaw);
