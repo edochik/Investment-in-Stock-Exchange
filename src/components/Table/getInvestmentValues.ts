@@ -1,5 +1,5 @@
-import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
-import { Security } from "../../domain/Security.js";
+import { ImoexSecurity } from "../../domain/ImoexSecurity";
+import { Security } from "../../domain/Security";
 import { UserData } from "../../redux/userDataSlice/userDataSlice";
 import { Value } from "./columns";
 
@@ -17,7 +17,6 @@ export function getInvestmentValues(userData: UserData, securitiesData: securiti
 		const coeff = coefficients[company.ticker] ?? 1;
 		return acc + coeff * company.weight;
 	}, 0);
-
 
 	//* вывод в таблицу
 	//? дополнительные данные для расчета (без вывода)

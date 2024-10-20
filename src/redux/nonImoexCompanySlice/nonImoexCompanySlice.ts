@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { ImoexSecurity } from "../../domain/ImoexSecurity.js"
+import { ImoexSecurity } from "../../domain/ImoexSecurity"
 
 const extractNonImoexLocalStorage = (): ImoexSecurity[] => {
 	const nonImoexCompany = localStorage.getItem('nonImoex');
@@ -12,12 +12,7 @@ const extractNonImoexLocalStorage = (): ImoexSecurity[] => {
 		return []
 	}
 }
-export interface UserSecurity {
-	indexId: "IMOEX" | "NONIMOEX",
-	ticker: string,
-	shortname: string,
-	weight: number,
-}
+
 
 const initialState: ImoexSecurity[] = extractNonImoexLocalStorage()
 

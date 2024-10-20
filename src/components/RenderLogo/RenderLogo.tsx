@@ -1,4 +1,4 @@
-import { securityHasSvg } from "../../utils/typescript";
+import { securityHasSvg } from "./securityHasSvg";
 import s from "./RenderLogo.module.scss";
 
 interface RenderLogoProps {

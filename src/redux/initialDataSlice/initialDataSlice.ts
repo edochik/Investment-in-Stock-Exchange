@@ -49,6 +49,14 @@ export const initialDataSlice = createSlice({
 			.addCase(fetchInitialDataThunk.fulfilled, (state, action) => {
 				state.loading = "succeeded";
 				const { imoex, securities } = action.payload;
+				console.log(imoex.map(company => {
+					const { ticker, shortnames, weight } = company;
+					return {
+						ticker,
+						shortname: shortnames,
+						weight
+					}
+				}));
 				state.imoex = imoex;
 				state.securities = Object.fromEntries(securities.map(s => [s.secid, s]))
 			})

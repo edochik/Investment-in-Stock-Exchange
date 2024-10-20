@@ -1,5 +1,5 @@
-import { ImoexSecurity } from "../../domain/ImoexSecurity.js";
-import { Security } from "../../domain/Security.js";
+import { ImoexSecurity } from "../../domain/ImoexSecurity";
+import { Security } from "../../domain/Security";
 
 export function filterBySecurities(
   securities: Record<string, Security>,

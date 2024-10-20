@@ -15,7 +15,6 @@ const CompanySelector = () => {
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
   const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
-  console.log(Object.keys(securities));
   const companies = filterBySecurities(
     securities,
     imoex.concat(nonImoexCompany)

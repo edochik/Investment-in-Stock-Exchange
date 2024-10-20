@@ -13,10 +13,10 @@ export const selectInvestmentValues = createSelector(
     const { imoex, securities } = securitiesData;
     // console.log(imoex, securities, "selectInvestmentValues");
     // правильно ли это imoex => делается запрос || nonImoex => localStorage - быстрее отрабатывает
-    // if (Object.values(securities).length === 0) {
-    //   return null;
-    // }
-    // console.log(Object.keys(securities));
+    // возникает ошибка todakey = разные, возникает ошибка
+    if (Object.values(securities).length === 0) {
+      return null;
+    }
     const moex = imoex.concat(nonImoex);
     return getInvestmentValues(userData, { moex, securities }, cart);
   }
