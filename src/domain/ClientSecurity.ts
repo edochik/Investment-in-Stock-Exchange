@@ -1,4 +1,4 @@
-export interface UserSecurity {
+export interface ClientSecurity {
 	ticker: string,
 	shortname: string,
 	weight: number,

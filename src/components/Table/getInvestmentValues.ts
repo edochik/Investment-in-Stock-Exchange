@@ -1,17 +1,17 @@
-import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { Security } from "../../domain/Security";
+import { ClientSecurity } from "../../domain/ClientSecurity.js";
 import { UserData } from "../../redux/userDataSlice/userDataSlice";
 import { Value } from "./columns";
 
 interface securitiesData {
-	moex: ImoexSecurity[],
+	moex: ClientSecurity[],
 	securities: Record<string, Security>
 }
 
 export function getInvestmentValues(userData: UserData, securitiesData: securitiesData, cart: string[]): Value[] {
 	const { coefficients, stocks, moneyUser } = userData;
 	const { moex, securities } = securitiesData;
-	
+
 	const keys = new Set(cart);
 	const weightCompanies = 1 / moex.reduce((acc, company) => {
 		const coeff = coefficients[company.ticker] ?? 1;
@@ -22,12 +22,10 @@ export function getInvestmentValues(userData: UserData, securitiesData: securiti
 	//? дополнительные данные для расчета (без вывода)
 
 	return moex.filter(({ ticker }) => !keys.has(ticker)).map((dataCompany) => {
-		const { ticker, shortnames, indexid } = dataCompany; //* ticker и shornames Api
+		const { ticker, shortname } = dataCompany; //* ticker и shornames Api
 		let { weight } = dataCompany //* вес компании Api
-
 		const price = securities[ticker].prevprice; //* цена за акцию Api
 		const lotsize = securities[ticker].lotsize; //? лотность  Api
-
 		const stocksBuyUser = stocks[ticker] ?? 0; //? купленно акций
 		const totalStocksBuyUser = stocksBuyUser * price //* сумма купленных акций
 		const coefficient = coefficients[ticker] ?? 1; //* коэффициент
@@ -41,9 +39,8 @@ export function getInvestmentValues(userData: UserData, securitiesData: securiti
 		const progressTarget = stocksBuyUser * 100 / aroundStockLotsize; //*Цель достигнута в %
 		weight *= coefficient
 		return {
-			indexid,
 			ticker,
-			shortnames,
+			shortnames: shortname,
 			weight,
 			price,
 			stocksBuyUser,

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Security } from "../../domain/Security";
-import { ImoexSecurity } from "../../domain/ImoexSecurity";
 import { fetchInitialDataThunk } from "./thunk";
+import { ClientSecurity } from "../../domain/ClientSecurity.js";
 
 export interface InitialData {
 	loading: "idle" | "pending" | "succeeded" | "failed";
 	error: string | null;
-	imoex: ImoexSecurity[],
+	imoex: ClientSecurity[],
 	securities: Record<Security["secid"], Security>;
 }
 
@@ -49,14 +49,6 @@ export const initialDataSlice = createSlice({
 			.addCase(fetchInitialDataThunk.fulfilled, (state, action) => {
 				state.loading = "succeeded";
 				const { imoex, securities } = action.payload;
-				console.log(imoex.map(company => {
-					const { ticker, shortnames, weight } = company;
-					return {
-						ticker,
-						shortname: shortnames,
-						weight
-					}
-				}));
 				state.imoex = imoex;
 				state.securities = Object.fromEntries(securities.map(s => [s.secid, s]))
 			})
@@ -68,3 +60,8 @@ export const initialDataSlice = createSlice({
 });
 
 export const { imoexExcludingCartItem } = initialDataSlice.actions
+
+
+// преобразовать могу данные в fetch => получаю данные в нужном формате
+// преобразовать данные в thunk потому что здесь кладу данные в localStorage
+// тогда придется преобразовывать и в Slicer 
