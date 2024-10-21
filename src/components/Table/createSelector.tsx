@@ -4,7 +4,7 @@ import { getInvestmentValues } from "./getInvestmentValues";
 
 const selectUserData = (state: RootState) => state.userData;
 const selectSecuritiesData = (state: RootState) => state.data;
-const selectNonImoex = (state: RootState) => state.nonImoexCompany;
+const selectNonImoex = (state: RootState) => state.nonImoex;
 const selectCart = (state: RootState) => state.cart;
 
 export const selectInvestmentValues = createSelector(
@@ -13,7 +13,8 @@ export const selectInvestmentValues = createSelector(
     const { imoex, securities } = securitiesData;
     // console.log(imoex, securities, "selectInvestmentValues");
     // правильно ли это imoex => делается запрос || nonImoex => localStorage - быстрее отрабатывает
-    // возникает ошибка todakey = разные, возникает ошибка
+    // возникает ошибка только когда данных imoex нет в localStorage и даты разные
+    // ошибка возникает дальше getInvestmentValues, nonImoex отработал а Security еще нет
     if (Object.values(securities).length === 0) {
       return null;
     }

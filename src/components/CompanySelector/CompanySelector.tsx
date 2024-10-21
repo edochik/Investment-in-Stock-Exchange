@@ -14,7 +14,7 @@ const CompanySelector = () => {
   const [inputWeight, setInputWeight] = useState("");
   const dispatch = useAppDispatch();
   const { securities, imoex } = useAppSelector((state) => state.data);
-  const nonImoexCompany = useAppSelector((state) => state.nonImoexCompany);
+  const nonImoexCompany = useAppSelector((state) => state.nonImoex);
   const companies = filterBySecurities(
     securities,
     imoex.concat(nonImoexCompany)
@@ -48,30 +48,27 @@ const CompanySelector = () => {
   return (
     <div className={s.SelectedCompany}>
       <form className={s.form} onSubmit={handleSubmit}>
-        <label className={s.label}>
-          Введите название:
-          <Autocomplete
-            // мы даем ключ каждый раз разный в зависимости от ценных бумаг, как итог происходит перерендер компонента, что визуально выглядит как удаление написаного, так как компонент уже другой
-            key={selectedSecurity?.secid}
-            items={companies}
-            filterByKey={({ secid, shortname }, query) =>
-              [secid, shortname].some((val) =>
-                val.toLowerCase().startsWith(query.toLowerCase())
-              )
-            }
-            render={({ secid, shortname }) => (
-              <>
-                <RenderLogo secid={secid} shortname={shortname} />
-                <p className={s.text}>
-                  {secid} {shortname}
-                </p>
-              </>
-            )}
-            value={selectedSecurity}
-            setValue={setSelectedSecurity}
-            inputStringValue={({ secid }) => secid}
-          />
-        </label>
+        <Autocomplete
+          // мы даем ключ каждый раз разный в зависимости от ценных бумаг, как итог происходит перерендер компонента, что визуально выглядит как удаление написаного, так как компонент уже другой
+          key={selectedSecurity?.secid}
+          items={companies}
+          filterByKey={({ secid, shortname }, query) =>
+            [secid, shortname].some((val) =>
+              val.toLowerCase().startsWith(query.toLowerCase())
+            )
+          }
+          render={({ secid, shortname }) => (
+            <>
+              <RenderLogo secid={secid} shortname={shortname} />
+              <p className={s.text}>
+                {secid} {shortname}
+              </p>
+            </>
+          )}
+          value={selectedSecurity}
+          setValue={setSelectedSecurity}
+          inputStringValue={({ secid }) => secid}
+        />
         <label className={s.label}>
           Введите вес компании:
           <input

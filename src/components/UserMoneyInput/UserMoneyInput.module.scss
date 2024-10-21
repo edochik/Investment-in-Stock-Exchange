@@ -2,12 +2,6 @@
 
 .UserMoneyInput {
 	margin-bottom: 25px;
-	display: flex;
-	align-items: center;
-	column-gap: 10px;
-	.target {
-		margin: 0;
-	}
 	.input {
 		text-align: center;
 		@include input-style();

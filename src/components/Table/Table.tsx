@@ -15,7 +15,8 @@ export const Table = () => {
     direction: "desc",
     column: null,
   });
-  
+  const { loading, imoex } = useAppSelector((state) => state.data);
+
   const investmentValues = useAppSelector(selectInvestmentValues);
 
   const onClickSelectedColumn = (column: Columns) => {
@@ -27,9 +28,12 @@ export const Table = () => {
       };
     });
   };
-
+  if (loading === "failed" && imoex.length === 0) {
+    return <div>Нет интернета</div>;
+  }
+  // добавлено чтобы ошибка не появлялась
   if (investmentValues === null) {
-    return <div>...Loading</div>;
+    return <div>...?????</div>;
   }
   return (
     <>

@@ -3,6 +3,14 @@
 .Autocomplete {
 	position: relative;
 	display: inline-block;
+	.label {
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+		.input {
+			@include input-style();
+		}
+	}
 	.list {
 		list-style: none;
 		margin: 0;
@@ -10,9 +18,7 @@
 		background-color: white;
 		position: absolute;
 		left: 0;
-		top: 35px;
 		width: 100%;
-		background: white;
 		overflow-x: auto;
 		max-height: 20vh;
 		box-shadow:
@@ -30,45 +36,6 @@
 				cursor: pointer;
 				background-color: green;
 			}
-		}
-	}
-	.input {
-		@include input-style();
-	}
-	.button {
-		cursor: pointer;
-		position: absolute;
-		width: 20px;
-		height: 20px;
-		border-radius: 50%;
-		border: none;
-		right: 10px;
-		top: 50%;
-		translate: 0 -50%;
-		&:hover {
-			background-color: white;
-		}
-		&:before {
-			position: absolute;
-			content: '';
-			top: 50%;
-			left: 50%;
-			translate: -50% -50%;
-			rotate: -45deg;
-			background-color: green;
-			width: 80%;
-			height: 2px;
-		}
-		&:after {
-			position: absolute;
-			content: '';
-			top: 50%;
-			left: 50%;
-			translate: -50% -50%;
-			rotate: 45deg;
-			background-color: green;
-			width: 80%;
-			height: 2px;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { Security } from "../../domain/Security";
 import { fetchInitialDataThunk } from "./thunk";
 import { ClientSecurity } from "../../domain/ClientSecurity.js";
@@ -10,22 +10,6 @@ export interface InitialData {
 	securities: Record<Security["secid"], Security>;
 }
 
-// const extractImoexDataLocalStorage = (): Pick<InitialData, "imoex" | 'securities'> => {
-// 	const imoexCompany = localStorage.getItem('imoexData')
-// 	if (imoexCompany === null) {
-// 		return { imoex: [], securities: {} }
-// 	}
-// 	try {
-// 		const { imoex, securities } = JSON.parse(imoexCompany);
-// 		const result = Object.fromEntries(securities.map((s: Security) => [s.secid, s]))
-// 		return { imoex, securities: result }
-// 	} catch (error) {
-// 		return { imoex: [], securities: {} }
-// 	}
-// }
-
-// const { imoex, securities } = extractImoexDataLocalStorage();
-
 export const initialState: InitialData = {
 	loading: "idle",
 	imoex: [],
@@ -36,11 +20,7 @@ export const initialState: InitialData = {
 export const initialDataSlice = createSlice({
 	name: "data",
 	initialState,
-	reducers: {
-		imoexExcludingCartItem: (state, action) => {
-			state.imoex = action.payload;
-		}
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchInitialDataThunk.pending, (state) => {
@@ -58,10 +38,3 @@ export const initialDataSlice = createSlice({
 			});
 	},
 });
-
-export const { imoexExcludingCartItem } = initialDataSlice.actions
-
-
-// преобразовать могу данные в fetch => получаю данные в нужном формате
-// преобразовать данные в thunk потому что здесь кладу данные в localStorage
-// тогда придется преобразовывать и в Slicer 
