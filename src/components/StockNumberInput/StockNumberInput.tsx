@@ -1,5 +1,4 @@
 import s from "./StockNumberInput.module.scss";
-import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { updateStocks } from "../../redux/userDataSlice/userDataSlice";
 interface StockNumberInputProps {

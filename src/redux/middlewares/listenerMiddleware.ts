@@ -2,9 +2,7 @@ import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../index";
 import { updateCoefficient, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
 import { selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
-import { imoexExcludingCartItem } from "../initialDataSlice/initialDataSlice";
 import { addCompanyToCart, removeCompanyFromCart } from "../cartSlice/cartSlice";
-import { fetchInitialDataThunk } from "../initialDataSlice/thunk";
 
 export const listenerMiddleware = createListenerMiddleware()
 export const startAppListening = listenerMiddleware.startListening.withTypes<
@@ -20,12 +18,10 @@ startAppListening({
 		selectedNonImoex,
 		addCompanyToCart,
 		removeCompanyFromCart,
-		imoexExcludingCartItem
 	),
 	// одно из четырех полей  type | actionCreator | matcher |predicate
 	effect: async (action, listenerApi) => {
-		const { userData, nonImoexCompany, cart, data } = listenerApi.getState()
-		console.log(data, 'middleware');
+		const { userData, nonImoex: nonImoexCompany, cart, data } = listenerApi.getState()
 		const imoexDataRaw = localStorage.getItem('imoexData');
 		if (imoexDataRaw !== null) {
 			const imoexData = JSON.parse(imoexDataRaw);
@@ -39,9 +35,9 @@ startAppListening({
 });
 
 // слушатель для обновление при null = imoex или разная дата
-startAppListening({
-	matcher: isAnyOf(fetchInitialDataThunk.fulfilled),
-	effect: async (action, listenerApi) => {
+// startAppListening({
+	// matcher: isAnyOf(fetchInitialDataThunk.fulfilled),
+	// effect: async (action, listenerApi) => {
 		// const { cart, data } = listenerApi.getState();
 		// const imoexDictionary = Object.fromEntries(data.imoex.map(s => [s.ticker, s]));
 		// const keys = new Set(cart.map(item => item.ticker));
@@ -49,6 +45,6 @@ startAppListening({
 		// const resultCart = cart.map(item => imoexDictionary[item.ticker] ? imoexDictionary[item.ticker] : item)
 		// listenerApi.dispatch(imoexExcludingCartItem(imoex))
 		// listenerApi.dispatch(updateItemCart(resultCart))
-	}
-});
+	// }
+// });
 

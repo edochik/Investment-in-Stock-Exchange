@@ -6,7 +6,7 @@ import { RenderLogo } from "../RenderLogo/RenderLogo";
 
 export interface Value {
   ticker: string;
-  shortnames: string;
+  shortname: string;
   weight: number;
   price: number;
   totalStocksBuyUser: number;
@@ -28,7 +28,7 @@ export const columns: Columns[] = [
     header: "Тикер",
     cell: (value) => (
       <div className={s.ticker}>
-        <RenderLogo secid={value.ticker} shortname={value.shortnames} />
+        <RenderLogo secid={value.ticker} shortname={value.shortname} />
         <p className={s.text}>{value.ticker}</p>
       </div>
     ),
@@ -36,8 +36,8 @@ export const columns: Columns[] = [
   },
   {
     header: "Название компании",
-    cell: (value) => value.shortnames,
-    sortFunction: (a, b) => b.shortnames.localeCompare(a.shortnames),
+    cell: (value) => value.shortname,
+    sortFunction: (a, b) => b.shortname.localeCompare(a.shortname),
   },
   {
     header: "Вес компании",

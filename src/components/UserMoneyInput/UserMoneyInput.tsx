@@ -6,20 +6,22 @@ import { formatPrice } from "./formatPrice";
 const UserMoneyInput = () => {
   const money = useAppSelector((state) => state.userData.moneyUser);
   const dispatch = useAppDispatch();
+
   const handleChangeUpdateMoney = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value.replaceAll(" ", ""));
     dispatch(updateUserMoney(value));
   };
+
   return (
-    <div className={s.UserMoneyInput}>
-      <p className={s.target}>Цель: </p>
+    <label className={s.UserMoneyInput}>
+      Цель:&nbsp;
       <input
         type="text"
         className={s.input}
         value={formatPrice(money)}
         onChange={(e) => handleChangeUpdateMoney(e)}
       />
-    </div>
+    </label>
   );
 };
 

@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import s from "./Autocomplete.module.scss";
 interface AutocompleteProps<T> {
   items: T[];
@@ -10,20 +10,26 @@ interface AutocompleteProps<T> {
 }
 
 const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
-  const { items, filterByKey, render, value, setValue, inputStringValue } = props;
-  const [valueInput, setValueInput] = useState(value === null ? "" : inputStringValue(value));
+  const { items, filterByKey, render, value, setValue, inputStringValue } =
+    props;
+  const [valueInput, setValueInput] = useState(
+    value === null ? "" : inputStringValue(value)
+  );
 
   return (
     <div className={s.Autocomplete}>
-      <input
-        className={s.input}
-        type="text"
-        value={valueInput}
-        onChange={(e) => {
-          setValueInput(e.target.value)
-          setValue(null);
-        }}
-      />
+      <label className={s.label}>
+        Введите название:
+        <input
+          className={s.input}
+          type="text"
+          value={valueInput}
+          onChange={(e) => {
+            setValueInput(e.target.value);
+            setValue(null);
+          }}
+        />
+      </label>
       <ul className={s.list}>
         {value === null &&
           items
@@ -33,7 +39,7 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
                 <li
                   key={index}
                   className={s.item}
-                  onClick={(e) => {
+                  onClick={() => {
                     setValueInput(inputStringValue(item));
                     setValue(item);
                   }}

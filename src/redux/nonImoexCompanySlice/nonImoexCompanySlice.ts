@@ -13,10 +13,9 @@ const extractNonImoexLocalStorage = (): ClientSecurity[] => {
 	}
 }
 
-
 const initialState: ClientSecurity[] = extractNonImoexLocalStorage()
 
-export const nonImoexCompanySlice = createSlice({
+export const nonImoexSlice = createSlice({
 	name: 'nonImoex',
 	initialState,
 	reducers: {
@@ -26,4 +25,4 @@ export const nonImoexCompanySlice = createSlice({
 	}
 })
 
-export const { selectedNonImoex } = nonImoexCompanySlice.actions
+export const { selectedNonImoex } = nonImoexSlice.actions
