@@ -10,16 +10,19 @@ interface securitiesData {
 export function getInvestmentValues(userData: UserData, securitiesData: securitiesData, cart: string[]): Value[] {
 	const { coefficients, stocks, moneyUser } = userData;
 	const { moex, securities } = securitiesData;
+
 	const keys = new Set(cart);
-	const weightCompanies = 1 / moex.reduce((acc, company) => {
+	const filterMoex = moex.filter(({ ticker }) => !keys.has(ticker));
+
+	const weightCompanies = 1 / filterMoex.reduce((acc, company) => {
 		const coeff = coefficients[company.ticker] ?? 1;
 		return acc + coeff * company.weight;
 	}, 0);
 
 	//* вывод в таблицу
 	//? дополнительные данные для расчета (без вывода)
-	
-	return moex.filter(({ ticker }) => !keys.has(ticker)).map((dataCompany) => {
+
+	return filterMoex.map((dataCompany) => {
 		const { ticker, shortname } = dataCompany; //* ticker и shornames Api
 		let { weight } = dataCompany //* вес компании Api
 		const price = securities[ticker].prevprice; //* цена за акцию Api
