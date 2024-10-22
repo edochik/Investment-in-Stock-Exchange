@@ -4,40 +4,55 @@ import { fetchSecurities } from "../../api/fetchSecurities";
 import { Security } from "../../domain/Security";
 import { ClientSecurity } from "../../domain/ClientSecurity";
 
-const extractImoexDataLocalStorage = async (): Promise<{
-	imoex: ClientSecurity[];
-	securities: Security[];
-}> => {
-	const today = new Date();
-	const todayKey = `${today.getDate()}.${today.getMonth()}.${today.getFullYear()}`;
-	const imoexDataJson = localStorage.getItem("imoexData");
-	try {
-		if (imoexDataJson === null) {
-			const [imoex, securities] = await Promise.all([fetchImoex(), fetchSecurities()])
-			localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex, securities }))
-			return { imoex, securities }
-		}
-		const getDateKey: string = JSON.parse(imoexDataJson).todayKey
-		if (todayKey !== getDateKey) {
-			const [imoex, securities] = await Promise.all([fetchImoex(), fetchSecurities()])
-			localStorage.setItem("imoexData", JSON.stringify({ todayKey, imoex, securities }))
-			return { imoex, securities }
-		}
-		const { imoex, securities } = JSON.parse(imoexDataJson);
-		return { imoex, securities }
-	} catch (error) {
-		const getDateKey: string = JSON.parse(imoexDataJson!).todayKey;
-		if (todayKey !== getDateKey) {
-			const { imoex, securities } = JSON.parse(localStorage.getItem('imoexData')!)
-			return { imoex, securities };
-		}
-		return { imoex: [], securities: [] }
-	}
+interface ImoexDataLocalStorage {
+  updatedAt: Date;
+  imoex: ClientSecurity[];
+  securities: Security[];
 }
 
-export const fetchInitialDataThunk = createAsyncThunk("fetchInitialData", async (): Promise<{
-	imoex: ClientSecurity[];
-	securities: Security[];
-}> => {
-	return extractImoexDataLocalStorage()
-})
+const extractImoexDataLocalStorage = (): ImoexDataLocalStorage | null => {
+  const imoexDataJson = localStorage.getItem("imoexData");
+  if (imoexDataJson === null) {
+    return null;
+  }
+  try {
+    return JSON.parse(imoexDataJson);
+  } catch (error) {
+    return null;
+  }
+};
+
+// todo
+function isSameDay(d1: Date, d2: Date) {
+  return true;
+}
+
+export const fetchInitialDataThunk = createAsyncThunk(
+  "fetchInitialData",
+  async (): Promise<ImoexDataLocalStorage & { isFresh: boolean } | null> => {
+    const imoexDataLocalStorage = extractImoexDataLocalStorage();
+    const today = new Date();
+
+    if (
+      imoexDataLocalStorage !== null &&
+      isSameDay(today, imoexDataLocalStorage.updatedAt)
+    ) {
+      return { ...imoexDataLocalStorage, isFresh: true };
+    }
+
+    try {
+      const [imoex, securities] = await Promise.all([
+        fetchImoex(),
+        fetchSecurities(),
+      ]);
+      const actualData = { updatedAt: today, imoex, securities };
+      localStorage.setItem("imoexData", JSON.stringify(actualData));
+      return { ...actualData, isFresh: true };
+    } catch (error) {
+      if (imoexDataLocalStorage === null) {
+        return null;
+      }
+      return { ...imoexDataLocalStorage, isFresh: false };
+    }
+  }
+);

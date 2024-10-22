@@ -6,15 +6,23 @@ import { ClientSecurity } from "../../domain/ClientSecurity.js";
 export interface InitialData {
 	loading: "idle" | "pending" | "succeeded" | "failed";
 	error: string | null;
-	imoex: ClientSecurity[],
-	securities: Record<Security["secid"], Security>;
+	data: {
+		imoex: ClientSecurity[],
+		securities: Record<Security["secid"], Security>;
+		updatedAt: Date | null,
+		isFresh: boolean
+	} | null;
 }
 
 export const initialState: InitialData = {
 	loading: "idle",
-	imoex: [],
-	securities: {},
 	error: null,
+	data: {
+		imoex: [],
+		securities: {},
+		updatedAt: null,
+		isFresh: false,
+	}
 };
 
 export const initialDataSlice = createSlice({
@@ -28,9 +36,17 @@ export const initialDataSlice = createSlice({
 			})
 			.addCase(fetchInitialDataThunk.fulfilled, (state, action) => {
 				state.loading = "succeeded";
-				const { imoex, securities } = action.payload;
-				state.imoex = imoex;
-				state.securities = Object.fromEntries(securities.map(s => [s.secid, s]))
+				if (action.payload === null) {
+					state.data = null
+					return;
+				}
+				const { imoex, securities, updatedAt, isFresh } = action.payload;
+				state.data = {
+					imoex,
+					updatedAt,
+					isFresh,
+					securities: Object.fromEntries(securities.map(s => [s.secid, s]))
+				};
 			})
 			.addCase(fetchInitialDataThunk.rejected, (state, action) => {
 				state.loading = "failed";
