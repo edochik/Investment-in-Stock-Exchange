@@ -13,7 +13,7 @@ const CompanySelector = () => {
   );
   const [inputWeight, setInputWeight] = useState("");
   const dispatch = useAppDispatch();
-  const { securities, imoex } = useAppSelector((state) => state.data);
+  const { imoex, securities } = useAppSelector((state) => state.data.data)!;
   const nonImoexCompany = useAppSelector((state) => state.nonImoex);
   const companies = filterBySecurities(
     securities,

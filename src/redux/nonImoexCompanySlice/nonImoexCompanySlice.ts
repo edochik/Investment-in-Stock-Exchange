@@ -3,6 +3,7 @@ import { ClientSecurity } from "../../domain/ClientSecurity.js";
 
 const extractNonImoexLocalStorage = (): ClientSecurity[] => {
 	const nonImoexCompany = localStorage.getItem('nonImoex');
+	// console.log('extractLocalStorage');
 	if (nonImoexCompany === null) {
 		return []
 	}

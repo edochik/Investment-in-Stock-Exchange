@@ -16,9 +16,9 @@ export function getInvestmentValues(userData: UserData, securitiesData: securiti
 		return acc + coeff * company.weight;
 	}, 0);
 
-	
 	//* вывод в таблицу
 	//? дополнительные данные для расчета (без вывода)
+	
 	return moex.filter(({ ticker }) => !keys.has(ticker)).map((dataCompany) => {
 		const { ticker, shortname } = dataCompany; //* ticker и shornames Api
 		let { weight } = dataCompany //* вес компании Api

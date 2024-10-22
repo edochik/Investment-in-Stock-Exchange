@@ -7,7 +7,7 @@ interface RemoveCompanyProps {
 
 const RemoveCompany = ({ ticker }: RemoveCompanyProps) => {
   const dispatch = useAppDispatch();
-  const { imoex } = useAppSelector((state) => state.data);
+  const { imoex } = useAppSelector((state) => state.data.data)!;
   const nonImoex = useAppSelector((state) => state.nonImoex);
 
   const onClickRemove = (ticker: string) => {

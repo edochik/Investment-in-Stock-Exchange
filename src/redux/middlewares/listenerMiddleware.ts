@@ -3,6 +3,7 @@ import { AppDispatch, RootState } from "../index";
 import { updateCoefficient, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
 import { selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
 import { addCompanyToCart, removeCompanyFromCart } from "../cartSlice/cartSlice";
+import { fetchInitialDataThunk } from "../initialDataSlice/thunk";
 
 export const listenerMiddleware = createListenerMiddleware()
 export const startAppListening = listenerMiddleware.startListening.withTypes<
@@ -25,7 +26,7 @@ startAppListening({
 		const imoexDataRaw = localStorage.getItem('imoexData');
 		if (imoexDataRaw !== null) {
 			const imoexData = JSON.parse(imoexDataRaw);
-			imoexData.imoex = data.imoex
+			imoexData.imoex = data.data!.imoex
 			localStorage.setItem('imoexData', JSON.stringify(imoexData))
 		}
 		localStorage.setItem('userData', JSON.stringify(userData))
@@ -35,9 +36,10 @@ startAppListening({
 });
 
 // слушатель для обновление при null = imoex или разная дата
-// startAppListening({
-	// matcher: isAnyOf(fetchInitialDataThunk.fulfilled),
-	// effect: async (action, listenerApi) => {
+startAppListening({
+	matcher: isAnyOf(fetchInitialDataThunk.pending),
+	effect: async (action, listenerApi) => {
+		// console.log(listenerApi.getState(), 'middleware - fetchInitialDataThunk.pending');
 		// const { cart, data } = listenerApi.getState();
 		// const imoexDictionary = Object.fromEntries(data.imoex.map(s => [s.ticker, s]));
 		// const keys = new Set(cart.map(item => item.ticker));
@@ -45,6 +47,6 @@ startAppListening({
 		// const resultCart = cart.map(item => imoexDictionary[item.ticker] ? imoexDictionary[item.ticker] : item)
 		// listenerApi.dispatch(imoexExcludingCartItem(imoex))
 		// listenerApi.dispatch(updateItemCart(resultCart))
-	// }
-// });
+	}
+});
 

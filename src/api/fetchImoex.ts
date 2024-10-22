@@ -4,7 +4,11 @@ import { fetchData, formatSecurityData } from "./helper";
 const API_IMOEX = 'https://iss.moex.com/iss/statistics/engines/stock/markets/index/analytics/IMOEX.json?limit=100';
 
 
-export async function fetchImoex() {
+export async function fetchImoex(): Promise<{
+	ticker: string;
+	shortname: string;
+	weight: number;
+}[]> {
 	const data = await fetchData<"analytics">(API_IMOEX);
 	const result = formatSecurityData<ImoexSecurity>(data.analytics);
 	return result.map(company => {

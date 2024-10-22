@@ -9,7 +9,8 @@ const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const cart = useAppSelector((state) => state.cart);
-  const securities = useAppSelector((state) => state.data.securities);
+  const securities = useAppSelector((state) => state.data.data!.securities);
+  
   const dispatch = useAppDispatch();
 
   const onClickRemoveCompany = (secid: string) => {
