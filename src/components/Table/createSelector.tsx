@@ -11,13 +11,10 @@ export const selectInvestmentValues = createSelector(
   [selectUserData, selectSecuritiesData, selectNonImoex, selectCart],
   (userData, securitiesData, nonImoex, cart) => {
     const { imoex, securities } = securitiesData;
-    // console.log(imoex, securities, "selectInvestmentValues");
-    // правильно ли это imoex => делается запрос || nonImoex => localStorage - быстрее отрабатывает
-    // возникает ошибка только когда данных imoex нет в localStorage и даты разные
-    // ошибка возникает дальше getInvestmentValues, nonImoex отработал а Security еще нет
     if (Object.values(securities).length === 0) {
       return [];
     }
+
     const moex = imoex.concat(nonImoex);
     return getInvestmentValues(userData, { moex, securities }, cart);
   }

@@ -41,7 +41,7 @@ export const columns: Columns[] = [
   },
   {
     header: "Вес компании",
-    cell: (value) => `${value.weight.toFixed(2)}%`,
+    cell: (value) => value.weight,
     sortFunction: (a, b) => b.weight - a.weight,
   },
   {
