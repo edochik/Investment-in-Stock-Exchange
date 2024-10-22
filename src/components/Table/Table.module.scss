@@ -25,7 +25,16 @@
       }
     }
   }
+  .tbody {
+    .tr {
+      background-color: rgb(0, 128, 0, 0.1);
+    }
+    .imoex_color {
+      background-color: rgb(0, 0, 255, 0.1);
+    }
+  }
   .ticker {
+    position: relative;
     display: flex;
     align-items: center;
     column-gap: 20px;
@@ -34,6 +43,13 @@
     }
     .text {
       margin: 0;
+    }
+    .decor {
+      position: absolute;
+      right: -5px;
+      bottom: -7px;
+      margin: 0px;
+      font-size: 10px;
     }
   }
 }
