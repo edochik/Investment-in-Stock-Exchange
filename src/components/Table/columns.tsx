@@ -82,7 +82,7 @@ export const columns: Columns[] = [
     cell: (value) =>
       isNaN(value.totalStockBuyTarget)
         ? "0"
-        : Math.round(value.totalStockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
+        : Math.ceil(value.totalStockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
     sortFunction: (a, b) => b.totalStockBuyTarget - a.totalStockBuyTarget,
   },
   {
