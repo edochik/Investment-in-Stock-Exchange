@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Security } from "../../domain/Security";
 import { fetchInitialDataThunk } from "./thunk";
 import { ClientSecurity } from "../../domain/ClientSecurity.js";

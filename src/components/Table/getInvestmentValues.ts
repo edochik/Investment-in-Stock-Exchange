@@ -7,6 +7,7 @@ interface securitiesData {
 	securities: Record<string, Security>
 }
 
+
 export function getInvestmentValues(
 	userData: UserData,
 	securitiesData: securitiesData,
