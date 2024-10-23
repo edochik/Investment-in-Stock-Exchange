@@ -14,7 +14,6 @@ export const selectInvestmentValues = createSelector(
     if (Object.values(securities).length === 0) {
       return [];
     }
-
     const moex = imoex.concat(nonImoex);
     return getInvestmentValues(userData, { moex, securities }, cart);
   }

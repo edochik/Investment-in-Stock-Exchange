@@ -23,6 +23,9 @@ export interface Columns {
   sortFunction?: (a: Value, b: Value) => number;
 }
 
+const roundNumber = (value: number): string =>
+  Number.isInteger(value) ? `${value}` : `${value.toFixed(2)}%`;
+
 export const columns: Columns[] = [
   {
     header: "Тикер",
@@ -41,7 +44,10 @@ export const columns: Columns[] = [
   },
   {
     header: "Вес компании",
-    cell: (value) => value.weight,
+    cell: (value) =>
+      Number.isInteger(value.weight)
+        ? `${value.weight} %`
+        : `${value.weight.toFixed(2)}%`,
     sortFunction: (a, b) => b.weight - a.weight,
   },
   {
@@ -73,8 +79,7 @@ export const columns: Columns[] = [
   },
   {
     header: "Купить акций(шт)",
-    cell: (value) =>
-      isNaN(value.stockBuyTarget) ? "0" : Math.round(value.stockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
+    cell: (value) => (isNaN(value.stockBuyTarget) ? "0" : value.stockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
     sortFunction: (a, b) => b.stockBuyTarget - a.stockBuyTarget,
   },
   {

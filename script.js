@@ -31,7 +31,7 @@
 
 //*========================================================================
 //*сравнивать обнуля временную зону, т.е без разницы где ты находишься сравниваются только год-месяц-день
-const date = new Date()
+// const date = new Date()
 
 // function isSameDay(toDayRaw, dateString) {
 // 	const oldDay = new Date(dateString).setHours(0, 0, 0, 0);

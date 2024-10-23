@@ -16,9 +16,9 @@ export const Table = () => {
     column: null,
   });
   const imoex = useAppSelector((state) => state.data.data!.imoex);
-  const tickersImoex = new Set(imoex.map((item) => item.ticker));
-  const investmentValues = useAppSelector(selectInvestmentValues);
 
+  const tickersImoex: Set<string> = new Set(imoex.map((item) => item.ticker));
+  const investmentValues = useAppSelector(selectInvestmentValues);
   const onClickSelectedColumn = (column: Columns) => {
     setSelectedColumn((prev) => {
       return {
@@ -28,7 +28,6 @@ export const Table = () => {
       };
     });
   };
-
   return (
     <table className={s.table}>
       <thead className={s.thead}>
