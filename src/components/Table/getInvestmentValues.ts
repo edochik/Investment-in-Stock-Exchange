@@ -2,31 +2,30 @@ import { Security } from "../../domain/Security";
 import { ClientSecurity } from "../../domain/ClientSecurity.js";
 import { UserData } from "../../redux/userDataSlice/userDataSlice";
 import { Value } from "./columns";
-interface securitiesData {
+export interface SecuritiesData {
 	moex: ClientSecurity[],
 	securities: Record<string, Security>
 }
 
-
 export function getInvestmentValues(
 	userData: UserData,
-	securitiesData: securitiesData,
+	securitiesData: SecuritiesData,
 	cart: string[],
 ): Value[] {
 	const { coefficients, stocks, moneyUser } = userData;
 	const { moex, securities } = securitiesData;
 
-	const keys = new Set(cart);
-	const filterMoex = moex.filter(({ ticker }) => !keys.has(ticker));
+	const tickersInCart = new Set(cart);
+	const filterCompanies = moex.filter(({ ticker }) => !tickersInCart.has(ticker));
 
-	const weightCompanies = 1 / filterMoex.reduce((acc, company) => {
+	const weightCompanies = 1 / filterCompanies.reduce((acc, company) => {
 		const coeff = coefficients[company.ticker] ?? 1;
 		return acc + coeff * company.weight;
 	}, 0);
 
 	//* вывод в таблицу
 	//? дополнительные данные для расчета (без вывода)
-	return filterMoex.map((dataCompany) => {
+	return filterCompanies.map((dataCompany) => {
 		const { ticker, shortname } = dataCompany; //* ticker и shornames Api
 		let { weight } = dataCompany //* вес компании Api
 		const price = securities[ticker].prevprice; //* цена за акцию Api

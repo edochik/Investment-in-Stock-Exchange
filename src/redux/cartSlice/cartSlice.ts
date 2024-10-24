@@ -13,7 +13,6 @@ import { extractLocalStorageOnKey } from "../extractLocalStorageOnKey";
 // 	}
 // }
 
-
 const initialState: string[] = extractLocalStorageOnKey<string[]>('cart', [])
 
 export const cartSlice = createSlice({

@@ -35,21 +35,20 @@ export const fetchInitialDataThunk = createAsyncThunk(
   async (): Promise<ImoexDataLocalStorage & { isFresh: boolean } | null> => {
     // const imoexDataLocalStorage = extractImoexDataLocalStorage();
     const imoexDataLocalStorage = extractLocalStorageOnKey<ImoexDataLocalStorage | null>("imoexData", null);
-    const today = new Date();
+    const toDay = new Date();
     // сюда попадаем если localStorage не пустой и дата не меньше обновленной даты
     if (
       imoexDataLocalStorage !== null &&
-      !isSameDay(today, imoexDataLocalStorage.updatedAt)
+      !isSameDay(toDay, imoexDataLocalStorage.updatedAt)
     ) {
       return { ...imoexDataLocalStorage, isFresh: true };
     }
-    // console.log(today);
     try {
       const [imoex, securities] = await Promise.all([
         fetchImoex(),
         fetchSecurities(),
       ]);
-      const actualData = { updatedAt: today, imoex, securities };
+      const actualData = { updatedAt: toDay, imoex, securities };
       localStorage.setItem("imoexData", JSON.stringify(actualData));
       return { ...actualData, isFresh: true };
     } catch (error) {
