@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import s from "./Cart.module.scss";
 import { removeCompanyFromCart } from "../../redux/cartSlice/cartSlice";

@@ -7,9 +7,11 @@ import { useAppSelector } from "../hooks";
 
 function App() {
   const data = useAppSelector((state) => state.data.data);
+
   if (data === null) {
     return <p>Данные отсутствуют, нет подключения к интернету (сети)</p>;
   }
+
   const { updatedAt, isFresh } = data;
   const date = new Date(updatedAt!);
   const formatDate = date.toLocaleDateString("ru-RU", {
@@ -21,7 +23,7 @@ function App() {
     <div className={s.App}>
       <div className={s.wrapper}>
         <UserMoneyInput />
-        {!isFresh && <p className={s.info}>Данные за {formatDate}</p>}
+        {!isFresh && <p className={s.info}>Информация загружена за {formatDate}</p>}
         <Cart />
       </div>
       <Table />

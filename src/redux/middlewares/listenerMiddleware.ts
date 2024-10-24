@@ -3,7 +3,6 @@ import { AppDispatch, RootState } from "../index";
 import { updateCoefficient, updateStocks, updateUserMoney } from "../userDataSlice/userDataSlice";
 import { selectedNonImoex } from "../nonImoexCompanySlice/nonImoexCompanySlice";
 import { addCompanyToCart, removeCompanyFromCart } from "../cartSlice/cartSlice";
-import { fetchInitialDataThunk } from "../initialDataSlice/thunk";
 
 export const listenerMiddleware = createListenerMiddleware()
 export const startAppListening = listenerMiddleware.startListening.withTypes<
@@ -35,18 +34,4 @@ startAppListening({
 	}
 });
 
-// слушатель для обновление при null = imoex или разная дата
-startAppListening({
-	matcher: isAnyOf(fetchInitialDataThunk.pending),
-	effect: async (action, listenerApi) => {
-		// console.log(listenerApi.getState(), 'middleware - fetchInitialDataThunk.pending');
-		// const { cart, data } = listenerApi.getState();
-		// const imoexDictionary = Object.fromEntries(data.imoex.map(s => [s.ticker, s]));
-		// const keys = new Set(cart.map(item => item.ticker));
-		// const imoex = data.imoex.filter(item => !keys.has(item.ticker));
-		// const resultCart = cart.map(item => imoexDictionary[item.ticker] ? imoexDictionary[item.ticker] : item)
-		// listenerApi.dispatch(imoexExcludingCartItem(imoex))
-		// listenerApi.dispatch(updateItemCart(resultCart))
-	}
-});
 
