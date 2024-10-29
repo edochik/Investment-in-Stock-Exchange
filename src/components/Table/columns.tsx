@@ -23,8 +23,8 @@ export interface Columns {
   sortFunction?: (a: Value, b: Value) => number;
 }
 
-const roundNumber = (value: number): string =>
-  Number.isInteger(value) ? `${value}` : `${value.toFixed(2)}%`;
+// const roundNumber = (value: number): string =>
+//   Number.isInteger(value) ? `${value}` : `${value.toFixed(2)}%`;
 
 export const columns: Columns[] = [
   {

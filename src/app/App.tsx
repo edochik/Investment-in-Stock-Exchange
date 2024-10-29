@@ -7,7 +7,7 @@ import { useAppSelector } from "../hooks";
 
 function App() {
   const data = useAppSelector((state) => state.data.data);
-
+  
   if (data === null) {
     return <p>Данные отсутствуют, нет подключения к интернету (сети)</p>;
   }

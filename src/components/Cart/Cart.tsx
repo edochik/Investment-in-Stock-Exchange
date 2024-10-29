@@ -10,7 +10,6 @@ const Cart = () => {
   const ref = useRef<HTMLDivElement>(null);
   const cart = useAppSelector((state) => state.cart);
   const securities = useAppSelector((state) => state.data.data!.securities);
-
   const dispatch = useAppDispatch();
 
   const onClickRemoveCompany = (secid: string) => {

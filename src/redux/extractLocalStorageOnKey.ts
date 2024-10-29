@@ -1,10 +1,10 @@
 export function extractLocalStorageOnKey<T>(key: string, value: T): T {
-	const cart = localStorage.getItem(key);
-	if (cart === null) {
+	const data = localStorage.getItem(key);
+	if (data === null) {
 		return value
 	}
 	try {
-		return JSON.parse(cart)
+		return JSON.parse(data)
 	} catch (error) {
 		return value
 	}

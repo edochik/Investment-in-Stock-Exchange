@@ -3,7 +3,7 @@ import { useAppSelector } from "../../hooks";
 import { Columns, columns } from "./columns";
 import { selectInvestmentValues } from "./createSelector";
 import { useState } from "react";
-import { sortInvestmentValues } from "./sortInvesmentValues";
+import { sortInvestmentValues } from "./sortInvestmentValues";
 import classNames from "classnames";
 export interface SelectedColumn {
   direction: "desc" | "asc";
@@ -18,6 +18,7 @@ export const Table = () => {
   const imoex = useAppSelector((state) => state.data.data!.imoex);
 
   const tickersImoex: Set<string> = new Set(imoex.map((item) => item.ticker));
+
   const investmentValues = useAppSelector(selectInvestmentValues);
   const onClickSelectedColumn = (column: Columns) => {
     setSelectedColumn((prev) => {

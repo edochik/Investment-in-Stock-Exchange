@@ -13,18 +13,6 @@ const initialUserData = {
 	stocks: {}
 }
 
-// const extractDataUserLocalStorage = () => {
-// 	const dataUserJson = localStorage.getItem('userData')
-// 	if (dataUserJson === null) {
-// 		return initialUserData
-// 	}
-// 	try {
-// 		return JSON.parse(dataUserJson) as unknown as UserData;
-// 	} catch (error) {
-// 		return initialUserData
-// 	}
-// }
-
 const initialState: UserData = extractLocalStorageOnKey<UserData>('userData', initialUserData)
 
 export const userDataSlice = createSlice({
@@ -45,3 +33,4 @@ export const userDataSlice = createSlice({
 
 export const { updateCoefficient, updateStocks, updateUserMoney } = userDataSlice.actions
 
+export default userDataSlice.reducer

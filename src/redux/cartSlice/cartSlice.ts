@@ -1,18 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { extractLocalStorageOnKey } from "../extractLocalStorageOnKey";
 
-// const extractCartLocalStorage = () => {
-// 	const cart = localStorage.getItem('cart');
-// 	if (cart === null) {
-// 		return []
-// 	}
-// 	try {
-// 		return JSON.parse(cart)
-// 	} catch (error) {
-// 		return []
-// 	}
-// }
-
 const initialState: string[] = extractLocalStorageOnKey<string[]>('cart', [])
 
 export const cartSlice = createSlice({
@@ -30,3 +18,4 @@ export const cartSlice = createSlice({
 
 export const { addCompanyToCart, removeCompanyFromCart } = cartSlice.actions
 
+export default cartSlice.reducer

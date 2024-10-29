@@ -32,7 +32,6 @@ describe('Тестирование функции getInvestmentValues', () => {
 		} as UserData
 		const cart: string[] = []
 		const result = getInvestmentValues(userData, securitiesData, cart);
-		console.log(result);
 		expect(result).toEqual([{
 			price: 300,
 			progressTarget: NaN,

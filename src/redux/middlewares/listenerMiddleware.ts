@@ -21,17 +21,11 @@ startAppListening({
 	),
 	// одно из четырех полей  type | actionCreator | matcher |predicate
 	effect: async (action, listenerApi) => {
-		const { userData, nonImoex: nonImoexCompany, cart, data } = listenerApi.getState()
-		const imoexDataRaw = localStorage.getItem('imoexData');
-		if (imoexDataRaw !== null) {
-			const imoexData = JSON.parse(imoexDataRaw);
-			imoexData.imoex = data.data!.imoex
-			localStorage.setItem('imoexData', JSON.stringify(imoexData))
-		}
+		const { userData, nonImoex: nonImoexCompany, cart } = listenerApi.getState()
 		localStorage.setItem('userData', JSON.stringify(userData))
 		localStorage.setItem('nonImoex', JSON.stringify(nonImoexCompany))
 		localStorage.setItem('cart', JSON.stringify(cart))
 	}
-});
+})
 
 
