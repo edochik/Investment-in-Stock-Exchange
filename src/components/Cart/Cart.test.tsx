@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { Cart } from "./Cart";
@@ -23,7 +23,7 @@ const dataState = {
     updatedAt: null,
     isFresh: false,
   },
-};
+} as unknown as InitialData;
 describe("component Cart", () => {
   it("Отображает пустую корзину с кнопкой disabled", async () => {
     const preloadedState = {
@@ -36,7 +36,7 @@ describe("component Cart", () => {
   it("Отображает компании в корзине и позволяет их раскрывать, при удалении остается одна компания", async () => {
     const preloadedState = {
       cart: ["aaaa", "bbbb"],
-      data: dataState as unknown as InitialData,
+      data: dataState,
     };
     renderWithProviders(<Cart />, { preloadedState });
     const openCartBtn = screen.getByRole("button", { name: /2/ });
@@ -55,7 +55,7 @@ describe("component Cart", () => {
   it("При удаление последней компании, компонент закрывается и становится disabled", async () => {
     const preloadedState = {
       cart: ["bbbb"],
-      data: dataState as unknown as InitialData,
+      data: dataState,
     };
     renderWithProviders(<Cart />, { preloadedState });
     const user = userEvent.setup();
@@ -70,7 +70,7 @@ describe("component Cart", () => {
   it("Закрывает корзину при клике вне области", async () => {
     const preloadedState = {
       cart: ["bbbb"],
-      data: dataState as unknown as InitialData,
+      data: dataState,
     };
     renderWithProviders(<Cart />, { preloadedState });
     const openCartBtn = screen.getByRole("button", { name: /1/ });

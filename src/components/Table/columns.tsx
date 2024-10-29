@@ -60,7 +60,7 @@ export const columns: Columns[] = [
   {
     header: "Куплено акций (шт)",
     cell: (value) => (
-      <StockNumberInput ticker={value.ticker} stocks={value.stocksBuyUser} />
+      <StockNumberInput ticker={value.ticker}  />
     ),
   },
   {

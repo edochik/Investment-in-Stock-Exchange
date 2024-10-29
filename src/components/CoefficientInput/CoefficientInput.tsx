@@ -13,11 +13,15 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { value } = e.target;
+    console.log(value);
     if (!/^[0-9.]*$/.test(value)) {
+      console.log("tut");
       return;
     }
     const valueAsNumber = Number(value);
+    console.log(valueAsNumber);
     if (!Number.isNaN(valueAsNumber)) {
+      console.log(valueAsNumber);
       dispatch(updateCoefficient({ ticker, count: valueAsNumber }));
     }
   };
@@ -27,7 +31,7 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
       <input
         className={s.input}
         type="text"
-        value={coefficient[ticker] || "1"}
+        value={coefficient[ticker] ?? "1"}
         onChange={(e) => handleChangeUpdateCoefficients(e)}
       />
     </>

@@ -1,10 +1,8 @@
 import { Columns, Value } from "./columns";
 import { sortInvestmentValues } from "./sortInvestmentValues";
-
 interface List {
 	ticker: string
 }
-
 const list = [
 	{ ticker: 'ABBB' },
 	{ ticker: 'AAAB' },

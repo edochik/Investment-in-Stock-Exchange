@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { updateStocks } from "../../redux/userDataSlice/userDataSlice";
 interface StockNumberInputProps {
   ticker: string;
-  stocks: number;
 }
 
 const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
