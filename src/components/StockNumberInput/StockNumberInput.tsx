@@ -24,7 +24,7 @@ const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
         className={s.input}
         type="text"
         value={stocks[ticker] || "0"}
-        onChange={(e) => handleChangeUpdateStocks(e)}
+        onChange={handleChangeUpdateStocks}
       />
     </>
   );
