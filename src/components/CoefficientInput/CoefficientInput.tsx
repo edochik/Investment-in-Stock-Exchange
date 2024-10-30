@@ -1,5 +1,5 @@
 import s from "./CoefficientInput.module.scss";
-
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { updateCoefficient } from "../../redux/userDataSlice/userDataSlice";
 interface CoefficientInputProps {
@@ -8,20 +8,20 @@ interface CoefficientInputProps {
 
 const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
   const coefficient = useAppSelector((state) => state.userData.coefficients);
+  const value = coefficient[ticker] ?? "1";
+  const [inputValue, setInputValue] = useState(String(value));
   const dispatch = useAppDispatch();
+
   const handleChangeUpdateCoefficients = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { value } = e.target;
-    console.log(value);
     if (!/^[0-9.]*$/.test(value)) {
-      console.log("tut");
       return;
     }
+    setInputValue(value);
     const valueAsNumber = Number(value);
-    console.log(valueAsNumber);
     if (!Number.isNaN(valueAsNumber)) {
-      console.log(valueAsNumber);
       dispatch(updateCoefficient({ ticker, count: valueAsNumber }));
     }
   };
@@ -31,8 +31,8 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
       <input
         className={s.input}
         type="text"
-        value={coefficient[ticker] ?? "1"}
-        onChange={(e) => handleChangeUpdateCoefficients(e)}
+        value={inputValue}
+        onChange={handleChangeUpdateCoefficients}
       />
     </>
   );
