@@ -55,7 +55,7 @@ export const columns: Columns[] = [
         : `${value.price.toFixed(2)}`,
   },
   {
-    header: "Куплено акций (шт)",
+    header: "Куплено акций (шт) ✍️",
     cell: (value) => (
       <StockNumberInput ticker={value.ticker}  />
     ),
@@ -66,7 +66,7 @@ export const columns: Columns[] = [
     sortFunction: (a, b) => b.totalStocksBuyUser - a.totalStocksBuyUser,
   },
   {
-    header: "Коэффициент",
+    header: "Коэффициент ✍️",
     cell: (value) => <CoefficientInput ticker={value.ticker} />,
   },
   {

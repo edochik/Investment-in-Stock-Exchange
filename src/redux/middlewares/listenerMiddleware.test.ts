@@ -1,4 +1,4 @@
-
+export { }
 test('Тест middleware', () => {
 
 })
