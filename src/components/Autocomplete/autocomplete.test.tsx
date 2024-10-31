@@ -1,51 +1,86 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { Autocomplete } from "./Autocomplete";
-// <Autocomplete
-//           key={selectedSecurity?.secid}
-//           items={companies}
-//           filterByKey={({ secid, shortname }, query) =>
-//             [secid, shortname].some((val) =>
-//               val.toLowerCase().startsWith(query.toLowerCase())
-//             )
-//           }
-//           render={({ secid, shortname }) => (
-//             <>
-//               <RenderLogo secid={secid} shortname={shortname} />
-//               <p className={s.text}>
-//                 {secid} {shortname}
-//               </p>
-//             </>
-//           )}
-//           value={selectedSecurity}
-//           setValue={setSelectedSecurity}
-//           inputStringValue={({ secid }) => secid}
-//         />
+import { renderWithProviders } from "../../redux/test/renderWithProviders";
 
-// test("тестирование компонента Autocomplete", async () => {
-//   // interface Items {
-//   //   secid: string;
-//   //   shortname: string;
-//   // }
-//   // const key ="AABB"
-//   const items = ["red", "blue", "green"];
-//   const filterByKey = (value: string, query: string) => value.startsWith(query);
-//   const show = (item: string) => <p>{item}</p>;
-//   const value = null;
-//   const setValue = (arg: string | null) => console.log(">>>>>", arg);
-//   const inputStringValue = (arg: string) => arg;
-//   render(
-//     <Autocomplete
-//       items={items}
-//       filterByKey={filterByKey}
-//       render={show}
-//       value={value}
-//       setValue={setValue}
-//       inputStringValue={inputStringValue}
-//     />
-//   );
-// });
+describe("component Autocomplete", () => {
+  it("пользователь нажимает на элемент из списка", async () => {
+    const user = userEvent.setup();
+    const mockFn = jest.fn();
+    renderWithProviders(
+      <Autocomplete
+        items={["red", "blue", "green"]}
+        filterByKey={(value, query) => value.startsWith(query)}
+        render={(item) => <p>{item}</p>}
+        value={null}
+        setValue={mockFn}
+        inputStringValue={(arg) => arg}
+      />,
+      {}
+    );
+    const items = screen.getAllByRole("listitem");
+    expect(items).toHaveLength(3);
+    await user.click(items[0]);
+    const input = screen.getByRole("textbox");
+    expect(input).toHaveDisplayValue("red");
+    expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(mockFn).toHaveBeenCalledWith("red");
+  });
+  it("пользователь вводит значение в input", async () => {
+    const user = userEvent.setup();
+    const mockFn = jest.fn();
+    renderWithProviders(
+      <Autocomplete
+        items={["red", "blue", "green", "black"]}
+        filterByKey={(value, query) => value.startsWith(query)}
+        render={(item) => <p>{item}</p>}
+        value={null}
+        setValue={mockFn}
+        inputStringValue={(arg) => arg}
+      />,
+      {}
+    );
+    const input = screen.getByRole("textbox");
+    await user.type(input, "b");
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+    const inputValue = screen.getByRole("textbox");
+    expect(inputValue).toHaveDisplayValue("b");
+    expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(mockFn).toHaveBeenCalledWith(null);
+  });
+});
 
+// ??? отображается li элемент проверить на верхне уровнем компоненте
+// {
+  /* <body>
+      <div>
+        <div
+          class="Autocomplete"
+        >
+          <label
+            class="label"
+          >
+            Введите название:
+            <input
+              class="input"
+              type="text"
+              value="red"
+            />
+          </label>
+          <ul
+            class="list"
+          >
+            <li
+              class="item"
+            >
+              <p>
+                red
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </body> */
+// }
 // https://testing-library.com/docs/queries/about/
-export {};

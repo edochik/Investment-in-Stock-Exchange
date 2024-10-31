@@ -50,6 +50,40 @@
 //? [4] можно сбросить временную зону date.setHours(0, 0, 0, 0)
 
 
-const array = ["A", "B", "C", "D"]
+// const array = ["A", "B", "C", "D"]
 
-console.log(array.find(item => item === 'A'));
+// console.log(array.find(item => item === 'A'));
+
+
+// function createData(tickers, keys, values) {
+// 	const result = Object.create(null);
+// 	tickers.forEach((elem) => {
+// 		const object = {}
+// 		keys.forEach((key, index) => {
+// 			object[key] = values[index](elem)
+// 		})
+// 		result[elem] = object
+// 	})
+// 	return result;
+// }
+
+// console.log(createData(
+// 	['a', 'b'], ['siced', 'shortname', 'price'], [(item) => item, (item) => `Компания ${item}`]));
+
+// { a: { siced: 'A', shortname: 'Компания A' }, b: { } }
+
+// function createSecurities<T>(
+//   tickers: string[],
+//   keys: string[],
+//   values: ((arg: string) => string)[]
+// ): Partial<ClientSecurity> {
+//   const result = Object.create(null);
+//   tickers.forEach((elem) => {
+//     const object: Record<string, string> = {};
+//     keys.forEach((key, index) => {
+//       object[key] = values[index](elem);
+//     });
+//     result[elem] = object;
+//   });
+//   return result;
+// }

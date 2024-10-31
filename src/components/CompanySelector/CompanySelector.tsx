@@ -44,7 +44,6 @@ const CompanySelector = () => {
     setSelectedSecurity(null);
     setInputWeight("");
   };
-
   return (
     <div className={s.SelectedCompany}>
       <form className={s.form} onSubmit={handleSubmit}>

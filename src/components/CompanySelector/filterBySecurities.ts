@@ -5,8 +5,10 @@ export function filterBySecurities(
   securities: Record<string, Security>,
   companies: ClientSecurity[]
 ) {
-  const map = new Set(companies.map((item) => item.ticker));
+  const map = new Set(companies.map((item) => item.ticker)); // ['AAAA','BBBB']
   return Object.values(securities).filter(
     (security) => !map.has(security.secid)
   );
 }
+
+

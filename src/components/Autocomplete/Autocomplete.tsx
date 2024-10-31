@@ -4,9 +4,9 @@ interface AutocompleteProps<T> {
   items: T[];
   filterByKey: (arg: T, query: string) => boolean;
   render: (arg: T) => React.ReactNode;
-  inputStringValue: (arg: T) => string;
   value: T | null;
   setValue: (arg: T | null) => void;
+  inputStringValue: (arg: T) => string;
 }
 
 const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
