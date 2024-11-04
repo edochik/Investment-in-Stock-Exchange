@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { ClientSecurity } from "../../domain/ClientSecurity.js";
+import { ClientSecurity } from "../../domain/ClientSecurity";
 import { extractLocalStorageOnKey } from "../extractLocalStorageOnKey";
 
 const initialState: ClientSecurity[] = extractLocalStorageOnKey<ClientSecurity[]>('nonImoex', [])

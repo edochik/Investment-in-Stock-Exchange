@@ -2,7 +2,7 @@ import { useState } from "react";
 import s from "./CompanySelector.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { filterBySecurities } from "./filterBySecurities";
-import { selectedNonImoex } from "../../redux/nonImoexCompanySlice/nonImoexCompanySlice";
+import { selectedNonImoex } from "../../redux/nonImoexSlice/nonImoexSlice";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { Security } from "../../domain/Security";
 import { RenderLogo } from "../RenderLogo/RenderLogo";

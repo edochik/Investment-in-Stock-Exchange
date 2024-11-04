@@ -6,6 +6,8 @@ interface Dataset {
 
 export async function fetchData<T extends string>(url: string): Promise<{ [key in T]: Dataset }> {
 	const response = await fetch(url);
+	// console.log('>>>>>>>>>>>> fetchData <<<<<<<<<<<<<<<<');
+	// console.log(await response.json());
 	if (!response.ok) {
 		throw new Error(`${response.status}`);
 	}

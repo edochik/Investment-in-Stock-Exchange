@@ -2,13 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { initialDataSlice } from './initialDataSlice/initialDataSlice'
 import { fetchInitialDataThunk } from './initialDataSlice/thunk';
 import { userDataSlice } from './userDataSlice/userDataSlice';
-import { nonImoexSlice } from './nonImoexCompanySlice/nonImoexCompanySlice';
+import { nonImoexSlice } from './nonImoexSlice/nonImoexSlice';
 import { listenerMiddleware } from './middlewares/listenerMiddleware';
 import { cartSlice } from './cartSlice/cartSlice';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
 	data: initialDataSlice.reducer,
-	userData: userDataSlice.reducer,
+	userData: userDataSlice.reducer, 
 	nonImoex: nonImoexSlice.reducer,
 	cart: cartSlice.reducer
 })

@@ -31,17 +31,17 @@ describe("Тест CompanySelector", () => {
       preloadedState,
     });
     const listItems = screen.getAllByRole("listitem");
-    expect(screen.queryByText(/red/)).not.toBeInTheDocument(); 
+    expect(screen.queryByText(/red/)).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Добавить компанию" })
-    ).toHaveAttribute("disabled"); 
+    ).toHaveAttribute("disabled");
     await user.click(listItems[0]);
-    expect(screen.queryByRole("listitem")).not.toBeInTheDocument(); 
+    expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
     const inputWeight = screen.getByRole("textbox", {
       name: /Введите вес компании:/,
     });
     await user.type(inputWeight, "100");
-    await user.type(inputWeight, "abc"); 
+    await user.type(inputWeight, "abc");
     expect(screen.queryByText(/abc/)).not.toBeInTheDocument();
     const buttonAdd = screen.queryByRole("button", {
       name: /Добавить компанию/,

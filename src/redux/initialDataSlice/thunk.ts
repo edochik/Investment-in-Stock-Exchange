@@ -4,16 +4,11 @@ import { fetchSecurities } from "../../api/fetchSecurities";
 import { Security } from "../../domain/Security";
 import { ClientSecurity } from "../../domain/ClientSecurity";
 import { extractLocalStorageOnKey } from "../extractLocalStorageOnKey";
+import { isSameDay } from "./isSameDay";
 interface ImoexDataLocalStorage {
   updatedAt: Date;
   imoex: ClientSecurity[];
   securities: Security[];
-}
-
-function isSameDay(toDayRaw: Date, dateString: Date) {
-  const oldDay = new Date(dateString).setHours(0, 0, 0, 0);
-  const toDay = new Date(toDayRaw).setHours(0, 0, 0, 0);
-  return toDay > oldDay;
 }
 
 export const fetchInitialDataThunk = createAsyncThunk(
@@ -39,6 +34,7 @@ export const fetchInitialDataThunk = createAsyncThunk(
       if (imoexDataLocalStorage === null) {
         return null;
       }
+      console.log('>>>>>>>>>>>>>>>> tut <<<<<<<<<<');
       return { ...imoexDataLocalStorage, isFresh: false };
     }
   }

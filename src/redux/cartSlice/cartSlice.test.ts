@@ -2,23 +2,34 @@ import reducer, { addCompanyToCart, removeCompanyFromCart } from './cartSlice'
 
 describe('Тестирование cartSlice', () => {
 	test('Редюсер должен вернуть начальное состояние', () => {
-		expect(reducer(undefined, { type: 'unknown' })).toEqual([])
+		const initialState = undefined;
+		const action = { type: '' };
+		const result = reducer(initialState, action);
+		expect(result).toEqual([]);
 	})
 	test('Тестирование функции addCompanyToCart, добавить тикер в корзину', () => {
-		const previousState: string[] = [];
-		expect(reducer(previousState, addCompanyToCart('AAAA'))).toEqual(['AAAA'])
+		const initialState = ['AAAA'];
+		const action = { type: 'cart/addCompanyToCart', payload: 'BBBB' };
+		const result = reducer(initialState, action);
+		expect(result).toEqual(['AAAA', 'BBBB'])
 	})
 	test('Тестирование функции addCompanyToCart, корзина уже содержит тикер, добавляемый тикер добавляется в конец', () => {
-		const previousState: string[] = ['AAAA', 'BBBB'];
-		expect(reducer(previousState, addCompanyToCart('CCCC'))).toEqual(['AAAA', 'BBBB', 'CCCC'])
+		const initialState = ['AAAA', 'BBBB'];
+		const action = { type: 'cart/addCompanyToCart', payload: 'CCCC' };
+		const result = reducer(initialState, action);
+		expect(result).toEqual(['AAAA', 'BBBB', 'CCCC']);
 	})
 	test('Тестирование функции removeCompanyFromCart, убрать тикер из корзину', () => {
-		const previousState: string[] = ['BBBB', 'AAAA'];
-		expect(reducer(previousState, removeCompanyFromCart('AAAA'))).toEqual(['BBBB'])
+		const initialState = ['BBBB', 'AAAA'];
+		const action = removeCompanyFromCart('AAAA')
+		const result = reducer(initialState, action);
+		expect(result).toEqual(['BBBB'])
 	})
 	test('Тестирование функции removeCompanyFromCart, если тикера нет в корзине, то корзина остается в таком же виде', () => {
-		const previousState: string[] = ['BBBB', 'AAAA'];
-		expect(reducer(previousState, removeCompanyFromCart('FFFF'))).toEqual(['BBBB', 'AAAA'])
+		const initialState = ['BBBB', 'AAAA'];
+		const action = removeCompanyFromCart('FFFF')
+		const result = reducer(initialState, action);
+		expect(result).toEqual(['BBBB', 'AAAA'])
 	})
 })
 

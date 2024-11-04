@@ -6,7 +6,7 @@ import { RenderLogo } from "./RenderLogo";
 describe("component RenderLogo", () => {
   it("Компонент отображает фотографию", () => {
     renderWithProviders(<RenderLogo secid="AAAA" shortname="Компания" />);
-    expect(screen.getByRole(/img/)).toBeInTheDocument();
+    expect(screen.getByAltText(/логотип Компания/)).toBeInTheDocument();
   });
   it("Фотографии нет, компонент отображает первую букву Тикера", () => {
     renderWithProviders(<RenderLogo secid="AAAA" shortname="Компания" />);

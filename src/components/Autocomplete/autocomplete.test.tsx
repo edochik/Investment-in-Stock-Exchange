@@ -5,6 +5,9 @@ import { Autocomplete } from "./Autocomplete";
 import { renderWithProviders } from "../../redux/test/renderWithProviders";
 
 describe("component Autocomplete", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it("пользователь нажимает на элемент из списка", async () => {
     const user = userEvent.setup();
     const mockFn = jest.fn();
@@ -50,37 +53,3 @@ describe("component Autocomplete", () => {
     expect(mockFn).toHaveBeenCalledWith(null);
   });
 });
-
-// ??? отображается li элемент проверить на верхне уровнем компоненте
-// {
-  /* <body>
-      <div>
-        <div
-          class="Autocomplete"
-        >
-          <label
-            class="label"
-          >
-            Введите название:
-            <input
-              class="input"
-              type="text"
-              value="red"
-            />
-          </label>
-          <ul
-            class="list"
-          >
-            <li
-              class="item"
-            >
-              <p>
-                red
-              </p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </body> */
-// }
-// https://testing-library.com/docs/queries/about/

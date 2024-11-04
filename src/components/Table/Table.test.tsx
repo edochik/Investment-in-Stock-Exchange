@@ -43,23 +43,23 @@ test("Отображение компаний, пользователь нажи
     cart: [],
   };
   const { store } = renderWithProviders(<Table />, { preloadedState });
-  //!проверяем что компании отображаются из списка imoex или nonImoex
+
   expect(screen.getByText("Компания A")).toBeInTheDocument();
   expect(screen.getByText("Компания C")).toBeInTheDocument();
-  //!Пользователь нажимает на кнопку в корзину, компания C убирается в корзину
+
   await user.click(screen.getByTestId("ticker-c"));
   const updateState = store.getState();
   expect(updateState.cart.find((item) => item === "c")).toBe("c");
   expect(screen.queryByText("Компания C")).not.toBeInTheDocument();
 
   const inputs = screen.queryAllByRole("textbox");
-  //!Пользователь вводит значение в первый input
+
   await user.type(inputs[0], "111");
   expect(screen.getByText("2775")).toBeInTheDocument();
-  //!Пользователь вводит значение во второй input
+
   await user.type(inputs[1], "3");
   expect(inputs[1]).toHaveDisplayValue("13");
-  //!Проверка сортировки
+  
   const sortButton = screen.getByRole("button", { name: "Название компании" });
   await user.click(sortButton);
   const list = screen

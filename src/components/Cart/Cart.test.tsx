@@ -14,6 +14,7 @@ describe("component Cart", () => {
     const openCartBtn = screen.getByRole("button", { name: /0/ });
     expect(openCartBtn).toHaveAttribute("disabled");
   });
+
   it("Отображает компании в корзине и позволяет их раскрывать, при удалении остается одна компания", async () => {
     const preloadedState = {
       cart: ["aaaa", "bbbb"],
@@ -45,6 +46,7 @@ describe("component Cart", () => {
     expect(screen.getAllByRole("listitem")).toHaveLength(1);
     expect(screen.getByText(/Компания A/)).toBeInTheDocument();
   });
+
   it("При удаление последней компании, компонент закрывается и становится disabled", async () => {
     const preloadedState = {
       cart: ["bbbb"],
