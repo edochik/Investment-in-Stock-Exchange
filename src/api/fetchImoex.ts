@@ -1,5 +1,6 @@
 import { ImoexSecurity } from "../domain/ImoexSecurity";
-import { fetchData, formatSecurityData } from "./helper";
+import { formatSecurityData } from "./formatSecurityData";
+import { fetchData } from "./helper";
 
 const API_IMOEX = 'https://iss.moex.com/iss/statistics/engines/stock/markets/index/analytics/IMOEX.json?limit=100';
 

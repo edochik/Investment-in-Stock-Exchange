@@ -2,7 +2,7 @@ import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { Cart } from "./Cart";
-import { renderWithProviders } from "../../redux/test/renderWithProviders";
+import { renderWithProviders } from "../../test/renderWithProviders";
 import { InitialData } from "../../redux/initialDataSlice/initialDataSlice";
 
 describe("component Cart", () => {

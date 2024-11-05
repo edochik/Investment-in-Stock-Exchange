@@ -89,3 +89,19 @@
 // }
 
 // console.log(JSON.stringify([1, 2, 3, 4]));
+// const result = "(function () { return trow new Error()})()";
+// const result = [1, 2, 3, 4,]
+// const json = JSON.stringify(result);
+// const res = JSON.parse(json)
+// console.log(result, 'result');
+// console.log(json, 'json');
+// console.log(res, 'res');
+
+// const result = "(function() { return 'test'; })()"; // самовызывающаяся функция как строка
+const result = JSON.stringify("(function() { return 'test'; })()")
+try {
+	const parsed = JSON.parse(result); // вызывает SyntaxError
+	console.log(parsed);
+} catch (error) {
+	console.error("Ошибка парсинга:", error); // Здесь будет поймана ошибка
+}

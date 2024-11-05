@@ -1,4 +1,4 @@
-import { renderWithProviders } from "../redux/test/renderWithProviders";
+import { renderWithProviders } from "../test/renderWithProviders";
 import { screen } from "@testing-library/react";
 import App from "./App";
 import { InitialData } from "../redux/initialDataSlice/initialDataSlice.js";

@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import { renderWithProviders } from "../../redux/test/renderWithProviders";
+import { renderWithProviders } from "../../test/renderWithProviders";
 import { CompanySelector } from "./CompanySelector";
 import { InitialData } from "../../redux/initialDataSlice/initialDataSlice";
 import { screen } from "@testing-library/react";

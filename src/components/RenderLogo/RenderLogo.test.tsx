@@ -1,4 +1,4 @@
-import { renderWithProviders } from "../../redux/test/renderWithProviders";
+import { renderWithProviders } from "../../test/renderWithProviders";
 import { fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 

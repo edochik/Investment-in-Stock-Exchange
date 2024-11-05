@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { Autocomplete } from "./Autocomplete";
-import { renderWithProviders } from "../../redux/test/renderWithProviders";
+import { renderWithProviders } from "../../test/renderWithProviders";
 
 describe("component Autocomplete", () => {
   afterEach(() => {

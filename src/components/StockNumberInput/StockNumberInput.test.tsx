@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import { renderWithProviders } from "../../redux/test/renderWithProviders";
+import { renderWithProviders } from "../../test/renderWithProviders";
 import { StockNumberInput } from "./StockNumberInput";
 import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -12,7 +12,7 @@ test("в input можно ввести только цифры, при ввод�
       coefficients: {},
       moneyUser: 0,
       stocks: {},
-    } 
+    },
   };
   const { store } = renderWithProviders(<StockNumberInput ticker="AAAA" />, {
     preloadedState,

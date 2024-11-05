@@ -1,5 +1,5 @@
 import { InitialData } from "../../redux/initialDataSlice/initialDataSlice";
-import { renderWithProviders } from "../../redux/test/renderWithProviders";
+import { renderWithProviders } from "../../test/renderWithProviders";
 import { UserData } from "../../redux/userDataSlice/userDataSlice.js";
 import { Table } from "./Table";
 import { screen } from "@testing-library/react";
@@ -59,7 +59,7 @@ test("Отображение компаний, пользователь нажи
 
   await user.type(inputs[1], "3");
   expect(inputs[1]).toHaveDisplayValue("13");
-  
+
   const sortButton = screen.getByRole("button", { name: "Название компании" });
   await user.click(sortButton);
   const list = screen
