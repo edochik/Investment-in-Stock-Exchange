@@ -64,6 +64,7 @@ describe('Тест fetchInitialDataThunk', () => {
 		const [_, fullfilled] = calls;
 		expect(fullfilled[0].payload).toStrictEqual(imoexData);
 		jest.restoreAllMocks();
+		window.localStorage.clear();
 	});
 	it('Данные в localStorage есть, данные не обновлены, дата не свежая', async () => {
 		const imoexData = {
@@ -85,5 +86,6 @@ describe('Тест fetchInitialDataThunk', () => {
 		const [_, fullfilled] = calls;
 		expect(fullfilled[0].payload).toStrictEqual(imoexData);
 		jest.restoreAllMocks();
+		window.localStorage.clear();
 	});
 })

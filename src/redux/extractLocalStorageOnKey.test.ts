@@ -23,5 +23,6 @@ describe('Тест extractLocalStorageOnKey', () => {
 		};
 		getErrorLocalStorage('testKey', '{"foo": 1.}');
 		expect(extractLocalStorageOnKey('testKey', 'default value')).toBe('default value');
+		window.localStorage.clear();
 	});
 })
