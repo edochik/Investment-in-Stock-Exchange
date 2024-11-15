@@ -23,7 +23,7 @@ const securitiesData = {
 	},
 } as unknown as SecuritiesData;
 
-describe('Тестирование функции getInvestmentValues', () => {
+describe('Тест функции getInvestmentValues', () => {
 	test('Функция создает объект с необходимыми полями', () => {
 		const userData = {
 			coefficients: {},

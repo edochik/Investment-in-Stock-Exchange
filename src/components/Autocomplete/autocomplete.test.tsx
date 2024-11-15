@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { Autocomplete } from "./Autocomplete";
 import { renderWithProviders } from "../../test/renderWithProviders";
 
-describe("component Autocomplete", () => {
+describe("Тест component Autocomplete", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });

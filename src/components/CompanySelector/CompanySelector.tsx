@@ -48,7 +48,6 @@ const CompanySelector = () => {
     <div className={s.SelectedCompany}>
       <form className={s.form} onSubmit={handleSubmit}>
         <Autocomplete
-          // мы даем ключ каждый раз разный в зависимости от ценных бумаг, как итог происходит перерендер компонента, что визуально выглядит как удаление написаного, так как компонент уже другой
           key={selectedSecurity?.secid}
           items={companies}
           filterByKey={({ secid, shortname }, query) =>

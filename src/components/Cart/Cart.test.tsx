@@ -5,7 +5,7 @@ import { Cart } from "./Cart";
 import { renderWithProviders } from "../../test/renderWithProviders";
 import { InitialData } from "../../redux/initialDataSlice/initialDataSlice";
 
-describe("component Cart", () => {
+describe("Тест component Cart", () => {
   it("Отображает пустую корзину с кнопкой disabled", async () => {
     const preloadedState = {
       cart: [],

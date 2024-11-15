@@ -1,6 +1,6 @@
 import { fetchInitialDataThunk } from "./thunk";
 import * as moduleIsSameDay from './isSameDay';
-import { localStorageMock } from "../../test/localStorageMock.js";
+import { localStorageMock } from "../../test/localStorageMock";
 
 
 Object.defineProperty(window, "localStorage", { value: localStorageMock });
@@ -10,11 +10,11 @@ const setLocalStorage = (id: string, data: any) => {
 };
 
 describe('Тест fetchInitialDataThunk', () => {
-	it('Обработка ошибки данных нет в localStorage данные отсутствуют', async () => {
-		global.fetch = jest.fn(() => { }) as jest.Mock; // подменяем fetch 
-		const dispatch = jest.fn(); // делаем mock
-		const thunk = fetchInitialDataThunk(); // передаем вызов в thunk
-		await thunk(dispatch, () => { }, {}); // вызываем
+	it('Обработка ошибки, данных нет в localStorage, запрос с ошибкой', async () => {
+		global.fetch = jest.fn(() => { }) as jest.Mock; 
+		const dispatch = jest.fn(); 
+		const thunk = fetchInitialDataThunk(); 
+		await thunk(dispatch, () => { }, {});
 		const { calls } = dispatch.mock;
 		const [pending, fullfilled] = calls;
 		expect(fullfilled[0].payload).toEqual(null);
@@ -34,9 +34,9 @@ describe('Тест fetchInitialDataThunk', () => {
 			ok: true,
 			json: () => fetchData
 		})) as jest.Mock;
-		const dispatch = jest.fn(); // делаем mock
-		const thunk = fetchInitialDataThunk(); // передаем вызов в thunk
-		await thunk(dispatch, () => { }, {}); // вызываем
+		const dispatch = jest.fn(); 
+		const thunk = fetchInitialDataThunk(); 
+		await thunk(dispatch, () => { }, {}); 
 		const { calls } = dispatch.mock;
 		const [_, fullfilled] = calls;
 		const { imoex, securities } = fullfilled[0].payload;
@@ -54,9 +54,9 @@ describe('Тест fetchInitialDataThunk', () => {
 			},
 			isFresh: true
 		}
-		setLocalStorage('imoexData', imoexData) // положил данные в localStorage
+		setLocalStorage('imoexData', imoexData) 
 		jest.spyOn(moduleIsSameDay, 'isSameDay').mockReturnValue(false)
-		const dispatch = jest.fn(); // делаю mock dispatch
+		const dispatch = jest.fn(); 
 		const thunk = fetchInitialDataThunk();
 		await thunk(dispatch, () => { }, {});
 		global.fetch = jest.fn(() => { }) as jest.Mock;

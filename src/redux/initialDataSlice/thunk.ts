@@ -34,7 +34,6 @@ export const fetchInitialDataThunk = createAsyncThunk(
       if (imoexDataLocalStorage === null) {
         return null;
       }
-      console.log('>>>>>>>>>>>>>>>> tut <<<<<<<<<<');
       return { ...imoexDataLocalStorage, isFresh: false };
     }
   }

@@ -76,7 +76,7 @@ export const columns: Columns[] = [
   },
   {
     header: "Купить акций(шт)",
-    cell: (value) => (isNaN(value.stockBuyTarget) ? "0" : value.stockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
+    cell: (value) => (isNaN(value.stockBuyTarget) ? "0" : value.stockBuyTarget), 
     sortFunction: (a, b) => b.stockBuyTarget - a.stockBuyTarget,
   },
   {
@@ -84,7 +84,7 @@ export const columns: Columns[] = [
     cell: (value) =>
       isNaN(value.totalStockBuyTarget)
         ? "0"
-        : Math.ceil(value.totalStockBuyTarget), // при вводе денег будет NaN, эта проверка убирает
+        : Math.ceil(value.totalStockBuyTarget),
     sortFunction: (a, b) => b.totalStockBuyTarget - a.totalStockBuyTarget,
   },
   {

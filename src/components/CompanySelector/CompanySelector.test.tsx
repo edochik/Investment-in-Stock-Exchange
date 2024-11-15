@@ -6,7 +6,7 @@ import { screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 
-describe("Тест CompanySelector", () => {
+describe("Тест component CompanySelector", () => {
   test("Добавление компании в nonImoex", async () => {
     const user = userEvent.setup();
     const preloadedState = {

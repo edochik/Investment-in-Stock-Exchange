@@ -22,6 +22,3 @@ export async function fetchImoex(): Promise<{
 	})
 }
 
-// 'https://iss.moex.com/iss/securities.json'
-// 'https://iss.moex.com/iss/engines/stock/markets/shares/securities/AFLT.xml'
-

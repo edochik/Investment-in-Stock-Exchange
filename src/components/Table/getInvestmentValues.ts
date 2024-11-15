@@ -23,25 +23,21 @@ export function getInvestmentValues(
 		return acc + coeff * company.weight;
 	}, 0);
 
-	//* вывод в таблицу
-	//? дополнительные данные для расчета (без вывода)
 	return filterCompanies.map((dataCompany) => {
-		const { ticker, shortname } = dataCompany; //* ticker и shornames Api
-		let { weight } = dataCompany //* вес компании Api
-		const price = securities[ticker].prevprice; //* цена за акцию Api
-		const lotsize = securities[ticker].lotsize; //? лотность  Api
-		const stocksBuyUser = stocks[ticker] ?? 0; //? купленно акций
-		const totalStocksBuyUser = stocksBuyUser * price //* сумма купленных акций
-		const coefficient = coefficients[ticker] ?? 1; //* коэффициент
-		const newWeight = weight * coefficient //* вес с учетом коэффициента 
-		const weightPortfolio = newWeight * weightCompanies * 100; //* вес акций в портфеле
-		const stockBuy = Math.round((moneyUser * weightPortfolio) / (price * 100)); //? купить акций по формуле
-		//Math.round - нужен чтобы правильно округлить акции и посчитать процент
-		const aroundStockLotsize = Math.round(stockBuy / lotsize) * lotsize; //? округление акций по лотности
+		const { ticker, shortname } = dataCompany;
+		let { weight } = dataCompany
+		const price = securities[ticker].prevprice; 
+		const lotsize = securities[ticker].lotsize; 
+		const stocksBuyUser = stocks[ticker] ?? 0; 
+		const totalStocksBuyUser = stocksBuyUser * price;
+		const coefficient = coefficients[ticker] ?? 1; 
+		const newWeight = weight * coefficient;
+		const weightPortfolio = newWeight * weightCompanies * 100; 
+		const stockBuy = Math.round((moneyUser * weightPortfolio) / (price * 100)); 
+		const aroundStockLotsize = Math.round(stockBuy / lotsize) * lotsize; 
 		const stockBuyTarget = stocks[ticker] ? aroundStockLotsize - stocks[ticker] : aroundStockLotsize
-		//*Купить акций (шт)
-		const totalStockBuyTarget = stockBuyTarget * price; //*итого за акции
-		const progressTarget = stocksBuyUser * 100 / aroundStockLotsize; //*Цель достигнута в %
+		const totalStockBuyTarget = stockBuyTarget * price; 
+		const progressTarget = stocksBuyUser * 100 / aroundStockLotsize;
 		return {
 			ticker,
 			shortname,

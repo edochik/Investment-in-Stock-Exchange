@@ -12,9 +12,8 @@ const list = [
 
 const sortFunction = (a: List, b: List) => b.ticker.localeCompare(a.ticker);
 
-describe('Тестирование функции sortInvestmentValues', () => {
-
-	test('Данные не сортируются', () => {
+describe('Тест функции sortInvestmentValues', () => {
+	test('функция не сортирует данные', () => {
 		const result = sortInvestmentValues({ column: null, direction: 'desc' }, list);
 		expect(result).toEqual([
 			{ ticker: 'ABBB' },
@@ -23,7 +22,7 @@ describe('Тестирование функции sortInvestmentValues', () => {
 			{ ticker: 'ABAB' }
 		])
 	})
-	test('Данные сортируются от Я => А', () => {
+	test('функция сортирует от Я => А', () => {
 		const column = {
 			sortFunction
 		} as unknown as Columns
@@ -35,7 +34,7 @@ describe('Тестирование функции sortInvestmentValues', () => {
 			{ ticker: 'AAAB' }
 		])
 	})
-	test('Данные сортируются от А => Я', () => {
+	test('функция сортирует от А => Я', () => {
 		const column = {
 			sortFunction
 		} as unknown as Columns

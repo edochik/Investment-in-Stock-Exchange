@@ -20,10 +20,8 @@ export function createUserDataListenerMiddleware() {
 			addCompanyToCart,
 			removeCompanyFromCart,
 		),
-		// одно из четырех полей  type | actionCreator | matcher |predicate
 		effect: async (action, listenerApi) => {
 			const { userData, nonImoex, cart } = listenerApi.getState()
-			console.log("------------------------", userData)
 			localStorage.setItem('userData', JSON.stringify(userData))
 			localStorage.setItem('nonImoex', JSON.stringify(nonImoex))
 			localStorage.setItem('cart', JSON.stringify(cart))

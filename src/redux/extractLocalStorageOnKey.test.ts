@@ -17,7 +17,7 @@ describe('Тест extractLocalStorageOnKey', () => {
 		expect(extractLocalStorageOnKey('testKey', 'return')).toBe('return');
 		window.localStorage.clear();
 	});
-	it('test', () => {
+	it('Выбрасывает ошибку, если JSON поврежден', () => {
 		const getErrorLocalStorage = (id: string, data: any) => {
 			window.localStorage.setItem(id, data);
 		};
