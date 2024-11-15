@@ -4,7 +4,7 @@ import App from "./App";
 import { InitialData } from "../redux/initialDataSlice/initialDataSlice.js";
 import "@testing-library/jest-dom";
 
-describe("Тест component App", () => {
+describe("Тест компонента App", () => {
   it("Данные отсутствуют, нет интернета", () => {
     const preloadedState = {
       data: {

@@ -4,7 +4,7 @@ import { StockNumberInput } from "./StockNumberInput";
 import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-describe("Тест component StockNumberInput", () => {
+describe("Тест компонента StockNumberInput", () => {
   test("в input можно ввести только цифры, при вводе цифр данные в Redux обновляются", async () => {
     const user = userEvent.setup();
     const preloadedState = {

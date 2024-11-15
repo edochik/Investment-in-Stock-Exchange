@@ -1,7 +1,7 @@
 
 import reducer, { selectedNonImoex } from './nonImoexSlice'
 
-describe('Тест слайса nonImoexSlice', () => {
+describe('Тест nonImoexSlice', () => {
 	test('selectedNonImoex добавляет компанию в слайс', () => {
 		const initialState = [{ ticker: 'AAAA', shortname: 'Компания А', weight: 50 }]
 		const action = selectedNonImoex({ ticker: 'BBBB', shortname: 'Компания B', weight: 50 })

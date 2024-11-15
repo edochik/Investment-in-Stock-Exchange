@@ -1,6 +1,6 @@
 import { formatSecurityData } from "./formatSecurityData";
 
-test('Тестирование formatSecurityData', () => {
+test('Тест функции formatSecurityData', () => {
 	const data = {
 		columns: ['ticker'],
 		data: [['A'], ['B']]

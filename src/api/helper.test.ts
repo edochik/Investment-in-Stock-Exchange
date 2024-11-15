@@ -1,6 +1,6 @@
 import { fetchData } from "./helper";
 
-describe('Тестирование fetch', () => {
+describe('Тест функции fetchData', () => {
 	it('Получаем необходимые значения', async () => {
 		global.fetch = jest.fn(() => Promise.resolve({
 			ok: true,

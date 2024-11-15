@@ -4,7 +4,7 @@ import { RemoveCompany } from "./RemoveCompany";
 import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-describe("Тест component RemoveCompany", () => {
+describe("Тест компонента RemoveCompany", () => {
   test("Убирает компанию в корзину", async () => {
     const user = userEvent.setup();
     const preloadedState = {

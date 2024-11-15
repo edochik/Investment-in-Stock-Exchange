@@ -3,7 +3,7 @@ import { fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import { RenderLogo } from "./RenderLogo";
-describe("Тест component RenderLogo", () => {
+describe("Тест компонента RenderLogo", () => {
   it("Компонент отображает фотографию", () => {
     renderWithProviders(<RenderLogo secid="AAAA" shortname="Компания" />);
     expect(screen.getByAltText(/логотип Компания/)).toBeInTheDocument();

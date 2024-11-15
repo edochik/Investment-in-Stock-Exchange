@@ -6,7 +6,7 @@ import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
-describe("Тест component Table", () => {
+describe("Тест компонента Table", () => {
   test("Отображение компаний, пользователь нажимает на кнопку положить в корзину, компания не отображается и находится в корзине", async () => {
     const user = userEvent.setup();
     const preloadedState = {

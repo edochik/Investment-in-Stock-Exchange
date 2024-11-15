@@ -4,7 +4,7 @@ import { UserMoneyInput } from "./UserMoneyInput";
 import "@testing-library/jest-dom";
 import { screen } from "@testing-library/react";
 
-describe("Тест component UserMoneyInput", () => {
+describe("Тест компонента UserMoneyInput", () => {
   test("Пользователь вводи значение в инпут", async () => {
     const user = userEvent.setup();
     const preloadedState = {

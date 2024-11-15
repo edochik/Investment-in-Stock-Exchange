@@ -1,6 +1,6 @@
 import reducer, {  removeCompanyFromCart } from './cartSlice'
 
-describe('Тестирование cartSlice', () => {
+describe('Тест cartSlice', () => {
 	test('Редюсер должен вернуть начальное состояние', () => {
 		const initialState = undefined;
 		const action = { type: '' };

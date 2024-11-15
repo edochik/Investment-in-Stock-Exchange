@@ -4,7 +4,7 @@ import { CoefficientInput } from "./CoefficientInput";
 import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-describe("Тест component CoefficientInput", () => {
+describe("Тест компонента CoefficientInput", () => {
   test("в input можно ввести только цифры, при вводе цифр данные в Redux обновляются", async () => {
     const user = userEvent.setup();
     const preloadedState = {
