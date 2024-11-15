@@ -1,6 +1,6 @@
 import { fetchImoex } from "./fetchImoex";
 
-test('функция преобразовывает данные', async () => {
+test('Тест fetchImoex', async () => {
 	const data = {
 		analytics: {
 			columns: ['ticker', 'shortnames', 'weight', 'test'],

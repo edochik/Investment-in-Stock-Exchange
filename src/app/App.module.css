@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+}
+.App .wrapper {
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.App .wrapper .info,
+.App .wrapper .loading {
+  position: fixed;
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.App .wrapper .info {
+  z-index: 9;
+  background-color: tomato;
+}
+.App .wrapper .loading {
+  z-index: 99;
+  background-color: mediumseagreen;
+}/*# sourceMappingURL=App.module.css.map */

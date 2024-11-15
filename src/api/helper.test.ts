@@ -1,7 +1,7 @@
 import { fetchData } from "./helper";
 
-describe('Тестирование', () => {
-	it('Данные без отклонения', async () => {
+describe('Тестирование fetch', () => {
+	it('Получаем необходимые значения', async () => {
 		global.fetch = jest.fn(() => Promise.resolve({
 			ok: true,
 			json: () => 'Test'
@@ -10,7 +10,7 @@ describe('Тестирование', () => {
 		expect(result).toBe('Test');
 		jest.restoreAllMocks();
 	})
-	it('Данные с отклонениями', async () => {
+	it('Обработка ошибки', async () => {
 		global.fetch = jest.fn(() => Promise.resolve({
 			ok: false,
 			json: () => 'Test',

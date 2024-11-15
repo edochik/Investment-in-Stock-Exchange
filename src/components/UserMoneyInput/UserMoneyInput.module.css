@@ -1,0 +1,11 @@
+.UserMoneyInput {
+  margin-bottom: 25px;
+}
+.UserMoneyInput .input {
+  text-align: center;
+  outline-color: rgba(0, 0, 255, 0.5);
+  background-color: rgb(237, 238, 242);
+  border: 1px solid rgb(160, 160, 160);
+  padding: 5px;
+  font-size: 18px;
+}/*# sourceMappingURL=UserMoneyInput.module.css.map */

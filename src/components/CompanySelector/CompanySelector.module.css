@@ -1,0 +1,39 @@
+.SelectedCompany {
+  margin-bottom: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+.SelectedCompany .form {
+  display: flex;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+}
+.SelectedCompany .form .label {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+.SelectedCompany .form .label .image {
+  height: 1em;
+}
+.SelectedCompany .form .label .text {
+  margin: 0;
+  padding: 0;
+}
+.SelectedCompany .form .input {
+  outline-color: rgba(0, 0, 255, 0.5);
+  background-color: rgb(237, 238, 242);
+  border: 1px solid rgb(160, 160, 160);
+  padding: 5px;
+  font-size: 18px;
+}
+.SelectedCompany .form .btn_add {
+  cursor: pointer;
+  margin-top: auto;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.text {
+  margin: 0;
+}/*# sourceMappingURL=CompanySelector.module.css.map */
