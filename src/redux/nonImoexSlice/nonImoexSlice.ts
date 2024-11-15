@@ -16,6 +16,4 @@ export const nonImoexSlice = createSlice({
 
 export const { selectedNonImoex } = nonImoexSlice.actions
 
-
-
 export default nonImoexSlice.reducer
