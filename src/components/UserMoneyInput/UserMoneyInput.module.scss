@@ -1,9 +1,22 @@
 @import '../../style/mixin.scss';
 
 .UserMoneyInput {
+	position: relative;
 	margin-bottom: 25px;
 	.input {
 		text-align: center;
 		@include input-style();
+	}
+	.info {
+		transition: color 0.3s ease-in;
+		position: absolute;
+		left: 0;
+		bottom: -20px;
+		color: rgb(0, 128, 0, 0.5);
+		font-size: 16px;
+		display: block;
+	}
+	.hidden {
+		color: white;
 	}
 }
