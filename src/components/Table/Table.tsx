@@ -66,10 +66,10 @@ export const Table = () => {
               </th>
             ))}
             {!securities[value.ticker] && (
-              <span className={s.info}>
+              <th className={s.info}>
                 Информация по акциям {value.ticker} на Московской бирже (MOEX)
                 отсутствует
-              </span>
+              </th>
             )}
           </tr>
         ))}
