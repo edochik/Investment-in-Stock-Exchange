@@ -9,7 +9,7 @@ export interface UserData {
 
 const initialUserData = {
 	coefficients: {},
-	moneyUser: 0,
+	moneyUser: 100000,
 	stocks: {}
 }
 

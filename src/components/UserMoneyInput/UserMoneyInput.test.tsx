@@ -19,7 +19,7 @@ describe("Тест компонента UserMoneyInput", () => {
     });
     const input = screen.getByRole("textbox");
     await user.type(input, "100000");
-    expect(input).toHaveDisplayValue("100 000");
+    expect(input).toHaveDisplayValue("100 000 ₽");
     const updateState = store.getState();
     expect(updateState.userData.moneyUser).toBe(100000);
   });

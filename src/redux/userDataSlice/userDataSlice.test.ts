@@ -5,7 +5,7 @@ describe('Тестирование userDataSlice', () => {
 	beforeEach(() => {
 		previousState = {
 			coefficients: {},
-			moneyUser: 0,
+			moneyUser: 100000,
 			stocks: {}
 		}
 	})
