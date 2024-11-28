@@ -26,17 +26,17 @@ export function getInvestmentValues(
 	return filterCompanies.map((dataCompany) => {
 		const { ticker, shortname } = dataCompany;
 		let { weight } = dataCompany
-		const price = securities[ticker].prevprice; 
-		const lotsize = securities[ticker].lotsize; 
-		const stocksBuyUser = stocks[ticker] ?? 0; 
+		const price = securities[ticker]?.prevprice ?? 0;
+		const lotsize = securities[ticker]?.lotsize ?? 0;
+		const stocksBuyUser = stocks[ticker] ?? 0;
 		const totalStocksBuyUser = stocksBuyUser * price;
-		const coefficient = coefficients[ticker] ?? 1; 
+		const coefficient = coefficients[ticker] ?? 1;
 		const newWeight = weight * coefficient;
-		const weightPortfolio = newWeight * weightCompanies * 100; 
-		const stockBuy = Math.round((moneyUser * weightPortfolio) / (price * 100)); 
-		const aroundStockLotsize = Math.round(stockBuy / lotsize) * lotsize; 
+		const weightPortfolio = newWeight * weightCompanies * 100;
+		const stockBuy = Math.round((moneyUser * weightPortfolio) / (price * 100));
+		const aroundStockLotsize = Math.round(stockBuy / lotsize) * lotsize;
 		const stockBuyTarget = stocks[ticker] ? aroundStockLotsize - stocks[ticker] : aroundStockLotsize
-		const totalStockBuyTarget = stockBuyTarget * price; 
+		const totalStockBuyTarget = stockBuyTarget * price;
 		const progressTarget = stocksBuyUser * 100 / aroundStockLotsize;
 		return {
 			ticker,

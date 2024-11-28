@@ -16,7 +16,7 @@ export const Table = () => {
     column: null,
   });
   const imoex = useAppSelector((state) => state.data.data!.imoex);
-
+  const securities = useAppSelector((state) => state.data.data!.securities);
   const tickersImoex: Set<string> = new Set(imoex.map((item) => item.ticker));
 
   const investmentValues = useAppSelector(selectInvestmentValues);
@@ -57,6 +57,7 @@ export const Table = () => {
             className={classNames({
               [s.tr]: true,
               [s.imoex_color]: tickersImoex.has(value.ticker),
+              [s.miss]: !securities[value.ticker],
             })}
           >
             {columns.map((column, index) => (
@@ -64,6 +65,12 @@ export const Table = () => {
                 {column.cell(value)}
               </th>
             ))}
+            {!securities[value.ticker] && (
+              <span className={s.info}>
+                Информация по акциям {value.ticker} на Московской бирже (MOEX)
+                отсутствует
+              </span>
+            )}
           </tr>
         ))}
       </tbody>

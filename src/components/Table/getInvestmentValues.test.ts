@@ -109,5 +109,54 @@ describe('Тест функции getInvestmentValues', () => {
 			weightPortfolio: 100,
 		}])
 	})
+	test('Функция создает объект, да же если нет данных в securities', () => {
+		const securitiesData = {
+			moex: [{
+				ticker: 'AABB',
+				shortname: 'Какой то банк',
+				weight: 0.50,
+			}, {
+				ticker: 'ZZBB',
+				shortname: 'Не такой банк',
+				weight: 0.50,
+			}],
+			securities: {
+				'AABB': {
+					prevprice: 300,
+					lotsize: 10
+				},
+			},
+		} as unknown as SecuritiesData;
+		const userData = {
+			coefficients: {},
+			stocks: {},
+			moneyUser: 0,
+		} as UserData
+		const cart: string[] = []
+		const result = getInvestmentValues(userData, securitiesData, cart);
+		expect(result).toEqual([{
+			price: 300,
+			progressTarget: NaN,
+			shortname: "Какой то банк",
+			stockBuyTarget: 0,
+			stocksBuyUser: 0,
+			ticker: "AABB",
+			totalStockBuyTarget: 0,
+			totalStocksBuyUser: 0,
+			weight: 0.5,
+			weightPortfolio: 50,
+		}, {
+			price: 0,
+			progressTarget: NaN,
+			shortname: "Не такой банк",
+			stockBuyTarget: NaN,
+			stocksBuyUser: 0,
+			ticker: "ZZBB",
+			totalStockBuyTarget: NaN,
+			totalStocksBuyUser: 0,
+			weight: 0.5,
+			weightPortfolio: 50,
+		}])
+	})
 })
 
