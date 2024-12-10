@@ -10,7 +10,7 @@ const UserMoneyInput = () => {
   const dispatch = useAppDispatch();
   const [cursorPosition, setCursorPosition] = useState(0); // Состояние для отслеживания позиции курсора
   const inputRef = useRef<HTMLInputElement>(null); // Реф для поля ввода
-  const handleChangeUpdateMoney = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateMoney = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value.replaceAll(" ", "").replace("₽", ""));
     dispatch(updateUserMoney(value));
   };
@@ -40,7 +40,7 @@ const UserMoneyInput = () => {
         type="text"
         className={s.input}
         value={`${formatPrice(money)} ₽`}
-        onChange={(e) => handleChangeUpdateMoney(e)}
+        onChange={(e) => handleUpdateMoney(e)}
         onFocus={handleFocus}
         onSelect={handleSelect}
       />

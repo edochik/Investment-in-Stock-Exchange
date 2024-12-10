@@ -12,7 +12,7 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
   const [inputValue, setInputValue] = useState(String(value));
   const dispatch = useAppDispatch();
 
-  const handleChangeUpdateCoefficients = (
+  const handleUpdateCoefficients = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { value } = e.target;
@@ -32,7 +32,7 @@ const CoefficientInput = ({ ticker }: CoefficientInputProps) => {
         className={s.input}
         type="text"
         value={inputValue}
-        onChange={handleChangeUpdateCoefficients}
+        onChange={handleUpdateCoefficients}
       />
     </>
   );

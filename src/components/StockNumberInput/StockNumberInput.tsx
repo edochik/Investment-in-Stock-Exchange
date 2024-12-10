@@ -8,7 +8,7 @@ interface StockNumberInputProps {
 const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
   const stocks = useAppSelector((state) => state.userData.stocks);
   const dispatch = useAppDispatch();
-  const handleChangeUpdateStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateStocks = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (!/^[0-9.]*$/.test(value)) {
       return;
@@ -24,7 +24,7 @@ const StockNumberInput = ({ ticker }: StockNumberInputProps) => {
         className={s.input}
         type="text"
         value={stocks[ticker] || "0"}
-        onChange={handleChangeUpdateStocks}
+        onChange={handleUpdateStocks}
       />
     </>
   );

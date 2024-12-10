@@ -29,7 +29,7 @@ const Cart = () => {
     window.addEventListener("scroll", scroll);
     return () => {
       document.removeEventListener("mousedown", onClickOutside);
-      window.addEventListener("scroll", scroll);
+      window.removeEventListener("scroll", scroll);
     };
   }, []);
 
